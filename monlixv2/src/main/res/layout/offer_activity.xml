@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgColor"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <FrameLayout
+                android:layout_marginTop="32dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+            <ImageView
+                    android:layout_marginBottom="24dp"
+                    android:src="@drawable/user_icon"
+                    android:onClick="showProfile"
+                    android:elevation="20dp"
+                    android:paddingTop="12dp"
+                    android:outlineProvider="paddedBounds"
+                    android:paddingBottom="12dp"
+                    android:scaleType="centerInside"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/account"
+                    android:contentDescription="show user" />
+            <ImageView
+                    android:onClick="refClick"
+                    android:src="@drawable/monlix"
+                    android:layout_gravity="center"
+                    android:text="Logo"
+                    android:layout_width="96dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Logo" />
+
+            <ImageView
+                    android:onClick="close"
+                    android:layout_gravity="right|center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_outline_close_24"
+                    android:contentDescription="close button" />
+
+        </FrameLayout>
+
+
+        <com.google.android.material.tabs.TabLayout
+                android:elevation="20dp"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                android:outlineProvider="paddedBounds"
+                app:tabMode="fixed"
+                android:id="@+id/monlixTablayout"
+                android:background="@drawable/toolbar_bg"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="64dp"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="0dp"
+                app:tabIndicatorColor="@color/transparent"
+                app:tabBackground="@drawable/tab_color_selector"
+                app:tabTextColor="#959DB2"
+                app:tabSelectedTextColor="@color/darkBlue"
+                app:tabTextAppearance="@style/MonlixTabButtonStyle"
+                android:layout_height="54dp" />
+    </LinearLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/monlixPager"
+            android:layout_marginTop="160dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
+            android:id="@+id/loaderWindow"
+            android:background="@color/bgColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:src="@drawable/monlix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="64dp"
+                android:id="@+id/imageView" />
+
+        <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/loader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/loader"
+                app:layout_constraintEnd_toEndOf="@+id/loader"
+                app:layout_constraintStart_toStartOf="@+id/loader"
+                android:layout_marginTop="6dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

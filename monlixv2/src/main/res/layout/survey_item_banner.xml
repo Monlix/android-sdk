@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:minHeight="200dp"
+        android:layout_height="wrap_content">
+
+    <FrameLayout
+            android:background="@drawable/dark_blue_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+        <LinearLayout
+                android:background="@drawable/border_radius_item"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="top|start"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/timer2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+            <TextView
+                    android:text="5 min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <TextView
+                    android:text="HOT"
+                    android:background="@drawable/hot_radius_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:background="@drawable/border_radius_item_transparent_20"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="top|end"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:src="@drawable/orange_star"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+            <TextView
+                    android:textColor="@color/white"
+                    android:text="5 min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="900"
+                    android:layout_height="wrap_content" />
+
+            <TextView
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    android:text="POINTS"
+                    android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="star'" />
+
+    </FrameLayout>
+
+    <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:gravity="center"
+                android:textAlignment="center"
+                android:text="aaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

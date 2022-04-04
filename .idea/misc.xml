@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/abc_menu_dropdown_panel_holo_light.xml" value="0.1875" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/border_radius_item.xml" value="0.182" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/border_radius_item_transparent_20.xml" value="0.2305" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/circle.xml" value="0.2305" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/dark_blue_gradient.xml" value="0.2305" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/hot_radius_item.xml" value="0.2305" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.2305" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/offer_item.xml" value="0.182" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/tab_color_selector.xml" value="0.248" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/tab_indicator.xml" value="0.1715" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/tab_indicator_selected.xml" value="0.248" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/drawable/test.xml" value="0.182" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/offer_activity.xml" value="0.22" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/offer_item.xml" value="0.181640625" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/offer_page.xml" value="0.181640625" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/survey_item.xml" value="0.25" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/survey_item_banner.xml" value="0.33" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/survey_item_v2.xml" value="0.16796875" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/transaction_fragment.xml" value="0.181640625" />
+        <entry key="..\:/Users/cofil/AndroidStudioProjects/Monlixv2/monlixv2/src/main/res/layout/transaction_fragment_container.xml" value="0.181640625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
