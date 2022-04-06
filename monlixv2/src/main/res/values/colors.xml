@@ -10,5 +10,8 @@
     <color name="grayLight">#92929D</color>
     <color name="bgColor">#f4f6fc</color>
     <color name="darkBlue">#334D6E</color>
+    <color name="grayV2">#ecf0fa</color>
+    <color name="grayV3">#f4f6fc</color>
+    <color name="grayV4">#ECEFFA</color>
 
 </resources>

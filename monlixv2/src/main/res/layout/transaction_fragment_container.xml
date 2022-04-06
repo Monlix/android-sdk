@@ -7,7 +7,7 @@
     android:orientation="vertical">
     <fragment
         android:id="@+id/fragment"
-        android:name="com.monlixv2.ui.TransactionFragment"
+        android:name="com.monlixv2.ui.fragments.TransactionFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

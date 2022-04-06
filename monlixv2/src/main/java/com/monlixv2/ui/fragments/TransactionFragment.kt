@@ -1,24 +1,26 @@
-package com.monlixv2.ui
+package com.monlixv2.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.monlix.service.models.TransactionResponse
 import com.monlixv2.R
 import com.monlixv2.adapters.TransactionAdapter
 import com.monlixv2.service.Api
-import com.monlix.service.models.TransactionResponse
+import com.monlixv2.ui.Main
+import com.monlixv2.util.Constants.TRANSACTION_FILTER_LIST
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.get
 import com.monlixv2.util.UIHelpers
 import java.net.URL
 import kotlin.concurrent.thread
+
 
 class TransactionFragment : Fragment() {
 
@@ -27,6 +29,7 @@ class TransactionFragment : Fragment() {
     private lateinit var ptcClicks: TextView;
     private lateinit var ptcEarnings: TextView;
     private lateinit var ptcContainer: LinearLayout;
+    private lateinit var spinner: AppCompatSpinner
 
     private lateinit var data: TransactionResponse;
     private lateinit var prefs: SharedPreferences
@@ -39,7 +42,7 @@ class TransactionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        prefs = PreferenceHelper.customPrefs(context as Offers, PreferenceHelper.MonlixPrefs);
+        prefs = PreferenceHelper.customPrefs(context as Main, PreferenceHelper.MonlixPrefs);
         return inflater.inflate(R.layout.transaction_fragment, container, false)
     }
 
@@ -64,6 +67,20 @@ class TransactionFragment : Fragment() {
         ptcClicks = view.findViewById(R.id.ptcClicks);
         ptcEarnings = view.findViewById(R.id.ptcEarnings);
         ptcContainer = view.findViewById(R.id.ptcContainer);
+        spinner = view.findViewById(R.id.spinner);
+        initSpinner()
+    }
+
+    fun initSpinner(){
+        spinner.adapter = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_dropdown_item,TRANSACTION_FILTER_LIST)
+        spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+                val value = adapterView.getItemAtPosition(i).toString()
+                Toast.makeText(requireContext(),value, Toast.LENGTH_LONG).show()
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        })
     }
 
     fun fetchData() {
@@ -82,7 +99,7 @@ class TransactionFragment : Fragment() {
                 return@thread
             }
             data = Api.parseTransactions(json)
-            (context as Offers).runOnUiThread {
+            (context as Main).runOnUiThread {
                 displayData(data)
             }
         }

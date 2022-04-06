@@ -1,0 +1,109 @@
+
+package com.monlixv2.ui.fragments
+
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.transition.TransitionManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.monlix.service.models.OfferResponse
+import com.monlixv2.R
+import com.monlixv2.adapters.TransactionAdapter
+import com.monlixv2.service.Api
+import com.monlix.service.models.TransactionResponse
+import com.monlixv2.adapters.PagerAdapter
+import com.monlixv2.ui.Main
+import com.monlixv2.util.PreferenceHelper
+import com.monlixv2.util.PreferenceHelper.get
+import com.monlixv2.util.UIHelpers
+import java.net.URL
+import kotlin.concurrent.thread
+
+class HomeFragment : Fragment() {
+
+    private var pager: ViewPager2? = null
+    private var tabLayout: TabLayout? = null
+
+    private lateinit var data: OfferResponse;
+    private lateinit var prefs: SharedPreferences
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        prefs = PreferenceHelper.customPrefs(context as Main, PreferenceHelper.MonlixPrefs);
+        return inflater.inflate(R.layout.home_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (view as ViewGroup).layoutTransition.setAnimateParentHierarchy(false);
+        this.loadViews(view)
+        this.fetchData()
+    }
+
+    private fun loadViews(view: View) {
+        pager = view.findViewById<ViewPager2>(R.id.monlixPager)
+        pager!!.offscreenPageLimit = 1
+        tabLayout = view.findViewById<TabLayout>(R.id.monlixTablayout)
+//        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//
+//            override fun onTabSelected(tab: TabLayout.Tab?) {
+//                triggerTransactionFetch(tab);
+//            }
+//
+//            override fun onTabReselected(tab: TabLayout.Tab?) {
+//                triggerTransactionFetch(tab);
+//            }
+//
+//            override fun onTabUnselected(tab: TabLayout.Tab?) {
+//            }
+//        })
+    }
+
+
+    private fun fetchData() {
+        prefs = PreferenceHelper.customPrefs((context as Main), PreferenceHelper.MonlixPrefs);
+        val appId = prefs[PreferenceHelper.MonlixAppId, ""]
+        val userId = prefs[PreferenceHelper.MonlixUserId, ""]
+        val url = "${Api.ENDPOINT}/offers?appid=${appId}&userid=${userId}"
+        thread {
+            val json = try {
+                URL(url).readText()
+            } catch (e: Exception) {
+                return@thread
+            }
+            data = Api.parseOffers(json)
+            (context as Main).runOnUiThread {
+                displayData(data)
+            }
+        }
+    }
+
+    private fun displayData(data: OfferResponse) {
+        val dataArray = arrayOf(data.surveys, data.offers, data.ads)
+        pager?.adapter = PagerAdapter(requireContext(), dataArray)
+        TabLayoutMediator(tabLayout!!, pager!!) { tab, position ->
+            tab.text = tabs[position]
+        }.attach()
+    }
+
+    companion object {
+        private val tabs = arrayOf("Surveys", "Offers", "Ads")
+    }
+
+
+}

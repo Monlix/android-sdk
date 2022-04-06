@@ -21,7 +21,7 @@
             <ImageView
                     android:layout_marginBottom="24dp"
                     android:src="@drawable/user_icon"
-                    android:onClick="showProfile"
+                    android:onClick="profileAction"
                     android:elevation="20dp"
                     android:paddingTop="12dp"
                     android:outlineProvider="paddedBounds"
@@ -51,37 +51,23 @@
         </FrameLayout>
 
 
-        <com.google.android.material.tabs.TabLayout
-                android:elevation="20dp"
-                app:tabMaxWidth="0dp"
-                app:tabGravity="fill"
-                android:outlineProvider="paddedBounds"
-                app:tabMode="fixed"
-                android:id="@+id/monlixTablayout"
-                android:background="@drawable/toolbar_bg"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="64dp"
-                app:tabIndicatorFullWidth="true"
-                app:tabIndicatorHeight="0dp"
-                app:tabIndicatorColor="@color/transparent"
-                app:tabBackground="@drawable/tab_color_selector"
-                app:tabTextColor="#959DB2"
-                app:tabSelectedTextColor="@color/darkBlue"
-                app:tabTextAppearance="@style/MonlixTabButtonStyle"
-                android:layout_height="54dp" />
+
     </LinearLayout>
 
 
-    <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/monlixPager"
-            android:layout_marginTop="160dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-    </androidx.viewpager2.widget.ViewPager2>
+    <androidx.fragment.app.FragmentContainerView
+            android:layout_marginTop="96dp"
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
 

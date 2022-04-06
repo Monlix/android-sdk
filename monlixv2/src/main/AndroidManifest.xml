@@ -12,7 +12,7 @@
             android:networkSecurityConfig="@xml/network_security_config"
             android:supportsRtl="true"
             >
-        <activity android:name=".ui.Offers" android:theme="@style/MonlinxTheme"
+        <activity android:name=".ui.Main" android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"
                 />
     </application>

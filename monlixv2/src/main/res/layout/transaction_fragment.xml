@@ -16,9 +16,36 @@
         android:layout_width="32dp"
         android:layout_height="32dp"/>
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/bot"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+            />
+        <ImageView
+                android:layout_marginTop="12dp"
+                android:src="@drawable/bot_circle"
+                android:layout_width="160dp"
+                android:layout_height="30dp"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:text="@string/no_activity"/>
+        <TextView
+                android:textAlignment="center"
+                android:maxWidth="220dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/check_out_current_offers"/>
+    </LinearLayout>
+
 
         <LinearLayout
-            android:visibility="invisible"
             android:weightSum="1"
             android:gravity="center"
             android:orientation="horizontal"
@@ -30,11 +57,16 @@
                 style="@style/MonlinxTranscationCard"
                 android:layout_height="wrap_content"
                 >
+                <ImageView
+                        android:src="@drawable/points"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="points icon" />
                 <TextView
                     android:fontFamily="@font/poppins_bold"
                     android:textSize="16sp"
                     android:textColor="#333"
-                    android:text="@string/ptc_clicks"
+                    android:text="@string/your_points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -49,11 +81,17 @@
                 style="@style/MonlinxTranscationCard"
                 android:layout_height="wrap_content"
                 >
+                <ImageView
+                        android:src="@drawable/clicks"
+                        android:scaleType="fitXY"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="points icon" />
                 <TextView
                     android:fontFamily="@font/poppins_bold"
                     android:textSize="16sp"
                     android:textColor="#333"
-                    android:text="@string/ptc_earnings"
+                    android:text="@string/your_clicks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -65,6 +103,31 @@
             </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/my_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:layout_gravity="start|center"
+                    android:text="@string/summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                />
+            <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner"
+                    android:layout_gravity="end|center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"/>
+
+        </FrameLayout>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/offer_result_list"
