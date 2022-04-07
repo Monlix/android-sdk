@@ -1,70 +1,39 @@
 package com.monlixv2.service
 
-import com.monlix.service.models.Offer
-import com.monlix.service.models.OfferResponse
-import com.monlix.service.models.Transaction
-import com.monlix.service.models.TransactionResponse
-import org.json.JSONArray
-import org.json.JSONObject
+import com.monlixv2.service.models.TransactionResponse
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 
-object Api {
-    const val ENDPOINT = "https://api.monlix.com/api"
+interface ApiInterface {
 
-    private fun getOffersByType(array: JSONArray): ArrayList<Offer> {
-        val outArray: ArrayList<Offer> = arrayListOf()
-        for (i in 0 until array.length()) {
-            val offerObject = array.getJSONObject(i)
-            val offer = Offer(
-                offerObject.getInt("id"),
-                offerObject.getString("payout"),
-                offerObject.getString("currency"),
-                offerObject.getString("link"),
-                offerObject.getString("name"),
-                offerObject.getString("description"),
-                offerObject.getString("logo"),
-                if (offerObject.has("provider")) { offerObject.getString("provider") } else "",
-            )
-            outArray.add(offer)
+    @GET("user/transactions")
+    suspend fun getTransactions(
+        @Query("appid") appId: String,
+        @Query("userid") userId: String,
+        @Query("subid") subId: String,
+        @Query("pageid") pageId: String,
+        @Query("status") status: String,
+    ): Response<TransactionResponse>
+
+    companion object {
+        private var instance : ApiInterface? = null
+
+        private var BASE_URL = "https://api.monlix.com/api/"
+
+        @Synchronized
+        fun getInstance(): ApiInterface {
+            if (instance == null)
+                instance = Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(BASE_URL)
+                    .build()
+                    .create(ApiInterface::class.java)
+            return instance as ApiInterface
         }
-        return outArray
-    }
-
-    fun parseOffers(responseString: String): OfferResponse {
-        val root = JSONObject(responseString);
-
-        val parsedSurveys = getOffersByType(root.getJSONArray("surveys"))
-        val parsedOffers = getOffersByType(root.getJSONArray("offers"))
-        val parsedAds = getOffersByType(root.getJSONArray("ads"))
-
-        val offerResponse = OfferResponse(parsedSurveys, parsedOffers, parsedAds);
-
-        return offerResponse;
-    }
-
-    fun parseTransactions(responseString: String): TransactionResponse {
-        val root = JSONObject(responseString);
-
-        val rawTransactionArray = root.getJSONArray("transactions");
-        val transactionArray: ArrayList<Transaction> = arrayListOf()
-        for (i in 0 until rawTransactionArray.length()) {
-            val transactionObject = rawTransactionArray.getJSONObject(i);
-            transactionArray.add(
-                Transaction(
-                    transactionObject.getString("id"),
-                    transactionObject.getString("currency"),
-                    transactionObject.getString("name"),
-                    transactionObject.getInt("reward"),
-                    transactionObject.getString("status"),
-                    transactionObject.getString("time")
-                )
-            )
-        }
-
-        return TransactionResponse(
-            root.getInt("ptcClicks"),
-            root.getInt("ptcEarnings"),
-            transactionArray
-        );
     }
 }

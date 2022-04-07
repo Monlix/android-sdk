@@ -9,10 +9,9 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.monlix.service.models.TransactionResponse
+import com.monlixv2.service.models.TransactionResponse
 import com.monlixv2.R
 import com.monlixv2.adapters.TransactionAdapter
-import com.monlixv2.service.Api
 import com.monlixv2.ui.Main
 import com.monlixv2.util.Constants.TRANSACTION_FILTER_LIST
 import com.monlixv2.util.PreferenceHelper
@@ -90,19 +89,19 @@ class TransactionFragment : Fragment() {
 
         val appId = prefs[PreferenceHelper.MonlixAppId, ""]
         val userId = prefs[PreferenceHelper.MonlixUserId, ""]
-        val url = "${Api.ENDPOINT}/user/transactions?appid=${appId}&userid=${userId}";
-
-        thread {
-            val json = try {
-                URL(url).readText()
-            } catch (e: Exception) {
-                return@thread
-            }
-            data = Api.parseTransactions(json)
-            (context as Main).runOnUiThread {
-                displayData(data)
-            }
-        }
+//        val url = "${Api.ENDPOINT}/user/transactions?appid=${appId}&userid=${userId}";
+//
+//        thread {
+//            val json = try {
+//                URL(url).readText()
+//            } catch (e: Exception) {
+//                return@thread
+//            }
+//            data = Api.parseTransactions(json)
+//            (context as Main).runOnUiThread {
+//                displayData(data)
+//            }
+//        }
     }
 
     private fun displayData(data: TransactionResponse) {

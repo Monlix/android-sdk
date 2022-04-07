@@ -9,18 +9,31 @@ import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlix.service.models.OfferResponse
 import com.monlixv2.R
+import com.monlixv2.service.ApiInterface
+import com.monlixv2.service.models.TransactionResponse
+import com.monlixv2.util.PreferenceHelper
+import com.monlixv2.util.PreferenceHelper.MonlixAppId
 import com.monlixv2.util.PreferenceHelper.MonlixUserId
 import com.monlixv2.util.PreferenceHelper.get
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.HttpException
+import retrofit2.Response
 import java.util.*
+
 
 class Main : AppCompatActivity() {
 
@@ -36,7 +49,9 @@ class Main : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.offer_activity)
+        setContentView(R.layout.main_activity)
+
+        prefs = PreferenceHelper.customPrefs(this, PreferenceHelper.MonlixPrefs);
         loadViews()
     }
 
@@ -58,6 +73,31 @@ class Main : AppCompatActivity() {
                 }
             }
         }, 2000)
+
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    val bottomSheetDialog = BottomSheetDialog(this@Main)
+                    bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
+
+                    bottomSheetDialog.show()
+                }
+            }
+        }, 5000)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = ApiInterface.getInstance().getTransactions(prefs[MonlixAppId,""]!!, prefs[MonlixUserId, ""]!!,"","","")
+            withContext(Dispatchers.Main) {
+                try {
+                    println("response")
+                   println(response.body()?.transactions?.size)
+                } catch (e: HttpException) {
+                    println("Exception ${e.message}")
+                } catch (e: Throwable) {
+                    println("Ooops: Something else went wrong")
+                }
+            }
+        }
     }
 
 

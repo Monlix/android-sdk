@@ -3,30 +3,19 @@ package com.monlixv2.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.monlix.service.models.OfferResponse
 import com.monlixv2.R
-import com.monlixv2.adapters.TransactionAdapter
-import com.monlixv2.service.Api
-import com.monlix.service.models.TransactionResponse
 import com.monlixv2.adapters.PagerAdapter
 import com.monlixv2.ui.Main
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.get
-import com.monlixv2.util.UIHelpers
-import java.net.URL
-import kotlin.concurrent.thread
 
 class HomeFragment : Fragment() {
 
@@ -59,19 +48,6 @@ class HomeFragment : Fragment() {
         pager = view.findViewById<ViewPager2>(R.id.monlixPager)
         pager!!.offscreenPageLimit = 1
         tabLayout = view.findViewById<TabLayout>(R.id.monlixTablayout)
-//        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                triggerTransactionFetch(tab);
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//                triggerTransactionFetch(tab);
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//            }
-//        })
     }
 
 
@@ -79,18 +55,18 @@ class HomeFragment : Fragment() {
         prefs = PreferenceHelper.customPrefs((context as Main), PreferenceHelper.MonlixPrefs);
         val appId = prefs[PreferenceHelper.MonlixAppId, ""]
         val userId = prefs[PreferenceHelper.MonlixUserId, ""]
-        val url = "${Api.ENDPOINT}/offers?appid=${appId}&userid=${userId}"
-        thread {
-            val json = try {
-                URL(url).readText()
-            } catch (e: Exception) {
-                return@thread
-            }
-            data = Api.parseOffers(json)
-            (context as Main).runOnUiThread {
-                displayData(data)
-            }
-        }
+//        val url = "${Api.ENDPOINT}/offers?appid=${appId}&userid=${userId}"
+//        thread {
+//            val json = try {
+//                URL(url).readText()
+//            } catch (e: Exception) {
+//                return@thread
+//            }
+////            data = Api.parseOffers(json)
+////            (context as Main).runOnUiThread {
+////                displayData(data)
+////            }
+//        }
     }
 
     private fun displayData(data: OfferResponse) {

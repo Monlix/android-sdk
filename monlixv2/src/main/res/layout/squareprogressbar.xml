@@ -3,7 +3,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-    <SquareProgressView
+    <com.monlixv2.ui.components.squareprogressbar.SquareProgressBar
             android:id="@+id/squareProgressBar1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

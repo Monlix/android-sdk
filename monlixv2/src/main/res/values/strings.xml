@@ -18,4 +18,11 @@
     <string name="send_link_to_email">Send linkto your email</string>
     <string name="scan_qr">Scan QR Code</string>
     <string name="enter_url_on_your">Enter URL on your device</string>
+    <string name="sort_offers_by">Sort offers by</string>
+    <string name="recommended">Recommended</string>
+    <string name="high_to_low">High to low</string>
+    <string name="low_to_high">Low to high</string>
+    <string name="newest">Newest</string>
+    <string name="search_offer_or_keyword">Search offer or keyword</string>
+    <string name="sort">Sort</string>
 </resources>
