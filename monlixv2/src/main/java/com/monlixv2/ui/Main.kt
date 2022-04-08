@@ -14,16 +14,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlix.service.models.OfferResponse
 import com.monlixv2.R
+import com.monlixv2.databinding.MainActivityBinding
 import com.monlixv2.service.ApiInterface
 import com.monlixv2.service.models.TransactionResponse
+import com.monlixv2.util.Constants.viewModelFactory
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixAppId
 import com.monlixv2.util.PreferenceHelper.MonlixUserId
 import com.monlixv2.util.PreferenceHelper.get
+import com.monlixv2.viewmodels.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,66 +43,60 @@ import java.util.*
 class Main : AppCompatActivity() {
 
     private lateinit var loader: ProgressBar;
-    private lateinit var loaderWindow: ConstraintLayout;
-    private var transition: Transition = Fade()
+//    private var transition: Transition = Fade()
 
     private lateinit var data: OfferResponse;
     private lateinit var prefs: SharedPreferences
     private lateinit var navHostFragment: NavHostFragment
+    private lateinit var viewModel: MainViewModel
+    private lateinit var binding: MainActivityBinding
 
     private  var isUserPage = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
 
+        binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+        binding.lifecycleOwner = this
         prefs = PreferenceHelper.customPrefs(this, PreferenceHelper.MonlixPrefs);
+        viewModel =
+            ViewModelProvider(
+                this,
+                viewModelFactory { MainViewModel(prefs[MonlixAppId,""]!!,prefs[MonlixUserId, ""]!!, application) }).get(
+                MainViewModel::class.java
+            )
+        binding.viewModel = viewModel
         loadViews()
     }
 
     private fun loadViews() {
-        loaderWindow = findViewById(R.id.loaderWindow);
-        loaderWindow.visibility = View.VISIBLE
-        transition.duration = 300;
-        transition.addTarget(loaderWindow);
-        loader = findViewById(R.id.loader);
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                runOnUiThread {
-                    TransitionManager.beginDelayedTransition(loaderWindow.parent as ViewGroup?, transition);
-                    loaderWindow.visibility = View.GONE
-                    loader.visibility = View.GONE
-                }
-            }
-        }, 2000)
+//        Timer().schedule(object : TimerTask() {
+//            override fun run() {
+//                runOnUiThread {
+//                    val bottomSheetDialog = BottomSheetDialog(this@Main)
+//                    bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
+//                    bottomSheetDialog.show()
+//                }
+//            }
+//        }, 5000)
 
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                runOnUiThread {
-                    val bottomSheetDialog = BottomSheetDialog(this@Main)
-                    bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
-
-                    bottomSheetDialog.show()
-                }
-            }
-        }, 5000)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = ApiInterface.getInstance().getTransactions(prefs[MonlixAppId,""]!!, prefs[MonlixUserId, ""]!!,"","","")
-            withContext(Dispatchers.Main) {
-                try {
-                    println("response")
-                   println(response.body()?.transactions?.size)
-                } catch (e: HttpException) {
-                    println("Exception ${e.message}")
-                } catch (e: Throwable) {
-                    println("Ooops: Something else went wrong")
-                }
-            }
-        }
+//        CoroutineScope(Dispatchers.IO).launch {
+//            println("aaaaaaaaaaaa")
+//            val response = ApiInterface.getInstance().getTransactions(prefs[MonlixAppId,""]!!, prefs[MonlixUserId, ""]!!,"","","")
+//            withContext(Dispatchers.Main) {
+//                try {
+//                    println("response")
+//                   println(response.body()?.transactions?.size)
+//                } catch (e: HttpException) {
+//                    println("Exception ${e.message}")
+//                } catch (e: Throwable) {
+//                    println("Ooops: Something else went wrong")
+//                }
+//            }
+//        }
     }
 
 
