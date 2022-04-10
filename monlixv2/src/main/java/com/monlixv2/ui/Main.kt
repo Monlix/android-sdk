@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.monlixv2.R
 import com.monlixv2.databinding.MainActivityBinding
+import com.monlixv2.ui.fragments.HomeFragment
 import com.monlixv2.util.Constants.viewModelFactory
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixAppId
@@ -50,15 +51,19 @@ class Main : AppCompatActivity() {
                 MainViewModel::class.java
             )
         binding.viewModel = viewModel
-//        loadViews()
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         setupListeners()
     }
 
 
     fun setupListeners(){
         viewModel.groupedResponse.observe(this, Observer {
-            if(it.mergedSurveys !== null) {
-                println("G0")
+            if(it.mergedSurveys !== null ) {
+                val currentFragment = if( navHostFragment.childFragmentManager.fragments.size > 0 ) navHostFragment.childFragmentManager.fragments[0] else null
+                if(currentFragment is HomeFragment) {
+                    currentFragment.displayData(it);
+                }
             }
         })
     }

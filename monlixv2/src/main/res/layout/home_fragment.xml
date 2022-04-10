@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.tabs.TabLayout
-            android:elevation="20dp"
-            app:tabMaxWidth="0dp"
-            app:tabGravity="fill"
-            android:outlineProvider="paddedBounds"
-            app:tabMode="fixed"
-            android:id="@+id/monlixTablayout"
-            android:background="@drawable/toolbar_bg"
-            android:layout_marginTop="12dp"
+    <LinearLayout
+            android:tag="test123"
             android:layout_width="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="32dp"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="0dp"
-            app:tabIndicatorColor="@color/transparent"
-            app:tabBackground="@drawable/tab_color_selector"
-            app:tabTextColor="#959DB2"
-            app:tabSelectedTextColor="@color/darkBlue"
-            app:tabTextAppearance="@style/MonlixTabButtonStyle"
-            android:layout_height="54dp" />
-    <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/monlixPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    </androidx.viewpager2.widget.ViewPager2>
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
-</LinearLayout>
+        <com.google.android.material.tabs.TabLayout
+                android:elevation="20dp"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                android:outlineProvider="paddedBounds"
+                app:tabMode="fixed"
+                android:id="@+id/monlixTablayout"
+                android:background="@drawable/toolbar_bg"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="32dp"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="0dp"
+                app:tabIndicatorColor="@color/transparent"
+                app:tabBackground="@drawable/tab_color_selector"
+                app:tabTextColor="#959DB2"
+                app:tabSelectedTextColor="@color/darkBlue"
+                app:tabTextAppearance="@style/MonlixTabButtonStyle"
+                android:layout_height="54dp" />
+
+        <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/monlixPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></androidx.viewpager2.widget.ViewPager2>
+
+    </LinearLayout>
+</layout>

@@ -1,56 +1,39 @@
 package com.monlixv2.adapters
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.recyclerview.widget.RecyclerView
-import com.monlixv2.R
-import com.monlixv2.service.models.ads.Ad
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.monlixv2.ui.fragments.AdsFragment
+import com.monlixv2.ui.fragments.OffersFragment
+import com.monlixv2.ui.fragments.SurveysFragment
+import com.monlixv2.viewmodels.GroupedResponse
 
-const val VIEW_TYPE_SURVEY_LIST = 0
-const val VIEW_TYPE_OFFER_LIST = 1
-const val VIEW_TYPE_ADS = 2
 
-class PagerAdapter(private val context: Context, private val offers: Array<ArrayList<Ad>>) :
-    RecyclerView.Adapter<PagerAdapter.PageHolder>() {
+const val SURVEY_POSITION = 0
+const val OFFER_POSITION = 1
+const val AD_POSITION = 2
 
-    override fun getItemViewType(position: Int): Int {
+class PagerAdapter(fa: AppCompatActivity?) :
+    FragmentStateAdapter(fa!!) {
 
-        return when (position) {
-            VIEW_TYPE_SURVEY_LIST -> VIEW_TYPE_SURVEY_LIST
-            VIEW_TYPE_OFFER_LIST -> VIEW_TYPE_OFFER_LIST
-            else -> {
-                VIEW_TYPE_ADS
+    private var data: GroupedResponse? = null
+
+    fun setupData(passedData: GroupedResponse) {
+        this.data = passedData
+    }
+
+    override fun createFragment(position: Int): Fragment {
+        val fragment: Fragment =
+            when (position) {
+                SURVEY_POSITION -> SurveysFragment.newInstance(data!!.mergedSurveys!!)
+                OFFER_POSITION -> OffersFragment.newInstance(data!!.campaigns!!)
+                else
+                -> AdsFragment.newInstance(data!!.offers!!.ads)
             }
-        }
-
+        return fragment
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageHolder {
-        return when (viewType) {
-            VIEW_TYPE_SURVEY_LIST ->  PageHolder(LayoutInflater.from(context).inflate(R.layout.survey_page, parent, false) as RecyclerView)
-            VIEW_TYPE_OFFER_LIST -> PageHolder(LayoutInflater.from(context).inflate(R.layout.transaction_fragment_container, parent, false) as LinearLayout)
-            else -> {
-                PageHolder(LayoutInflater.from(context).inflate(R.layout.transaction_fragment_container, parent, false) as LinearLayout)
-            }
-        }
-    }
-
-    override fun onBindViewHolder(holder: PageHolder, position: Int) {
-//        if (position != offers.size){
-//            val adapter = OfferAdapter(offers[position]);
-//            (holder.offerView as RecyclerView).addItemDecoration(
-//                UIHelpers.MarginItemDecoration(holder.itemView.context.resources.getDimensionPixelSize(R.dimen.offer_row_margin))
-//            )
-//            holder.offerView.adapter = adapter
-//        }
-    }
-
-    override fun getItemCount(): Int = offers.size
-
-    inner class PageHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val offerView = view
+    override fun getItemCount(): Int {
+        return 3
     }
 }

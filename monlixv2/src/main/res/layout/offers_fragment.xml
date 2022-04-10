@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:paddingStart="10dp"
+                    android:paddingRight="10dp"
+                    android:lines="1"
+                    android:gravity="center|left"
+                    android:drawableStart="@drawable/search2"
+                    android:hint="@string/search_offer_or_keyword"
+                    android:drawablePadding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="32dp">
+
+            <TextView
+                    android:gravity="center_horizontal"
+                    android:drawablePadding="6dp"
+                    android:drawableEnd="@drawable/filter_slider_v2"
+                    android:text="@string/sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/offerTypeSpinner"
+                    android:layout_gravity="end|center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
+        </FrameLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offer_list"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/offer_item" />
+    </LinearLayout>
+</layout>
+
+

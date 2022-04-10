@@ -13,8 +13,8 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
-    //    @GET("user/transactions")
-    @GET("test994.php")
+        @GET("user/transactions")
+//    @GET("test994.php")
     suspend fun getTransactions(
         @Query("appid") appId: String,
         @Query("userid") userId: String,
