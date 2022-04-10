@@ -1,13 +1,7 @@
 <resources>
 
     <style name="MonlixTabButtonStyle" parent="TextAppearance.Design.Tab">
-        <item name="fontFamily">@font/poppins</item>
-        <item name="android:fontFamily">@font/poppins</item>
-    </style>
-
-    <style name="MonlixTabButtonStyleSelected" parent="TextAppearance.Design.Tab">
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:fontFamily">@font/barlow_medium</item>
     </style>
 
     <style name="MonlinxTheme" parent="Theme.AppCompat.Light.NoActionBar">

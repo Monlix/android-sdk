@@ -16,8 +16,8 @@
 
         <LinearLayout
                 android:background="@drawable/border_radius_item"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="top|start"
                 android:orientation="horizontal"
                 android:gravity="center"
@@ -47,29 +47,6 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
-                android:background="@drawable/border_radius_item_transparent_20"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_gravity="top|end"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <ImageView
-                    android:src="@drawable/orange_star"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp" />
-            <TextView
-                    android:fontFamily="@font/barlow_medium"
-                    android:textSize="12sp"
-                    android:textColor="@color/white"
-                    android:text="4.5(13)"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-        </LinearLayout>
 
         <LinearLayout
                 android:orientation="vertical"
@@ -109,9 +86,9 @@
     </FrameLayout>
 
     <LinearLayout
+            android:padding="10dp"
             android:gravity="center"
             android:layout_marginTop="150dp"
-            android:minHeight="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
@@ -119,8 +96,6 @@
                 android:textColor="@color/darkBlue"
                 android:textSize="16sp"
                 android:fontFamily="@font/barlow_semibold"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
                 android:gravity="center"
                 android:textAlignment="center"
                 tools:text="Lorem ipsum"

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.monlixv2.R
+import com.monlixv2.adapters.SurveysAdapter
 import com.monlixv2.databinding.SurveysFragmentBinding
 import com.monlixv2.service.models.surveys.Survey
 
@@ -33,6 +35,16 @@ class SurveysFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (binding.surveyList.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if(position == 0)  2 else 1
+            }
+
+        }
+        binding.surveyList.apply {
+            adapter = surveys?.let { SurveysAdapter(it) }
+        }
+
         super.onViewCreated(view, savedInstanceState)
     }
 

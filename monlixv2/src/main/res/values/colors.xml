@@ -6,6 +6,8 @@
     <color name="green">#2ECC71</color>
     <color name="greenV2">#D4F4E6</color>
     <color name="greenV3">#3DB280</color>
+    <color name="greenV4">#32D276</color>
+    <color name="greenV5">#334d6e33</color>
     <color name="greenDark">#2AC270</color>
     <color name="darkBlack">#171725</color>
     <color name="black">#000000</color>
@@ -22,6 +24,7 @@
     <color name="grayV4">#ECEFFA</color>
     <color name="grayV5">#8CA0BA</color>
     <color name="grayV6">#E1E5F3</color>
+    <color name="grayV7">#959DB2</color>
     <color name="orangeV1">#F8AC2F</color>
     <color name="orangeV2">#FEEED5</color>
     <color name="redV1">#FFD8CE</color>

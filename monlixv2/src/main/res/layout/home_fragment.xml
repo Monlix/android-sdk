@@ -21,20 +21,21 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="12dp"
                 app:tabIndicatorFullWidth="true"
                 app:tabIndicatorHeight="0dp"
                 app:tabIndicatorColor="@color/transparent"
                 app:tabBackground="@drawable/tab_color_selector"
-                app:tabTextColor="#959DB2"
+                app:tabTextColor="@color/grayV7"
                 app:tabSelectedTextColor="@color/darkBlue"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:tabTextAppearance="@style/MonlixTabButtonStyle"
                 android:layout_height="54dp" />
 
         <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/monlixPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></androidx.viewpager2.widget.ViewPager2>
+                android:layout_height="match_parent"/>
 
     </LinearLayout>
 </layout>

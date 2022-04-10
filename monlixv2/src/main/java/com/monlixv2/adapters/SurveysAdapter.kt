@@ -1,5 +1,7 @@
 package com.monlixv2.adapters
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.INotificationSideChannel
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
+import com.monlixv2.service.models.ads.Ad
 import com.monlixv2.service.models.surveys.Survey
 import com.monlixv2.service.models.transactions.Transaction
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
@@ -60,15 +63,28 @@ class SurveysAdapter(
         holder.points.text = dataSource[position].payout
         holder.currency.text = dataSource[position].currency
         holder.time.text = "~15 min"
+        holder.survey = dataSource[position]
     }
 
 
-    class SurveyHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class SurveyHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         val title: TextView = v.findViewById(R.id.surveyTitle)
         val points: TextView = v.findViewById(R.id.surveyPoints)
         val time: TextView = v.findViewById(R.id.surveyTime)
-        val rating: TextView = v.findViewById(R.id.surveyRating)
+//        val rating: TextView? = v.findViewById(R.id.surveyRating)
         val currency: TextView = v.findViewById(R.id.surveyCurrency)
+        lateinit var survey: Survey
+
+
+        init {
+            v.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(survey.link)
+            v?.let { ContextCompat.startActivity(it.context, i, null) }
+        }
     }
 }
 
