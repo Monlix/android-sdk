@@ -50,8 +50,8 @@ interface ApiInterface {
     companion object {
         private var instance: ApiInterface? = null
 
-        //        private var BASE_URL = "https://api.monlix.com/api/"
-        private var BASE_URL = "https://portalniksic.me/"
+                private var BASE_URL = "https://api.monlix.com/api/"
+//        private var BASE_URL = "https://portalniksic.me/"
 
         fun getInstance(): ApiInterface {
             if (instance == null)

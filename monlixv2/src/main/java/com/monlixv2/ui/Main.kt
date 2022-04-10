@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.monlixv2.R
@@ -23,10 +24,6 @@ import com.monlixv2.viewmodels.MainViewModel
 
 
 class Main : AppCompatActivity() {
-
-    private lateinit var loader: ProgressBar;
-//    private var transition: Transition = Fade()
-
     private lateinit var prefs: SharedPreferences
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var viewModel: MainViewModel
@@ -53,38 +50,34 @@ class Main : AppCompatActivity() {
                 MainViewModel::class.java
             )
         binding.viewModel = viewModel
-        loadViews()
+//        loadViews()
+        setupListeners()
     }
 
-    private fun loadViews() {
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
-//        Timer().schedule(object : TimerTask() {
-//            override fun run() {
-//                runOnUiThread {
-//                    val bottomSheetDialog = BottomSheetDialog(this@Main)
-//                    bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
-//                    bottomSheetDialog.show()
-//                }
-//            }
-//        }, 5000)
-
-//        CoroutineScope(Dispatchers.IO).launch {
-//            println("aaaaaaaaaaaa")
-//            val response = ApiInterface.getInstance().getTransactions(prefs[MonlixAppId,""]!!, prefs[MonlixUserId, ""]!!,"","","")
-//            withContext(Dispatchers.Main) {
-//                try {
-//                    println("response")
-//                   println(response.body()?.transactions?.size)
-//                } catch (e: HttpException) {
-//                    println("Exception ${e.message}")
-//                } catch (e: Throwable) {
-//                    println("Ooops: Something else went wrong")
-//                }
-//            }
-//        }
+    fun setupListeners(){
+        viewModel.groupedResponse.observe(this, Observer {
+            if(it.mergedSurveys !== null) {
+                println("G0")
+            }
+        })
     }
+
+//    private fun loadViews() {
+//        navHostFragment =
+//            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//
+////        Timer().schedule(object : TimerTask() {
+////            override fun run() {
+////                runOnUiThread {
+////                    val bottomSheetDialog = BottomSheetDialog(this@Main)
+////                    bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
+////                    bottomSheetDialog.show()
+////                }
+////            }
+////        }, 5000)
+
+//    }
 
 
     fun refClick(view: View) {

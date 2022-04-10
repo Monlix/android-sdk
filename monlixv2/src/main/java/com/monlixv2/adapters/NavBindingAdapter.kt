@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
+import com.google.android.material.progressindicator.LinearProgressIndicator
 
 
 @BindingAdapter("mainDataLoading")
@@ -47,3 +48,19 @@ fun showEarnings(view: LinearLayout, isLoading: LiveData<Boolean>?) {
 fun showPoints(view: TextView, data: LiveData<String>?) {
     view.text = data?.value ?: ""
 }
+
+
+@BindingAdapter("progressbarLoading")
+fun progressbarLoading(view: LinearProgressIndicator, data: LiveData<Int>?) {
+    if(data?.value !== null) {
+        view.progress = data.value!!
+    }
+}
+
+@BindingAdapter("textLoading")
+fun textLoading(view: TextView, data: LiveData<Int>?) {
+    if(data?.value !== null) {
+        view.text = "Loading...${data.value!!}%"
+    }
+}
+//textLoading

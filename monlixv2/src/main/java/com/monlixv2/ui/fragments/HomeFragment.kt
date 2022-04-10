@@ -71,11 +71,12 @@ class HomeFragment : Fragment() {
 
     private fun displayData(data: OfferResponse) {
         val dataArray = arrayOf(data.surveys, data.offers, data.ads)
-        pager?.adapter = PagerAdapter(requireContext(), dataArray)
-        TabLayoutMediator(tabLayout!!, pager!!) { tab, position ->
-            tab.text = tabs[position]
-        }.attach()
+//        pager?.adapter = PagerAdapter(requireContext(), dataArray)
+//        TabLayoutMediator(tabLayout!!, pager!!) { tab, position ->
+//            tab.text = tabs[position]
+//        }.attach()
     }
+
 
     companion object {
         private val tabs = arrayOf("Surveys", "Offers", "Ads")

@@ -10,24 +10,35 @@ import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey
 import com.monlixv2.util.Credentials
 import kotlinx.coroutines.*
-import retrofit2.HttpException
-import java.lang.Exception
+import kotlin.math.atan
+import kotlin.math.roundToInt
 
 data class GroupedResponse(
     var surveys: ArrayList<Survey>?,
     var offers: OfferResponse?,
-    var campaigns: ArrayList<Campaign>?
-)
+    var campaigns: ArrayList<Campaign>?,
+    var mergedSurveys: ArrayList<Survey>?,
+    )
+
+ const val step = 0.3
 
 class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
     AndroidViewModel(application) {
 
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val _groupedResponse = MutableLiveData<GroupedResponse>()
     val groupedResponse: LiveData<GroupedResponse>
         get() = _groupedResponse
+
+    private val _renderProgress = MutableLiveData<Int>(0)
+    val renderProgress: LiveData<Int>
+        get() = _renderProgress
+
+    private val _currentProgress = MutableLiveData<Double>(0.0)
+    val currentProgress: LiveData<Double>
+        get() = _currentProgress
 
 
     private val _isLoading = MutableLiveData<Boolean>(true)
@@ -39,8 +50,29 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
         get() = _credentials
 
     init {
+        _groupedResponse.value = GroupedResponse(
+            surveys = null,
+            offers = null,
+            campaigns = null,
+            mergedSurveys = null
+        )
         _credentials.value = Credentials(APP_ID, USER_ID);
         makeRequest()
+
+    }
+
+    fun initProgressBar() {
+        resetProgressbar()
+        setInterval(10) {
+            val newCurrentProgress = _currentProgress.value!!.plus(step)
+            _currentProgress.postValue(newCurrentProgress)
+            _renderProgress.postValue(((atan(newCurrentProgress) / (Math.PI / 2) * 100 * 1000).roundToInt() / 1000))
+        }
+    }
+
+    fun resetProgressbar(){
+        _renderProgress.value = 0
+        _currentProgress.value = 0.0
     }
 
     fun surveysRequest() {
@@ -48,8 +80,8 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
             val response = ApiInterface.getInstance()
                 .getSurveys(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
-                println("response surveys")
                 _groupedResponse.value?.surveys = response.body()
+                checkProgress()
             } catch (e: Exception) {
                 println("Monlix Exception ${e.message}")
             }
@@ -62,6 +94,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
                 .getOffers(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.offers = response.body()
+                checkProgress()
             } catch (e: Exception) {
                 println("Monlix Exception ${e.message}")
             }
@@ -73,8 +106,8 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
             val response = ApiInterface.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
-                println("campaigns offers")
                 _groupedResponse.value?.campaigns = response.body()
+                checkProgress()
             } catch (e: Exception) {
                 println("Monlix Exception ${e.message}")
             }
@@ -83,9 +116,36 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
 
     fun makeRequest() {
         _isLoading.value = true
+        initProgressBar()
         surveysRequest();
         offersRequest();
         campaignsRequest()
+    }
+
+    fun setInterval(timeMillis: Long, handler: () -> Unit) = coroutineScope.launch {
+        while (_isLoading.value!!) {
+            delay(timeMillis)
+            handler()
+        }
+    }
+
+    fun checkProgress() {
+        if (_groupedResponse.value?.campaigns !== null && _groupedResponse.value?.offers !== null && _groupedResponse.value?.surveys !== null) {
+
+            val merged = ArrayList<Survey>()
+            merged.addAll(_groupedResponse.value!!.surveys!!)
+            merged.addAll(_groupedResponse.value!!.offers!!.surveys)
+
+            val newGroupedResponse = GroupedResponse(
+                surveys = _groupedResponse.value!!.surveys,
+                offers = _groupedResponse.value!!.offers,
+                campaigns = _groupedResponse.value!!.campaigns,
+                mergedSurveys = merged
+            )
+            _groupedResponse.value = newGroupedResponse
+            _isLoading.postValue(false)
+            resetProgressbar()
+        }
     }
 
 }
