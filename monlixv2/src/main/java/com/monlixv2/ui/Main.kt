@@ -4,40 +4,22 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.transition.Fade
-import android.transition.Transition
-import android.transition.TransitionManager
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.monlix.service.models.OfferResponse
 import com.monlixv2.R
 import com.monlixv2.databinding.MainActivityBinding
-import com.monlixv2.service.ApiInterface
-import com.monlixv2.service.models.TransactionResponse
 import com.monlixv2.util.Constants.viewModelFactory
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixAppId
 import com.monlixv2.util.PreferenceHelper.MonlixUserId
 import com.monlixv2.util.PreferenceHelper.get
 import com.monlixv2.viewmodels.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.HttpException
-import retrofit2.Response
-import java.util.*
 
 
 class Main : AppCompatActivity() {
@@ -45,13 +27,12 @@ class Main : AppCompatActivity() {
     private lateinit var loader: ProgressBar;
 //    private var transition: Transition = Fade()
 
-    private lateinit var data: OfferResponse;
     private lateinit var prefs: SharedPreferences
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: MainActivityBinding
 
-    private  var isUserPage = false
+    private var isUserPage = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +43,13 @@ class Main : AppCompatActivity() {
         viewModel =
             ViewModelProvider(
                 this,
-                viewModelFactory { MainViewModel(prefs[MonlixAppId,""]!!,prefs[MonlixUserId, ""]!!, application) }).get(
+                viewModelFactory {
+                    MainViewModel(
+                        prefs[MonlixAppId, ""]!!,
+                        prefs[MonlixUserId, ""]!!,
+                        application
+                    )
+                }).get(
                 MainViewModel::class.java
             )
         binding.viewModel = viewModel
@@ -100,7 +87,6 @@ class Main : AppCompatActivity() {
     }
 
 
-
     fun refClick(view: View) {
         val userId = prefs[MonlixUserId, ""]
         val i = Intent(Intent.ACTION_VIEW)
@@ -114,9 +100,16 @@ class Main : AppCompatActivity() {
     }
 
     fun profileAction(view: View) {
-        navHostFragment.navController.navigate(if(!isUserPage) R.id.action_homeFragment_to_transactionFragment else R.id.action_transactionFragment_to_homeFragment)
+        navHostFragment.navController.navigate(if (!isUserPage) R.id.action_homeFragment_to_transactionFragment else R.id.action_transactionFragment_to_homeFragment)
         isUserPage = !isUserPage
-        (view as AppCompatImageView).setImageDrawable( ContextCompat.getDrawable(this, if(isUserPage) R.drawable.arrow_left else R.drawable.user_fill)  )
+        (view as AppCompatImageView).setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                if (isUserPage) R.drawable.arrow_left else R.drawable.user_fill
+            )
+        )
+        if(!isUserPage) {
+            viewModel.makeRequest()
+        }
     }
-
 }

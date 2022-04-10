@@ -10,12 +10,12 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.monlix.service.models.Offer
+import com.monlixv2.service.models.ads.Ad
 import com.monlixv2.R
 
 
 class OfferAdapter(
-    private val dataSource: ArrayList<Offer>
+    private val dataSource: ArrayList<Ad>
 ) : RecyclerView.Adapter<OfferAdapter.OfferHolder>() {
 
     override fun onCreateViewHolder(
@@ -47,7 +47,7 @@ class OfferAdapter(
         val payout: TextView
         val currency: TextView
         val image: ImageView
-        lateinit var offer: Offer
+        lateinit var offer: Ad
 
         init {
             title = v.findViewById(R.id.title)

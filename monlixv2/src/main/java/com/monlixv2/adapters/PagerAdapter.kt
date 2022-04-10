@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.monlixv2.R
-import com.monlix.service.models.Offer
-import com.monlixv2.util.UIHelpers
+import com.monlixv2.service.models.ads.Ad
 
 const val VIEW_TYPE_SURVEY_LIST = 0
 const val VIEW_TYPE_OFFER_LIST = 1
 const val VIEW_TYPE_ADS = 2
 
-class PagerAdapter(private val context: Context, private val offers: Array<ArrayList<Offer>>) :
+class PagerAdapter(private val context: Context, private val offers: Array<ArrayList<Ad>>) :
     RecyclerView.Adapter<PagerAdapter.PageHolder>() {
 
     override fun getItemViewType(position: Int): Int {

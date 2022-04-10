@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.monlix.service.models.OfferResponse
+import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.R
 import com.monlixv2.adapters.PagerAdapter
 import com.monlixv2.ui.Main

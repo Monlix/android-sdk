@@ -2,6 +2,7 @@ package com.monlixv2.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.monlixv2.R
 
 object Constants {
 
@@ -12,7 +13,40 @@ object Constants {
     const val CLICKED = "Clicked"
     const val PENDING = "Pending"
 
-    val TRANSACTION_FILTER_LIST = arrayOf(ALL_ACTIVITY, IN_PROGRESS, CREDITED, REJECTED, CLICKED, PENDING)
+    const val ALL_ACTIVITY_QUERY_PARAM = ""
+    const val IN_PROGRESS_QUERY_PARAM = "inProgress"
+    const val CREDITED_QUERY_PARAM = "credited"
+    const val REJECTED_QUERY_PARAM = "cancelled"
+    const val CLICKED_QUERY_PARAM = "clicked"
+    const val PENDING_QUERY_PARAM = "pending"
+
+    val TRANSACTION_FILTER_LIST =
+        arrayOf(ALL_ACTIVITY, IN_PROGRESS, CREDITED, REJECTED, CLICKED, PENDING)
+
+    val TRANSACTION_FILTER_QUERY_PARAM = mapOf<String, String>(
+        ALL_ACTIVITY to ALL_ACTIVITY_QUERY_PARAM,
+        IN_PROGRESS to IN_PROGRESS_QUERY_PARAM,
+        CREDITED to CREDITED_QUERY_PARAM,
+        REJECTED to REJECTED_QUERY_PARAM,
+        CLICKED to CLICKED_QUERY_PARAM,
+        PENDING to PENDING_QUERY_PARAM,
+    )
+
+    val TRANSACTION_ITEM_STATUS_DRAWABLE = mapOf<String, Int>(
+        IN_PROGRESS_QUERY_PARAM to R.drawable.transaction_status_in_progress,
+        CREDITED_QUERY_PARAM to R.drawable.transaction_status_completed,
+        REJECTED_QUERY_PARAM to R.drawable.transaction_status_in_rejected,
+        CLICKED_QUERY_PARAM to R.drawable.transaction_status_in_clicked,
+        PENDING_QUERY_PARAM to R.drawable.transaction_status_in_pending,
+    )
+
+    val TRANSACTION_ITEM_STATUS_TEXT_COLOR = mapOf<String, Int>(
+        IN_PROGRESS_QUERY_PARAM to R.color.blue,
+        CREDITED_QUERY_PARAM to R.color.greenV3,
+        REJECTED_QUERY_PARAM to R.color.redV2,
+        CLICKED_QUERY_PARAM to R.color.grayV5,
+        PENDING_QUERY_PARAM to R.color.orangeV1,
+    )
 
     inline fun <VM : ViewModel> viewModelFactory(crossinline f: () -> VM) =
         object : ViewModelProvider.Factory {

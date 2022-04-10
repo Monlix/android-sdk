@@ -15,5 +15,8 @@
         <activity android:name=".ui.Main" android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"
                 />
+        <meta-data
+                android:name="preloaded_fonts"
+                android:resource="@array/preloaded_fonts" />
     </application>
 </manifest>

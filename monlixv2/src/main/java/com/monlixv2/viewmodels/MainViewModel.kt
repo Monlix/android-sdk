@@ -5,15 +5,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.monlixv2.service.ApiInterface
-import com.monlixv2.util.PreferenceHelper
-import com.monlixv2.util.PreferenceHelper.get
+import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.service.models.offers.OfferResponse
+import com.monlixv2.service.models.surveys.Survey
+import com.monlixv2.util.Credentials
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.lang.Exception
 
-data class Credentials (
-    val appId: String,
-    val userId: String
+data class GroupedResponse(
+    var surveys: ArrayList<Survey>?,
+    var offers: OfferResponse?,
+    var campaigns: ArrayList<Campaign>?
 )
 
 class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
@@ -21,6 +24,11 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
+
+    private val _groupedResponse = MutableLiveData<GroupedResponse>()
+    val groupedResponse: LiveData<GroupedResponse>
+        get() = _groupedResponse
+
 
     private val _isLoading = MutableLiveData<Boolean>(true)
     val isLoading: LiveData<Boolean>
@@ -32,31 +40,52 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
 
     init {
         _credentials.value = Credentials(APP_ID, USER_ID);
-        makeRequest();
+        makeRequest()
     }
 
+    fun surveysRequest() {
+        coroutineScope.launch {
+            val response = ApiInterface.getInstance()
+                .getSurveys(_credentials.value!!.appId, _credentials.value!!.userId, "")
+            try {
+                println("response surveys")
+                _groupedResponse.value?.surveys = response.body()
+            } catch (e: Exception) {
+                println("Monlix Exception ${e.message}")
+            }
+        }
+    }
+
+    fun offersRequest() {
+        coroutineScope.launch {
+            val response = ApiInterface.getInstance()
+                .getOffers(_credentials.value!!.appId, _credentials.value!!.userId, "")
+            try {
+                _groupedResponse.value?.offers = response.body()
+            } catch (e: Exception) {
+                println("Monlix Exception ${e.message}")
+            }
+        }
+    }
+
+    fun campaignsRequest() {
+        coroutineScope.launch {
+            val response = ApiInterface.getInstance()
+                .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
+            try {
+                println("campaigns offers")
+                _groupedResponse.value?.campaigns = response.body()
+            } catch (e: Exception) {
+                println("Monlix Exception ${e.message}")
+            }
+        }
+    }
 
     fun makeRequest() {
-        println("making request")
-        println(_credentials.value)
-        try {
-            coroutineScope.launch {
-                val response = ApiInterface.getInstance().getTransactions(_credentials.value!!.appId, _credentials.value!!.userId,"","","")
-                try {
-                    println("response")
-                    println(response.body()?.transactions?.size)
-                    _isLoading.postValue(false)
-                } catch (e: HttpException) {
-                    println("Exception ${e.message}")
-                } catch (e: Throwable) {
-                    println(e)
-                    println("Ooops: Something else went wrong")
-                }
-            }
-        }catch (e: Exception) {
-            println(e)
-        }
-
+        _isLoading.value = true
+        surveysRequest();
+        offersRequest();
+        campaignsRequest()
     }
 
 }

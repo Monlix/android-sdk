@@ -1,10 +1,9 @@
-package com.monlixv2.service.models
+package com.monlixv2.service.models.transactions
 
 import com.google.gson.annotations.SerializedName
-import com.monlix.service.models.Transaction
 
 data class TransactionResponse(
-    @SerializedName("ptrClicks")
+    @SerializedName("ptcClicks")
     val ptcClicks: Double,
     @SerializedName("ptcEarnings")
     val ptcEarnings: Double,
