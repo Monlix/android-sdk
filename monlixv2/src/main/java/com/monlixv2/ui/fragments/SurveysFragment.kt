@@ -33,7 +33,6 @@ class SurveysFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        println("kreated")
         super.onViewCreated(view, savedInstanceState)
     }
 

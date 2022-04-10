@@ -20,7 +20,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp">
 
-            <com.monlixv2.ui.components.squareprogressbar.SquareProgressBar
+            <com.monlixv2.ui.components.squareprogressbar.SquareProgressView
                     android:id="@+id/subi2"
                     android:layout_width="80dp"
                     android:layout_height="80dp" />
