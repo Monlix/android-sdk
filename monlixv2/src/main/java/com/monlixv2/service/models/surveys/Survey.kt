@@ -1,7 +1,11 @@
 package com.monlixv2.service.models.surveys
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Survey(
     @SerializedName("id")
     val id: Int,
@@ -21,4 +25,4 @@ data class Survey(
     val provider: String?,
     @SerializedName("platforms")
     val platforms: ArrayList<String>
-)
+) : Parcelable

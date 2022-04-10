@@ -22,27 +22,17 @@ import com.monlixv2.util.Constants.TRANSACTION_ITEM_STATUS_DRAWABLE
 import com.monlixv2.util.Constants.TRANSACTION_ITEM_STATUS_TEXT_COLOR
 
 
-const val LARGE_CARD = 0
-const val SMALL_CARD = 1
 
-class SurveysAdapter(
-    private val dataSource: ArrayList<Survey>
-) : RecyclerView.Adapter<SurveysAdapter.SurveyHolder>() {
+class AdsAdapter(
+    private val dataSource: ArrayList<Ad>
+) : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SurveyHolder {
-        val inflatedView = parent.inflate(
-            when (viewType) {
-                LARGE_CARD -> R.layout.survey_item_banner
-                else -> {
-                    R.layout.survey_item
-                }
-            }, false
-        )
-
-        return SurveyHolder(inflatedView)
+    ): AdHolder {
+        return AdHolder(parent.inflate(R.layout.offer_item_v2,false))
 
     }
 
@@ -55,31 +45,38 @@ class SurveysAdapter(
     }
 
 
-    override fun onBindViewHolder(holder: SurveyHolder, position: Int) {
+    override fun onBindViewHolder(holder: AdHolder, position: Int) {
         holder.title.text = dataSource[position].name
-        holder.points.text = dataSource[position].payout
-        holder.currency.text = dataSource[position].currency
-        holder.time.text = "~15 min"
-        holder.survey = dataSource[position]
+        holder.points.text = "${dataSource[position].payout} \n ${dataSource[position].currency}"
+        holder.description.text = dataSource[position].description
+        holder.ad = dataSource[position]
+
+        Glide.with(holder.itemView.context).load(dataSource[position].logo)
+            .transition(DrawableTransitionOptions.withCrossFade(300))
+            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
+            .into(holder.offerImage)
     }
 
 
-    class SurveyHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        val title: TextView = v.findViewById(R.id.surveyTitle)
-        val points: TextView = v.findViewById(R.id.surveyPoints)
-        val time: TextView = v.findViewById(R.id.surveyTime)
-//        val rating: TextView? = v.findViewById(R.id.surveyRating)
-        val currency: TextView = v.findViewById(R.id.surveyCurrency)
-        lateinit var survey: Survey
+    class AdHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+        val title: TextView = v.findViewById(R.id.offerTitle)
+        val description: TextView = v.findViewById(R.id.offerDescription)
+        val points: TextView = v.findViewById(R.id.offerPoints)
+        lateinit var ad: Ad
+        val progressView: SquareProgressView? = v.findViewById(R.id.transactionProgress)
+        val offerImage: ImageView = v.findViewById(R.id.offerImage)
 
 
         init {
             v.setOnClickListener(this)
+            progressView?.setWidthInDp(3)
+            progressView?.setColor(ContextCompat.getColor(v.context, R.color.orangeV1))
+            progressView?.setRoundedCorners(true, 8f)
         }
 
         override fun onClick(v: View?) {
             val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(survey.link)
+            i.data = Uri.parse(ad.link)
             v?.let { ContextCompat.startActivity(it.context, i, null) }
         }
     }

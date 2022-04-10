@@ -6,19 +6,21 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.monlixv2.R
+import com.monlixv2.adapters.AdsAdapter
+import com.monlixv2.adapters.SurveysAdapter
 import com.monlixv2.databinding.AdsFragmentBinding
 import com.monlixv2.service.models.ads.Ad
 
 private const val AD_PARAM = "AD_PARAM"
 
 class AdsFragment : Fragment() {
-    private var surveys: ArrayList<Ad>? = null
+    private var ads: ArrayList<Ad>? = null
     private lateinit var binding: AdsFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            surveys = it.getSerializable(AD_PARAM) as ArrayList<Ad>?
+            ads = it.getSerializable(AD_PARAM) as ArrayList<Ad>?
         }
     }
 
@@ -32,6 +34,9 @@ class AdsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.adRecycler.apply {
+            adapter = ads?.let { AdsAdapter(it) }
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 

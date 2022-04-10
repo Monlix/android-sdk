@@ -1,7 +1,10 @@
 package com.monlixv2.service.models.campaigns
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Campaign(
     @SerializedName("id")
     val id: Int,
@@ -35,4 +38,4 @@ data class Campaign(
     val currency: String,
     @SerializedName("cr")
     val cr: Double,
-)
+) : Parcelable
