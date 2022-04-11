@@ -30,7 +30,7 @@
                 app:tabSelectedTextColor="@color/darkBlue"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:tabTextAppearance="@style/MonlixTabButtonStyle"
-                android:layout_height="54dp" />
+                android:layout_height="46dp" />
 
         <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/monlixPager"
