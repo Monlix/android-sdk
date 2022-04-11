@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.monlixv2.R
+import com.monlixv2.adapters.AdsAdapter
+import com.monlixv2.adapters.OffersAdapter
 import com.monlixv2.databinding.OffersFragmentBinding
 import com.monlixv2.databinding.SurveysFragmentBinding
 import com.monlixv2.service.models.campaigns.Campaign
@@ -13,13 +15,13 @@ import com.monlixv2.service.models.campaigns.Campaign
 private const val OFFERS_PARAM = "OFFERS_PARAM"
 
 class OffersFragment : Fragment() {
-    private var surveys: ArrayList<Campaign>? = null
+    private var campaigns: ArrayList<Campaign>? = null
     private lateinit var binding: OffersFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            surveys = it.getSerializable(OFFERS_PARAM) as ArrayList<Campaign>?
+            campaigns = it.getSerializable(OFFERS_PARAM) as ArrayList<Campaign>?
         }
     }
 
@@ -33,8 +35,9 @@ class OffersFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        println("KREATED OFFER FRAGMENT")
-        println(surveys)
+        binding.offersRecycler.apply {
+            adapter = campaigns?.let { OffersAdapter(it) }
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 

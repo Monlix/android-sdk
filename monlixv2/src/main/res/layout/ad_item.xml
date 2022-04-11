@@ -21,44 +21,11 @@
                 app:cardElevation="0dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp">
-
             <ImageView
-                    android:id="@+id/offerImage"
+                    android:id="@+id/adImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="transaction image" />
-
-            <View
-                    android:visibility="gone"
-                    android:alpha=".2"
-                    android:background="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            <TextView
-                    android:visibility="gone"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_bold"
-                    tools:text="3/6"
-                    android:layout_marginTop="-10dp"
-                    android:id="@+id/stepsCount"
-                    android:textSize="24sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:visibility="gone"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/barlow"
-                    android:layout_marginTop="10dp"
-                    android:text="done"
-                    android:textSize="16sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <com.monlixv2.ui.components.squareprogressbar.SquareProgressView
-                    android:id="@+id/imageWithProgress"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -69,37 +36,32 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-            <LinearLayout
-                    android:orientation="horizontal"
+            <TextView
+                    android:background="@drawable/ad_status_bg"
+                    android:textSize="10sp"
+                    android:textColor="@color/redV2"
+                    android:fontFamily="@font/barlow_bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="STATUS" />
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="bbbbb" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="COMPLETE A TASK" />
 
             <TextView
                     android:fontFamily="@font/barlow_semibold"
                     android:textColor="@color/darkBlue"
                     android:layout_width="wrap_content"
-                    android:id="@+id/offerTitle"
+                    android:id="@+id/adTitle"
                     android:text="title"
                     android:layout_height="wrap_content" />
 
             <TextView
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:textColor="@color/grayV5"
                     android:textSize="12sp"
                     android:fontFamily="@font/barlow"
                     android:layout_width="wrap_content"
-                    android:id="@+id/offerDescription"
+                    android:id="@+id/adDescription"
                     android:text="subtitle"
                     android:layout_height="wrap_content" />
         </LinearLayout>
@@ -118,7 +80,7 @@
                 android:background="@drawable/offer_points_item"
                 android:text="+1 530 000"
                 android:textSize="12sp"
-                android:id="@+id/offerPoints"
+                android:id="@+id/adPoints"
                 android:gravity="center"
                 android:fontFamily="@font/barlow_bold"
                 android:layout_width="100dp"
@@ -130,7 +92,7 @@
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:textColor="@color/darkBlue"
-                android:text="@string/start_offer"
+                android:text="Watch Ad"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
     </LinearLayout>

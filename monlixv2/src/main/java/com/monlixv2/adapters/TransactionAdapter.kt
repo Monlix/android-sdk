@@ -107,7 +107,6 @@ class TransactionAdapter(
 
                     val shouldReveal = !expandedIds.contains(dataSource[position].id)
 
-                    println("Should reveal ${shouldReveal}")
                     holder.stepsContainer?.visibility =
                         if (shouldReveal) View.VISIBLE else View.GONE
                     holder.stepsScroller?.visibility =
