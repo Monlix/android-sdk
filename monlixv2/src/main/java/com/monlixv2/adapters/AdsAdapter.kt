@@ -46,7 +46,6 @@ class AdsAdapter(
             .transition(DrawableTransitionOptions.withCrossFade(300))
             .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
             .into(holder.offerImage)
-        println("position ${position} - ${dataSource[position].visited}")
         holder.itemView.alpha = if(dataSource[position].visited) 0.3f else 1f
     }
 

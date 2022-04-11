@@ -3,19 +3,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.monlixv2.R
-import com.monlixv2.adapters.AdsAdapter
 import com.monlixv2.adapters.OffersAdapter
 import com.monlixv2.databinding.OffersFragmentBinding
-import com.monlixv2.databinding.SurveysFragmentBinding
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.util.Constants
 
 private const val OFFERS_PARAM = "OFFERS_PARAM"
 
 class OffersFragment : Fragment() {
     private var campaigns: ArrayList<Campaign>? = null
+    private var filteredCampaigns: ArrayList<Campaign>? = ArrayList()
     private lateinit var binding: OffersFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +36,38 @@ class OffersFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.offersRecycler.apply {
-            adapter = campaigns?.let { OffersAdapter(it) }
-        }
+        filteredCampaigns!!.addAll(campaigns!!)
+        setupAdapter(filteredCampaigns!!)
+        initSpinner()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun setupAdapter(campaignList: ArrayList<Campaign>) {
+        binding.offersRecycler.apply {
+            adapter =  OffersAdapter(campaignList)
+        }
+    }
+
+    fun initSpinner(){
+        binding.offerTypeSpinner.adapter = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_dropdown_item,
+            Constants.OFFER_FILTER_LIST
+        )
+        binding.offerTypeSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+
+                println("WAAAAAAAAAAAA ${adapterView.getItemAtPosition(i).toString()}")
+                filteredCampaigns = when (adapterView.getItemAtPosition(i).toString()) {
+                    Constants.ALL_OFFERS -> campaigns
+                    else -> campaigns!!.filter { it -> Constants.ANDROID_CAMPAIGN_PARAM in it.oss
+                    } as ArrayList<Campaign>
+                }
+                setupAdapter(filteredCampaigns!!)
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        })
     }
 
     companion object {

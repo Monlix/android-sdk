@@ -48,6 +48,17 @@ object Constants {
         PENDING_QUERY_PARAM to R.color.orangeV1,
     )
 
+    const val ALL_OFFERS = "All offers"
+    const val ANDROID = "Android"
+    const val IOS_CAMPAIGN_PARAM = "ios"
+    const val ALL_CAMPAIGN_PARAM = "all"
+    const val ANDROID_CAMPAIGN_PARAM = "android"
+
+
+    val OFFER_FILTER_LIST =
+        arrayOf(ALL_OFFERS, ANDROID)
+
+
     inline fun <VM : ViewModel> viewModelFactory(crossinline f: () -> VM) =
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(aClass: Class<T>): T = f() as T

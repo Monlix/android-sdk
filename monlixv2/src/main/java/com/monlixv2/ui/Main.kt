@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.databinding.MainActivityBinding
 import com.monlixv2.ui.fragments.HomeFragment
@@ -57,11 +58,12 @@ class Main : AppCompatActivity() {
     }
 
 
-    fun setupListeners(){
+    fun setupListeners() {
         viewModel.groupedResponse.observe(this, Observer {
-            if(it.mergedSurveys !== null ) {
-                val currentFragment = if( navHostFragment.childFragmentManager.fragments.size > 0 ) navHostFragment.childFragmentManager.fragments[0] else null
-                if(currentFragment is HomeFragment) {
+            if (it.mergedSurveys !== null) {
+                val currentFragment =
+                    if (navHostFragment.childFragmentManager.fragments.size > 0) navHostFragment.childFragmentManager.fragments[0] else null
+                if (currentFragment is HomeFragment) {
                     currentFragment.displayData(it);
                 }
             }
@@ -106,8 +108,14 @@ class Main : AppCompatActivity() {
                 if (isUserPage) R.drawable.arrow_left else R.drawable.user_fill
             )
         )
-        if(!isUserPage) {
+        if (!isUserPage) {
             viewModel.makeRequest()
         }
+    }
+
+    fun offerFilterClick(view: View) {
+        val bottomSheetDialog = BottomSheetDialog(this@Main)
+        bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
+        bottomSheetDialog.show()
     }
 }

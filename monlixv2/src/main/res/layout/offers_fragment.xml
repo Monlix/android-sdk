@@ -8,6 +8,8 @@
             android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true"
@@ -15,10 +17,13 @@
                 android:layout_height="56dp">
 
             <androidx.appcompat.widget.AppCompatEditText
-                    android:paddingStart="10dp"
+                    android:fontFamily="@font/barlow_medium"
+                    android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:lines="1"
-                    android:gravity="center|left"
+                    android:textSize="12sp"
+                    android:gravity="center|start"
+                    android:background="@android:color/transparent"
                     android:drawableStart="@drawable/search2"
                     android:hint="@string/search_offer_or_keyword"
                     android:drawablePadding="10dp"
@@ -28,20 +33,32 @@
         </androidx.cardview.widget.CardView>
 
         <FrameLayout
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="32dp">
 
             <TextView
+                    android:onClick="offerFilterClick"
+                    android:layout_marginLeft="16dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkBlue"
+                    android:fontFamily="@font/barlow_bold"
                     android:gravity="center_horizontal"
-                    android:drawablePadding="6dp"
-                    android:drawableEnd="@drawable/filter_slider_v2"
                     android:text="@string/sort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+            <ImageView
+                    android:onClick="offerFilterClick"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_gravity="start|center_horizontal"
+                    android:src="@drawable/filter_slider_v2"
+                    android:layout_width="12dp"
+                    android:layout_height="wrap_content" />
+
             <androidx.appcompat.widget.AppCompatSpinner
+                    android:background="@drawable/spinner_icon"
                     android:id="@+id/offerTypeSpinner"
                     android:layout_gravity="end|center"
                     android:layout_width="wrap_content"

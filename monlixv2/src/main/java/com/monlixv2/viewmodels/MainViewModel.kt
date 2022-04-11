@@ -8,6 +8,7 @@ import com.monlixv2.service.ApiInterface
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey
+import com.monlixv2.util.Constants.IOS_CAMPAIGN_PARAM
 import com.monlixv2.util.Credentials
 import kotlinx.coroutines.*
 import kotlin.math.atan
@@ -106,7 +107,12 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
             val response = ApiInterface.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
-                _groupedResponse.value?.campaigns = response.body()
+                val campaigns = if(response.body() != null) response.body() else ArrayList();
+                //remove ios campaigns
+                val filtered = campaigns!!.filter {
+                        el -> IOS_CAMPAIGN_PARAM !in el.oss
+                } as ArrayList<Campaign>
+                _groupedResponse.value?.campaigns =  filtered
                 checkProgress()
             } catch (e: Exception) {
                 println("Monlix Exception ${e.message}")

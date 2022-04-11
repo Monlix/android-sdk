@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                        android:background="@drawable/aaaaas"
+                        android:background="@drawable/spinner_icon"
                         android:id="@+id/spinner"
                         android:layout_gravity="end|center"
                         android:layout_width="wrap_content"

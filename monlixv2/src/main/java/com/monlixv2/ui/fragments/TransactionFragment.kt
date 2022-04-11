@@ -70,7 +70,6 @@ class TransactionFragment : Fragment() {
 
         binding?.offerRecycler?.addOnScrollListener(object : RecyclerScrollListener(binding!!.offerRecycler.layoutManager!! as LinearLayoutManager){
             override fun loadMoreItems() {
-                println("Load more")
                 isLoadingg = true
             }
 
