@@ -37,25 +37,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp">
 
-            <TextView
-                    android:onClick="offerFilterClick"
-                    android:layout_marginLeft="16dp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/darkBlue"
-                    android:fontFamily="@font/barlow_bold"
-                    android:gravity="center_horizontal"
-                    android:text="@string/sort"
+            <LinearLayout
+                    android:id="@+id/sortFilters"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkBlue"
+                        android:fontFamily="@font/barlow_bold"
+                        android:text="@string/sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-            <ImageView
-                    android:onClick="offerFilterClick"
-                    android:layout_marginLeft="48dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_gravity="start|center_horizontal"
-                    android:src="@drawable/filter_slider_v2"
-                    android:layout_width="12dp"
-                    android:layout_height="wrap_content" />
+                <ImageView
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/filter_slider_v2"
+                        android:layout_width="12dp"
+                        android:layout_height="10dp" />
+            </LinearLayout>
+
 
             <androidx.appcompat.widget.AppCompatSpinner
                     android:background="@drawable/spinner_icon"

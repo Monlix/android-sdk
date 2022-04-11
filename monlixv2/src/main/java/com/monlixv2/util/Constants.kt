@@ -3,6 +3,9 @@ package com.monlixv2.util
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.monlixv2.R
+import com.monlixv2.service.models.campaigns.Campaign
+import java.text.SimpleDateFormat
+import kotlin.math.roundToInt
 
 object Constants {
 
@@ -63,4 +66,24 @@ object Constants {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(aClass: Class<T>): T = f() as T
         }
+
+    val campaignCrComparator = Comparator<Campaign> { a, b ->
+        (a.cr - b.cr).roundToInt()
+    }
+
+    val campaignHighToLowPayoutComparator = Comparator<Campaign> { a, b ->
+        (b.payout.toDouble() - a.payout.toDouble()).roundToInt()
+    }
+    val campaignLowToHighPayoutComparator = Comparator<Campaign> { a, b ->
+        (a.payout.toDouble() - b.payout.toDouble()).roundToInt()
+    }
+    private val formatter = SimpleDateFormat("yyyy-MM-dd")
+    val campaignDateComparator = Comparator<Campaign> { a, b ->
+        val date1 = formatter.parse(a.createdAt)
+        val date2 = formatter.parse(b.createdAt)
+
+        if(date2!! > date1) 1 else 0
+    }
+
+
 }

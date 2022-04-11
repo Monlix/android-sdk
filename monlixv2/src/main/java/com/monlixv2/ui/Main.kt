@@ -70,22 +70,6 @@ class Main : AppCompatActivity() {
         })
     }
 
-//    private fun loadViews() {
-//        navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//
-////        Timer().schedule(object : TimerTask() {
-////            override fun run() {
-////                runOnUiThread {
-////                    val bottomSheetDialog = BottomSheetDialog(this@Main)
-////                    bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
-////                    bottomSheetDialog.show()
-////                }
-////            }
-////        }, 5000)
-
-//    }
-
 
     fun refClick(view: View) {
         val userId = prefs[MonlixUserId, ""]
@@ -111,11 +95,5 @@ class Main : AppCompatActivity() {
         if (!isUserPage) {
             viewModel.makeRequest()
         }
-    }
-
-    fun offerFilterClick(view: View) {
-        val bottomSheetDialog = BottomSheetDialog(this@Main)
-        bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
-        bottomSheetDialog.show()
     }
 }

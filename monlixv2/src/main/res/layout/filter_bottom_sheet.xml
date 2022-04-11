@@ -39,6 +39,7 @@
 
 
     <RadioGroup
+            android:id="@+id/sortGroup"
             android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -47,6 +48,7 @@
                 android:text="@string/recommended"
                 android:gravity="center"
                 android:paddingLeft="12dp"
+                android:id="@+id/sortRecommended"
                 android:fontFamily="@font/barlow_medium"
                 android:textColor="@drawable/radiobuttonstate"
                 android:button="@drawable/filter_star_states"
@@ -57,6 +59,7 @@
                 android:text="@string/high_to_low"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
+                android:id="@+id/sortHighToLow"
                 android:fontFamily="@font/barlow_medium"
                 android:paddingLeft="12dp"
                 android:button="@drawable/filter_hl_states"
@@ -68,6 +71,7 @@
                 android:text="@string/low_to_high"
                 android:gravity="center"
                 android:paddingLeft="12dp"
+                android:id="@+id/sortLowToHigh"
                 android:fontFamily="@font/barlow_medium"
                 android:layout_marginTop="20dp"
                 android:textColor="@drawable/radiobuttonstate"
@@ -79,6 +83,7 @@
                 android:text="@string/newest"
                 android:gravity="center"
                 android:paddingLeft="12dp"
+                android:id="@+id/sortNewest"
                 android:fontFamily="@font/barlow_medium"
                 android:textColor="@drawable/radiobuttonstate"
                 android:layout_marginTop="20dp"
