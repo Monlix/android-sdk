@@ -1,6 +1,8 @@
 package com.monlixv2.adapters
 
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,6 +80,11 @@ class OffersAdapter(
         bottomSheetDialog.findViewById<TextView>(R.id.title)?.text = "Requirements"
         bottomSheetDialog.findViewById<TextView>(R.id.adTitle)?.text = campaign.name
         bottomSheetDialog.findViewById<TextView>(R.id.transactionId)?.text = campaign.description
+        bottomSheetDialog.findViewById<Button>(R.id.startOfferBtn)!!.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(campaign.url)
+            it?.let { ContextCompat.startActivity(it.context, i, null) }
+        }
 
 
         val logo = bottomSheetDialog.findViewById<ImageView>(R.id.transactionImage)
