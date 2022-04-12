@@ -1,6 +1,5 @@
 package com.monlixv2.ui.components.squareprogressbar
 
-import android.R
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.CornerPathEffect
@@ -9,6 +8,8 @@ import android.graphics.Paint.Align
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.monlixv2.R
 import com.monlixv2.ui.components.squareprogressbar.utils.CalculationUtil
 import com.monlixv2.ui.components.squareprogressbar.utils.PercentStyle
 import java.text.DecimalFormat
@@ -79,25 +80,20 @@ class SquareProgressView : View {
 
     private fun initializePaints(context: Context) {
         progressBarPaint = Paint()
-        progressBarPaint!!.color = context.resources.getColor(
-            R.color.holo_green_dark
-        )
+        progressBarPaint!!.color =
+            ContextCompat.getColor(context, R.color.green)
         progressBarPaint!!.strokeWidth = CalculationUtil.convertDpToPx(
             widthInDp, getContext()
         ).toFloat()
         progressBarPaint!!.isAntiAlias = true
         progressBarPaint!!.style = Paint.Style.STROKE
         outlinePaint = Paint()
-        outlinePaint!!.color = context.resources.getColor(
-            R.color.black
-        )
+        outlinePaint!!.color =  ContextCompat.getColor(context, R.color.black)
         outlinePaint!!.strokeWidth = 1f
         outlinePaint!!.isAntiAlias = true
         outlinePaint!!.style = Paint.Style.STROKE
         textPaint = Paint()
-        textPaint!!.color = context.resources.getColor(
-            R.color.black
-        )
+        textPaint!!.color =  ContextCompat.getColor(context, R.color.black)
         textPaint!!.isAntiAlias = true
         textPaint!!.style = Paint.Style.STROKE
     }
@@ -106,8 +102,8 @@ class SquareProgressView : View {
         this.canvas = canvas
         super.onDraw(canvas)
         strokewidth = CalculationUtil.convertDpToPx(widthInDp, context).toFloat()
-        val cW = canvas.width
-        val cH = canvas.height
+        val cW = width
+        val cH = height
         val scope = 2 * cW + 2 * cH - 4 * strokewidth
         val hSw = strokewidth / 2
         if (isOutline) {
@@ -264,7 +260,7 @@ class SquareProgressView : View {
         }
         var percentString = DecimalFormat("###").format(getProgress())
         if (setting.isPercentSign) {
-            percentString = percentString + percentSettings.customText
+            percentString += percentSettings.customText
         }
         textPaint!!.color = percentSettings.textColor
         canvas?.drawText(
