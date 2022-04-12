@@ -9,7 +9,6 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="@color/grayV3"
             android:layout_height="match_parent">
 
 
@@ -63,104 +62,20 @@
                 android:layout_height="wrap_content" />
 
 
-        <include  layout="@layout/transaction_item_v2_with_steps" />
-        <TextView
-                android:textColor="@color/darkBlue"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/barlow_semibold"
-                android:textAlignment="center"
-                android:text="@string/send_link_to_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <include  layout="@layout/offer_item_in_pop_window" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-                android:layout_marginTop="4dp"
-                android:hint="Your email..."
-                android:textAlignment="center"
-                android:fontFamily="@font/barlow"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/black"
-                android:paddingLeft="12dp"
-                android:background="@drawable/input_bordered_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         <Button
                 android:layout_marginTop="12dp"
                 android:background="@drawable/green_bordered_bg"
-                android:text="SEND"
+                android:text="@string/start_offer"
                 android:fontFamily="@font/barlow_semibold"
                 android:textColor="@color/white"
                 android:elevation="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
 
-        <LinearLayout
-                android:layout_marginTop="24dp"
-                android:weightSum="1"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            <ImageView
-                    android:layout_weight="0.45"
-                    android:src="@drawable/hr_line"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp" />
 
-            <TextView
-                    android:textColor="@color/darkBlue"
-                    android:fontFamily="@font/barlow_medium"
-                    android:textAlignment="center"
-                    android:text="OR"
-                    android:alpha="0.5"
-                    android:layout_weight="0.1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            <ImageView
-                    android:layout_weight="0.45"
-                    android:src="@drawable/hr_line"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp" />
-        </LinearLayout>
-
-        <TextView
-                android:textColor="@color/darkBlue"
-                android:fontFamily="@font/barlow_semibold"
-                android:textAlignment="center"
-                android:text="@string/scan_qr"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        <ImageView
-                android:id="@+id/qrImage"
-                android:layout_marginTop="12dp"
-                android:layout_gravity="center"
-                android:layout_width="140dp"
-                android:layout_height="140dp" />
-
-        <TextView
-                android:id="@+id/campaignUrl"
-                android:textColor="@color/darkBlue"
-                android:fontFamily="@font/barlow"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/gray_v4_bordered_bg"
-                android:minHeight="42dp"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:text="www.google.com"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        <TextView
-                android:textColor="@color/darkBlue"
-                android:fontFamily="@font/barlow_semibold"
-                android:textAlignment="center"
-                android:text="@string/enter_url_on_your"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,6 +1,6 @@
 package com.monlixv2.adapters
 
-import android.graphics.Bitmap
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.zxing.WriterException
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
-import com.monlixv2.util.UIHelpers.encodeAsBitmap
 
 
 const val SIMPLE_OFFER_CARD = 0
@@ -76,20 +74,10 @@ class OffersAdapter(
     private fun onOfferClick(holder: OfferHolder, campaign: Campaign) {
         val bottomSheetDialog = BottomSheetDialog(holder.itemView.context)
         bottomSheetDialog.setContentView(R.layout.ad_bottom_sheet)
-        bottomSheetDialog.findViewById<LinearLayout>(R.id.payoutContainer)?.visibility = View.GONE
-        bottomSheetDialog.findViewById<SquareProgressView>(R.id.transactionProgress)?.visibility =
-            View.GONE
-        bottomSheetDialog.findViewById<View>(R.id.transactionOverlay)?.visibility = View.GONE
-        bottomSheetDialog.findViewById<TextView>(R.id.doneText)?.visibility = View.GONE
-        bottomSheetDialog.findViewById<TextView>(R.id.doneText)?.visibility = View.GONE
-        bottomSheetDialog.findViewById<TextView>(R.id.stepsCount)?.visibility = View.GONE
-
 
         bottomSheetDialog.findViewById<TextView>(R.id.title)?.text = "Requirements"
         bottomSheetDialog.findViewById<TextView>(R.id.adTitle)?.text = campaign.name
         bottomSheetDialog.findViewById<TextView>(R.id.transactionId)?.text = campaign.description
-        bottomSheetDialog.findViewById<TextView>(R.id.campaignUrl)?.text = campaign.url
-        val qrImage = bottomSheetDialog.findViewById<ImageView>(R.id.qrImage)!!
 
 
         val logo = bottomSheetDialog.findViewById<ImageView>(R.id.transactionImage)
@@ -98,16 +86,6 @@ class OffersAdapter(
             .transition(DrawableTransitionOptions.withCrossFade(300))
             .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
             .into(logo!!)
-
-        try {
-            val bitmap: Bitmap = encodeAsBitmap(campaign.url, 140,140)!!
-            Glide.with(holder.itemView.context).load(bitmap)
-                .transition(DrawableTransitionOptions.withCrossFade(300))
-                .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
-                .into(qrImage)
-        } catch (e: WriterException) {
-            e.printStackTrace()
-        }
 
         if (campaign.hasGoals && campaign.goals.size > 0) {
             val stepsToggle = bottomSheetDialog.findViewById<TextView>(R.id.stepsToggle)!!
@@ -173,6 +151,8 @@ class OffersAdapter(
         bottomSheetDialog.findViewById<ImageView>(R.id.adSheetClose)?.setOnClickListener {
             bottomSheetDialog.cancel()
         }
+
+        bottomSheetDialog.behavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
         bottomSheetDialog.show()
     }
 
