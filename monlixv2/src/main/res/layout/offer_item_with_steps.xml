@@ -107,10 +107,9 @@
     <LinearLayout
             android:padding="4dp"
             android:background="@color/greenV4"
-            android:minHeight="44dp"
             android:layout_marginTop="100dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp">
 
         <LinearLayout
                 android:background="@drawable/offer_points_item"
@@ -118,20 +117,22 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
+
             <TextView
                     android:textColor="@color/white"
                     android:text="+1 530 000"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:id="@+id/offerPoints"
                     android:textAlignment="center"
                     android:gravity="center"
                     android:fontFamily="@font/barlow_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
             <TextView
                     android:textColor="@color/white"
                     android:text="USD"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:id="@+id/offerCurrency"
                     android:textAlignment="center"
                     android:gravity="center"
@@ -140,13 +141,12 @@
                     android:layout_height="wrap_content" />
         </LinearLayout>
 
-
         <TextView
-                android:id="@+id/startOfferBtn"
                 android:fontFamily="@font/barlow_bold"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:textAllCaps="true"
+                android:id="@+id/startOfferBtn"
                 android:textColor="@color/darkBlue"
                 android:text="@string/start_offer"
                 android:layout_width="match_parent"

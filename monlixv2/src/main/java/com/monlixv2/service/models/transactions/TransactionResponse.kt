@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TransactionResponse(
     @SerializedName("ptcClicks")
-    val ptcClicks: Double,
+    val ptcClicks: Int,
     @SerializedName("ptcEarnings")
     val ptcEarnings: Double,
     @SerializedName("completedOffers")

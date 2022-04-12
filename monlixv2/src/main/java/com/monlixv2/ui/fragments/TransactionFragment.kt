@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.R
@@ -31,8 +30,8 @@ class TransactionFragment : Fragment() {
     private lateinit var viewModel: TransactionsViewModel
     private var binding: TransactionFragmentBinding? = null
 
-    private var isLoadingg = false
-    private var isLastPagee = false
+    private var isRequestLoading = false
+    private var isRequestLastPage = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,14 +69,12 @@ class TransactionFragment : Fragment() {
 
         binding?.offerRecycler?.addOnScrollListener(object : RecyclerScrollListener(binding!!.offerRecycler.layoutManager!! as LinearLayoutManager){
             override fun loadMoreItems() {
-                isLoadingg = true
+                viewModel.loadNextPage()
             }
-
             override val isLastPage: Boolean
-                get() = isLastPagee
+                get() = isRequestLastPage
             override val isLoading: Boolean
-                get() = isLoadingg
-
+                get() = isRequestLoading
         })
 
 
@@ -98,19 +95,21 @@ class TransactionFragment : Fragment() {
     }
 
     fun bindListeners() {
-        viewModel.transactionList.observe(viewLifecycleOwner,  Observer {
-            binding?.offerRecycler?.adapter = TransactionAdapter(it);
-        })
+        viewModel.transactionList.observe(viewLifecycleOwner) {
+            if (!viewModel.pageId.value.contentEquals("0")) {
+                (binding?.offerRecycler?.adapter as TransactionAdapter).updateDataSource(it)
+            } else {
+                binding?.offerRecycler?.adapter = TransactionAdapter(it);
+            }
+        }
+        viewModel.isLastPage.observe(viewLifecycleOwner) {
+            isRequestLastPage = it
+        }
+        viewModel.isLoadingRequest.observe(viewLifecycleOwner) {
+            isRequestLoading = it
+        }
     }
 
-//    private fun displayData(data: TransactionResponse) {
-//        ptcClicks.text = data.ptcClicks.toString()
-//        ptcEarnings.text = data.ptcEarnings.toString()
-//        loader.visibility = View.GONE
-//        ptcContainer.visibility = View.VISIBLE
-//        recyclerView.adapter = TransactionAdapter(data.transactions);
-//        recyclerView.visibility = View.VISIBLE
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

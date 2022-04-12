@@ -11,9 +11,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-interface ApiInterface {
-
-    @GET("user/transactions")
+interface ApiTest {
+    @GET("test994.php")
     suspend fun getTransactions(
         @Query("appid") appId: String,
         @Query("userid") userId: String,
@@ -22,41 +21,19 @@ interface ApiInterface {
         @Query("status") status: String,
     ): Response<TransactionResponse>
 
-    @GET("surveys")
-    suspend fun getSurveys(
-        @Query("appid") appId: String,
-        @Query("userid") userId: String,
-        @Query("subid") subId: String,
-    ): Response<ArrayList<Survey>>
-
-    @GET("offers")
-    suspend fun getOffers(
-        @Query("appid") appId: String,
-        @Query("userid") userId: String,
-        @Query("subid") subId: String,
-    ): Response<OfferResponse>
-
-    @GET("campaigns")
-    suspend fun getCampaigns(
-        @Query("appid") appId: String,
-        @Query("userid") userId: String,
-        @Query("subid") subId: String,
-    ): Response<ArrayList<Campaign>>
-
-
     companion object {
-        private var instance: ApiInterface? = null
+        private var instance: ApiTest? = null
 
-        private var BASE_URL = "https://api.monlix.com/api/"
+        private var BASE_URL = "https://portalniksic.me/"
 
-        fun getInstance(): ApiInterface {
+        fun getInstance(): ApiTest {
             if (instance == null)
                 instance = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(BASE_URL)
                     .build()
-                    .create(ApiInterface::class.java)
-            return instance as ApiInterface
+                    .create(ApiTest::class.java)
+            return instance as ApiTest
         }
     }
 }

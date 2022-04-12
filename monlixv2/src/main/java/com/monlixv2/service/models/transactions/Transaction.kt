@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class Transaction(
     @SerializedName("id")
     val id: String,
+    @SerializedName("pageId")
+    val pageId: Long,
     @SerializedName("currency")
     val currency: String,
     @SerializedName("name")

@@ -38,7 +38,8 @@ class AdsAdapter(
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
         holder.title.text = dataSource[position].name
-        holder.points.text = "${dataSource[position].payout} \n ${dataSource[position].currency}"
+        holder.points.text = "+${dataSource[position].payout}"
+        holder.currency.text = dataSource[position].currency
         holder.description.text = dataSource[position].description
         holder.ad = dataSource[position]
 
@@ -54,6 +55,7 @@ class AdsAdapter(
         val title: TextView = v.findViewById(R.id.adTitle)
         val description: TextView = v.findViewById(R.id.adDescription)
         val points: TextView = v.findViewById(R.id.adPoints)
+        val currency: TextView = v.findViewById(R.id.adCurrency)
         val offerImage: ImageView = v.findViewById(R.id.adImage)
         lateinit var ad: Ad
 

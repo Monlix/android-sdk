@@ -21,6 +21,7 @@
                 app:cardElevation="0dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp">
+
             <ImageView
                     android:id="@+id/adImage"
                     android:layout_width="match_parent"
@@ -36,6 +37,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
             <TextView
                     android:background="@drawable/ad_status_bg"
                     android:textSize="10sp"
@@ -70,21 +72,39 @@
     <LinearLayout
             android:padding="4dp"
             android:background="@color/greenV4"
-            android:minHeight="44dp"
             android:layout_marginTop="100dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp">
 
-        <TextView
-                android:textColor="@color/white"
+        <LinearLayout
                 android:background="@drawable/offer_points_item"
-                android:text="+1 530 000"
-                android:textSize="12sp"
-                android:id="@+id/adPoints"
-                android:gravity="center"
-                android:fontFamily="@font/barlow_bold"
                 android:layout_width="100dp"
-                android:layout_height="match_parent" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:textColor="@color/white"
+                    android:text="+1 530 000"
+                    android:textSize="12sp"
+                    android:id="@+id/adPoints"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/barlow_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            <TextView
+                    android:textColor="@color/white"
+                    android:text="USD"
+                    android:textSize="12sp"
+                    android:id="@+id/adCurrency"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/barlow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <TextView
                 android:fontFamily="@font/barlow_bold"

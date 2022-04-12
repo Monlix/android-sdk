@@ -21,11 +21,17 @@ const val SIMPLE_TRANSCATION_CARD = 0
 const val STEPS_TRANSCATION_CARD = 1
 
 class TransactionAdapter(
-    private val dataSource: ArrayList<Transaction>
+    private var dataSource: ArrayList<Transaction>
 ) : RecyclerView.Adapter<TransactionAdapter.TransactionHolder>() {
 
     private var expandedIds = mutableSetOf<String>();
 
+
+    public fun updateDataSource(arrayList: ArrayList<Transaction>) {
+        val oldSize = dataSource.size
+        dataSource = arrayList
+        notifyItemRangeInserted(oldSize, arrayList.size)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

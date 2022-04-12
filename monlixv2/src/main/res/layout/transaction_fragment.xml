@@ -57,7 +57,7 @@
 
         <LinearLayout
                 android:visibility="gone"
-                app:showEarningsHandler="@{viewModel.isLoading}"
+                app:showEarningsHandler="@{viewModel.isLoadingProgress}"
                 android:weightSum="1"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -167,12 +167,6 @@
                     android:text="@string/check_out_current_offers" />
         </LinearLayout>
 
-        <ProgressBar
-                app:transactionDataLoader="@{viewModel.isLoading}"
-                android:visibility="visible"
-                android:layout_gravity="top|center"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
 
         <androidx.recyclerview.widget.RecyclerView
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -180,7 +174,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/transaction_item_v2" />
-
+        <ProgressBar
+                app:transactionDataLoader="@{viewModel.isLoadingProgress}"
+                android:visibility="visible"
+                android:layout_gravity="top|center"
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
     </LinearLayout>
 
 </layout>

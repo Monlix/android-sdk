@@ -40,8 +40,8 @@ fun transactionsNoDataHandler(linearLayout: LinearLayout, showNoData: LiveData<B
 
 
 @BindingAdapter("showEarningsHandler")
-fun showEarnings(view: LinearLayout, isLoading: LiveData<Boolean>?) {
-    view.visibility = if (isLoading?.value == true) View.GONE else View.VISIBLE
+fun showEarnings(view: LinearLayout, isLoadingProgress: LiveData<Boolean>?) {
+    view.visibility = if (isLoadingProgress?.value == true) View.GONE else View.VISIBLE
 }
 
 @BindingAdapter("showPoints")
