@@ -51,15 +51,18 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
         get() = _credentials
 
     init {
+        resetResponse()
+        _credentials.value = Credentials(APP_ID, USER_ID);
+        makeRequest()
+    }
+
+    private fun resetResponse(){
         _groupedResponse.value = GroupedResponse(
             surveys = null,
             offers = null,
             campaigns = null,
             mergedSurveys = null
         )
-        _credentials.value = Credentials(APP_ID, USER_ID);
-        makeRequest()
-
     }
 
     fun initProgressBar() {
@@ -121,6 +124,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
     }
 
     fun makeRequest() {
+        resetResponse()
         _isLoading.value = true
         initProgressBar()
         surveysRequest();

@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -13,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.databinding.MainActivityBinding
 import com.monlixv2.ui.fragments.HomeFragment
@@ -95,5 +93,12 @@ class Main : AppCompatActivity() {
         if (!isUserPage) {
             viewModel.makeRequest()
         }
+    }
+
+    override fun onBackPressed() {
+        if(!isUserPage){
+            finish()
+        }
+        profileAction(binding.profileActionBtn)
     }
 }
