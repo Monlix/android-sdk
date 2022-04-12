@@ -2,7 +2,6 @@
 
 <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,17 +19,27 @@
                 android:layout_height="wrap_content">
 
             <TextView
+                    android:id="@+id/adTitle"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/barlow_bold"
                     android:text="Solitaire Grand Harvest - Android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             <ImageView
+                    android:id="@+id/adSheetClose"
                     android:layout_marginLeft="-16dp"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:src="@drawable/close_ring" />
         </LinearLayout>
-
+        <View
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp"
+                android:background="#ECEFFA"
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
         <LinearLayout
                 android:id="@+id/features"
                 android:orientation="horizontal"
@@ -38,87 +47,27 @@
                 android:layout_height="wrap_content" />
 
         <TextView
+                android:textColor="@color/grayV5"
+                android:fontFamily="@font/barlow"
                 android:layout_marginTop="12dp"
                 android:text="• The advertiser decides whether or not you completed the offer and notifies us whether or not you should receive the incentive."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         <TextView
+                android:textColor="@color/grayV5"
+                android:fontFamily="@font/barlow"
                 android:layout_marginTop="12dp"
                 android:text="• Offers must be started and completed on the same device and in the same browser tab where the link opens. While working on the offers, you must keep your device connected to the internet at all times."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        <androidx.cardview.widget.CardView
-                app:cardCornerRadius="5dp"
-                app:cardElevation="3dp"
-                app:cardUseCompatPadding="true"
-                android:layout_marginTop="24dp"
-                android:minHeight="100dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            <LinearLayout
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <LinearLayout
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp" />
-
-                    <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                        <TextView
-                                android:text="@string/requirements"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        <TextView
-                                android:text="test"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        <TextView
-                                android:drawableEnd="@drawable/arrow_down"
-                                android:drawablePadding="12dp"
-                                android:layout_gravity="end"
-                                android:textAllCaps="true"
-                                android:text="@string/see_all_steps"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:background="#F9F9FB"
-                        android:id="@+id/stepsContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <include layout="@layout/requrement_item" />
-
-                    <include layout="@layout/requrement_item" />
-
-                    <include layout="@layout/requrement_item" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
+        <include  layout="@layout/transaction_item_v2_with_steps" />
         <TextView
+                android:textColor="@color/darkBlue"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/barlow_semibold"
                 android:textAlignment="center"
                 android:text="@string/send_link_to_email"
                 android:layout_width="match_parent"
@@ -127,17 +76,21 @@
         <androidx.appcompat.widget.AppCompatEditText
                 android:layout_marginTop="4dp"
                 android:hint="Your email..."
-                android:paddingTop="12dp"
                 android:textAlignment="center"
+                android:fontFamily="@font/barlow"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
                 android:paddingLeft="12dp"
                 android:background="@drawable/input_bordered_bg"
                 android:layout_width="match_parent"
-                android:layout_height="44dp" />
+                android:layout_height="wrap_content" />
 
         <Button
                 android:layout_marginTop="12dp"
                 android:background="@drawable/green_bordered_bg"
                 android:text="SEND"
+                android:fontFamily="@font/barlow_semibold"
                 android:textColor="@color/white"
                 android:elevation="20dp"
                 android:layout_width="match_parent"
@@ -158,8 +111,11 @@
                     android:layout_height="3dp" />
 
             <TextView
+                    android:textColor="@color/darkBlue"
+                    android:fontFamily="@font/barlow_medium"
                     android:textAlignment="center"
                     android:text="OR"
+                    android:alpha="0.5"
                     android:layout_weight="0.1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
@@ -171,18 +127,24 @@
         </LinearLayout>
 
         <TextView
+                android:textColor="@color/darkBlue"
+                android:fontFamily="@font/barlow_semibold"
                 android:textAlignment="center"
                 android:text="@string/scan_qr"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         <ImageView
+                android:id="@+id/qrImage"
                 android:layout_marginTop="12dp"
                 android:layout_gravity="center"
                 android:layout_width="140dp"
                 android:layout_height="140dp" />
 
         <TextView
+                android:id="@+id/campaignUrl"
+                android:textColor="@color/darkBlue"
+                android:fontFamily="@font/barlow"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/gray_v4_bordered_bg"
                 android:minHeight="42dp"
@@ -193,6 +155,8 @@
                 android:layout_height="wrap_content" />
 
         <TextView
+                android:textColor="@color/darkBlue"
+                android:fontFamily="@font/barlow_semibold"
                 android:textAlignment="center"
                 android:text="@string/enter_url_on_your"
                 android:layout_marginTop="12dp"

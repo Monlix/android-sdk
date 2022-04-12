@@ -126,7 +126,7 @@ class TransactionAdapter(
 
 
                     holder.stepsScroller?.apply {
-                        setOnTouchListener(View.OnTouchListener { v, event ->
+                        setOnTouchListener(View.OnTouchListener { v, _ ->
                             v.parent.parent.parent.requestDisallowInterceptTouchEvent(true);
                             performClick()
                             false
@@ -169,9 +169,6 @@ class TransactionAdapter(
         transaction: Transaction,
         isExpanded: Boolean
     ) {
-        println(transaction);
-        println(isExpanded);
-
         holder.stepsContainer?.removeAllViews()
 
         if (isExpanded) {
@@ -201,7 +198,6 @@ class TransactionAdapter(
                     requirementItem.findViewById<ImageView>(R.id.bottomDots).visibility =
                         View.GONE
                 }
-                println("adding")
                 holder.stepsContainer?.addView(requirementItem)
             }
         }

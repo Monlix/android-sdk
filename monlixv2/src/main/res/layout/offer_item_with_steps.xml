@@ -127,6 +127,7 @@
                 android:layout_height="match_parent" />
 
         <TextView
+                android:id="@+id/startOfferBtn"
                 android:fontFamily="@font/barlow_bold"
                 android:textSize="16sp"
                 android:gravity="center"

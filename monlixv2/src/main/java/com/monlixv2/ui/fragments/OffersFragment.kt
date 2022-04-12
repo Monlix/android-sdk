@@ -36,6 +36,13 @@ val SORT_IDS_TO_SORT_FILTER = arrayMapOf<Int, SORT_FILTER>(
     R.id.sortNewest to SORT_FILTER.NEWEST,
 )
 
+val SORT_FILTER_TO_ID = arrayMapOf<SORT_FILTER, Int>(
+    SORT_FILTER.RECOMMENDED to R.id.sortRecommended,
+    SORT_FILTER.HIGH_TO_LOW to R.id.sortHighToLow,
+    SORT_FILTER.LOW_TO_HIGH to R.id.sortLowToHigh,
+    SORT_FILTER.NEWEST to R.id.sortNewest
+)
+
 class OffersFragment : Fragment() {
     private var campaigns: ArrayList<Campaign>? = null
     private var filteredCampaigns: ArrayList<Campaign>? = ArrayList()
@@ -110,9 +117,12 @@ class OffersFragment : Fragment() {
 
     fun showOrderFilters() {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
-        bottomSheetDialog.setContentView(R.layout.filter_bottom_sheet)
+        bottomSheetDialog.setContentView(R.layout.sort_offers_bottom_sheet)
 
         val radioGroup = bottomSheetDialog.findViewById<RadioGroup>(R.id.sortGroup)
+        if(sortFilter !== SORT_FILTER.NONE) {
+            radioGroup?.check(SORT_FILTER_TO_ID[sortFilter]!!)
+        }
         radioGroup?.setOnCheckedChangeListener { _, clickedId ->
             sortFilter = SORT_IDS_TO_SORT_FILTER[clickedId]!!
             sortData()
