@@ -68,22 +68,20 @@
                 android:layout_height="wrap_content">
 
             <LinearLayout
+                    android:gravity="center"
+                    android:id="@+id/statusContainer"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+                <include layout="@layout/status_item_android" />
+                <include layout="@layout/status_item_multi_reward" />
+                <include layout="@layout/status_item_complete_task" />
+                <include layout="@layout/status_item_new_users" />
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="STATUS" />
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="bbbbb" />
             </LinearLayout>
 
             <TextView
+                    android:layout_marginTop="4dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:fontFamily="@font/barlow_semibold"
@@ -114,17 +112,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <TextView
-                android:textColor="@color/white"
+        <LinearLayout
                 android:background="@drawable/offer_points_item"
-                android:text="+1 530 000"
-                android:textSize="14sp"
-                android:id="@+id/offerPoints"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:fontFamily="@font/barlow_bold"
                 android:layout_width="100dp"
-                android:layout_height="match_parent" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+            <TextView
+                    android:textColor="@color/white"
+                    android:text="+1 530 000"
+                    android:textSize="14sp"
+                    android:id="@+id/offerPoints"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/barlow_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <TextView
+                    android:textColor="@color/white"
+                    android:text="USD"
+                    android:textSize="14sp"
+                    android:id="@+id/offerCurrency"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/barlow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <TextView
                 android:id="@+id/startOfferBtn"

@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
+import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
 
 
 const val SIMPLE_OFFER_CARD = 0
@@ -53,7 +54,8 @@ class OffersAdapter(
 
     override fun onBindViewHolder(holder: OfferHolder, position: Int) {
         holder.title.text = dataSource[position].name
-        holder.points.text = "${dataSource[position].payout} \n ${dataSource[position].currency}"
+        holder.points.text = "+${dataSource[position].payout}"
+        holder.currency.text = dataSource[position].currency
         holder.description.text = dataSource[position].description
         holder.campaign = dataSource[position]
 
@@ -66,6 +68,10 @@ class OffersAdapter(
             holder.offerStepsCount?.text = "0/${dataSource[position].goals.size}"
             holder.progressView?.setProgress(5.0)
         }
+        holder.statusNewUsers.visibility = if(dataSource[position].multipleTimes) View.GONE else View.VISIBLE
+        holder.statusAndroid.visibility = if(dataSource[position].oss.contains(ANDROID_CAMPAIGN_PARAM)) View.VISIBLE else View.GONE
+        holder.statusMultiReward.visibility = if(dataSource[position].hasGoals) View.VISIBLE else View.GONE
+        holder.statusCompleteTask.visibility = if(dataSource[position].hasGoals) View.GONE else View.VISIBLE
 
         holder.startOfferBtn.setOnClickListener {
             onOfferClick(holder, holder.campaign)
@@ -168,10 +174,16 @@ class OffersAdapter(
         val title: TextView = v.findViewById(R.id.offerTitle)
         val description: TextView = v.findViewById(R.id.offerDescription)
         val points: TextView = v.findViewById(R.id.offerPoints)
+        val currency: TextView = v.findViewById(R.id.offerCurrency)
         val offerImage: ImageView = v.findViewById(R.id.offerImage)
         val progressView: SquareProgressView? = v.findViewById(R.id.offerProgress)
         val offerStepsCount: TextView? = v.findViewById(R.id.offerStepsCount)
         val startOfferBtn: TextView = v.findViewById(R.id.startOfferBtn)
+        val statusAndroid: TextView = v.findViewById(R.id.status_item_android)
+        val statusMultiReward: TextView = v.findViewById(R.id.status_item_multireward)
+        val statusCompleteTask: TextView = v.findViewById(R.id.status_item_complete_task)
+        val statusNewUsers: TextView = v.findViewById(R.id.status_item_new_users)
+
         lateinit var campaign: Campaign
 
         init {
