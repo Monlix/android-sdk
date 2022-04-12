@@ -20,9 +20,9 @@ import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ALL_OFFERS
 import com.monlixv2.util.Constants.campaignCrComparator
-import com.monlixv2.util.Constants.campaignDateComparator
 import com.monlixv2.util.Constants.campaignHighToLowPayoutComparator
 import com.monlixv2.util.Constants.campaignLowToHighPayoutComparator
+import com.monlixv2.util.Constants.dateFormatter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -144,7 +144,7 @@ class OffersFragment : Fragment(), CoroutineScope {
                     campaignLowToHighPayoutComparator
                 )
                 SORT_FILTER.RECOMMENDED -> filteredCampaigns.sortWith(campaignCrComparator)
-                else -> filteredCampaigns.sortWith(campaignDateComparator)
+                else -> filteredCampaigns.sortByDescending { campaign -> dateFormatter.parse(campaign.createdAt) }
             }
         }
 

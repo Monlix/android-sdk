@@ -22,6 +22,8 @@ object Constants {
     const val REJECTED_QUERY_PARAM = "cancelled"
     const val CLICKED_QUERY_PARAM = "clicked"
     const val PENDING_QUERY_PARAM = "pending"
+    val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
+
 
     val TRANSACTION_FILTER_LIST =
         arrayOf(ALL_ACTIVITY, IN_PROGRESS, CREDITED, REJECTED, CLICKED, PENDING)
@@ -77,13 +79,7 @@ object Constants {
     val campaignLowToHighPayoutComparator = Comparator<Campaign> { a, b ->
         (a.payout.toDouble() - b.payout.toDouble()).roundToInt()
     }
-    private val formatter = SimpleDateFormat("yyyy-MM-dd")
-    val campaignDateComparator = Comparator<Campaign> { a, b ->
-        val date1 = formatter.parse(a.createdAt)
-        val date2 = formatter.parse(b.createdAt)
 
-        if(date2!! > date1) 1 else 0
-    }
 
 
 }
