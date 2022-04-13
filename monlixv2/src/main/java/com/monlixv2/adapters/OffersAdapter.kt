@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
@@ -83,6 +85,7 @@ class OffersAdapter(
         val bottomSheetDialog = BottomSheetDialog(holder.itemView.context)
         bottomSheetDialog.setContentView(R.layout.ad_bottom_sheet)
 
+        bottomSheetDialog.findViewById<View>(R.id.spacer)!!.minimumHeight = (Resources.getSystem().displayMetrics.heightPixels) / 2
         bottomSheetDialog.findViewById<TextView>(R.id.title)?.text = "Requirements"
         bottomSheetDialog.findViewById<TextView>(R.id.adTitle)?.text = campaign.name
         bottomSheetDialog.findViewById<TextView>(R.id.transactionId)?.text = campaign.description
@@ -116,7 +119,7 @@ class OffersAdapter(
 
             for (i in 0 until campaign.goals.size) {
                 val requirementItem = LayoutInflater.from(holder.itemView.context)
-                    .inflate(R.layout.requrement_item, null);
+                    .inflate(R.layout.requrement_item, null, false);
 
                 val textview =
                     requirementItem.findViewById<TextView>(R.id.requirementTitle)
@@ -159,13 +162,15 @@ class OffersAdapter(
                 stepsToggle.tag =
                     if (stepsToggle.tag == TAG_EXPANDED) TAG_NOT_EXPANDED else TAG_EXPANDED
             }
+            stepsToggle.performClick()
         }
 
         bottomSheetDialog.findViewById<ImageView>(R.id.adSheetClose)?.setOnClickListener {
             bottomSheetDialog.cancel()
         }
 
-        bottomSheetDialog.behavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
+        bottomSheetDialog.behavior.peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
+        bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetDialog.show()
     }
 
