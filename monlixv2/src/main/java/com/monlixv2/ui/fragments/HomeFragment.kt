@@ -1,10 +1,7 @@
 package com.monlixv2.ui.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
-import android.view.VerifiedInputEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -19,6 +16,7 @@ import com.monlixv2.viewmodels.GroupedResponse
 class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
+    private var tabs = arrayListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,18 +30,27 @@ class HomeFragment : Fragment() {
         binding.monlixPager.offscreenPageLimit = 1
     }
 
+    private fun setupTabNames (apiResponse: GroupedResponse){
+        tabs = arrayListOf()
+        if(apiResponse.mergedSurveys!!.size > 0) {
+            tabs.add("Surveys")
+        }
+        if(apiResponse.campaigns!!.size > 0) {
+            tabs.add("Offers")
+        }
+        if(apiResponse.offers!!.ads.size > 0) {
+            tabs.add("Ads")
+        }
+    }
 
     fun displayData(apiResponse: GroupedResponse) {
         val adapter = PagerAdapter(requireActivity() as Main);
+        setupTabNames(apiResponse)
         adapter.setupData(apiResponse)
         binding.monlixPager.adapter = adapter
         TabLayoutMediator(binding.monlixTablayout, binding.monlixPager) { tab, position ->
             tab.text = tabs[position]
         }.attach()
-    }
-
-    companion object {
-        private val tabs = arrayOf("Surveys", "Offers", "Ads")
     }
 
 }
