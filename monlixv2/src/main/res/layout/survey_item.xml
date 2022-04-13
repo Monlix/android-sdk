@@ -38,8 +38,8 @@
                     app:autoSizeMinTextSize="12sp"
                     app:autoSizeMaxTextSize="30sp"
                     app:autoSizeStepGranularity="2sp"
-                    android:textSize="30sp"
                     android:lines="1"
+                    android:textSize="30sp"
                     android:gravity="center"
                     android:text="900"
                     android:layout_height="wrap_content" />

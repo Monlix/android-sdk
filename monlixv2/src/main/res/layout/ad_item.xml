@@ -49,6 +49,8 @@
                     android:text="COMPLETE A TASK" />
 
             <TextView
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:fontFamily="@font/barlow_semibold"
                     android:textColor="@color/darkBlue"
                     android:layout_width="wrap_content"

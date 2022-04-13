@@ -93,7 +93,12 @@
             <TextView
                     android:textColor="@color/white"
                     android:text="+1 530 000"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeStepGranularity="2sp"
                     android:textSize="12sp"
+                    android:lines="1"
                     android:id="@+id/offerPoints"
                     android:textAlignment="center"
                     android:gravity="center"
