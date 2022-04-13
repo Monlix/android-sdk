@@ -54,13 +54,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/surveyPoints"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:textAlignment="center"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeMaxTextSize="60sp"
+                    app:autoSizeStepGranularity="2sp"
                     android:textSize="60sp"
+                    android:lines="1"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="900"
                     android:fontFamily="@font/barlow_extrabold"
                     android:layout_height="wrap_content" />
