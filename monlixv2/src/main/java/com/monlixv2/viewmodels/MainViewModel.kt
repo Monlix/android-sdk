@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.monlixv2.service.ApiInterface
-import com.monlixv2.service.models.ads.Ad
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey

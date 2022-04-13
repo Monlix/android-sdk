@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Survey(
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("payout")
-    val payout: String,
+    val payout: String?,
     @SerializedName("currency")
     val currency: String,
     @SerializedName("link")
@@ -24,5 +24,15 @@ data class Survey(
     @SerializedName("provider")
     val provider: String?,
     @SerializedName("platforms")
-    val platforms: ArrayList<String>
+    val platforms: ArrayList<String>?,
+    @SerializedName("minPayout")
+    val minPayout: Int?,
+    @SerializedName("maxPayout")
+    val maxPayout: Int?,
+    @SerializedName("minDuration")
+    val minDuration: String?,
+    @SerializedName("maxDuration")
+    val maxDuration: String?,
+    @SerializedName("rank")
+    val rank: Double?,
 ) : Parcelable

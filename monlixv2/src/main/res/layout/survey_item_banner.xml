@@ -15,6 +15,7 @@
             android:layout_height="150dp">
 
         <LinearLayout
+                android:id="@+id/surveyTimerContainer"
                 android:background="@drawable/border_radius_item"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
@@ -44,6 +45,34 @@
                     android:background="@drawable/hot_radius_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/ratingContainer"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_radius_item_transparent_20"
+                android:layout_gravity="top|end"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:minHeight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:src="@drawable/orange_star"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+            <TextView
+                    android:id="@+id/surveyRating"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/barlow_medium"
+                    android:textColor="@color/white"
+                    android:text="4.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
         </LinearLayout>
 
