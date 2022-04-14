@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.monlixv2.R
 import com.monlixv2.adapters.FeaturedOffersAdapter
-import com.monlixv2.adapters.OffersAdapter
 import com.monlixv2.databinding.OfferSearchActivityBinding
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.util.Constants.CAMPAIGNS_PAYLOAD
@@ -65,7 +64,7 @@ class SearchOffersActivity : AppCompatActivity(), CoroutineScope {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
     }
 
-    fun filterData() {
+    private fun filterData() {
         println(allCampaigns[0])
         filteredCampaigns = if (textFilter.isNotEmpty()) {
             allCampaigns.filter { it ->
@@ -119,9 +118,6 @@ class SearchOffersActivity : AppCompatActivity(), CoroutineScope {
 
     private fun displayResults() {
         filterData()
-        binding.searchRecycler.apply {
-            adapter = OffersAdapter(filteredCampaigns, this@SearchOffersActivity)
-        }
     }
 
     fun close(view: View) {

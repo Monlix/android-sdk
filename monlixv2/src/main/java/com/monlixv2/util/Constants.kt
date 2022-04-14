@@ -1,5 +1,6 @@
 package com.monlixv2.util
 
+import androidx.collection.arrayMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.monlixv2.R
@@ -83,6 +84,27 @@ object Constants {
         (a.payout.toDouble() - b.payout.toDouble()).roundToInt()
     }
 
+    enum class SORT_FILTER {
+        RECOMMENDED,
+        HIGH_TO_LOW,
+        LOW_TO_HIGH,
+        NEWEST,
+        NONE
+    }
+
+    val SORT_IDS_TO_SORT_FILTER = arrayMapOf(
+        R.id.sortRecommended to SORT_FILTER.RECOMMENDED,
+        R.id.sortHighToLow to SORT_FILTER.HIGH_TO_LOW,
+        R.id.sortLowToHigh to SORT_FILTER.LOW_TO_HIGH,
+        R.id.sortNewest to SORT_FILTER.NEWEST,
+    )
+
+    val SORT_FILTER_TO_ID = arrayMapOf(
+        SORT_FILTER.RECOMMENDED to R.id.sortRecommended,
+        SORT_FILTER.HIGH_TO_LOW to R.id.sortHighToLow,
+        SORT_FILTER.LOW_TO_HIGH to R.id.sortLowToHigh,
+        SORT_FILTER.NEWEST to R.id.sortNewest
+    )
 
 
 }
