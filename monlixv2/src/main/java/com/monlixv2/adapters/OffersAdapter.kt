@@ -18,6 +18,7 @@ import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
 import com.monlixv2.util.UIHelpers.dangerouslySetHTML
 
 
+const val FILTER_CARD = 2
 const val SIMPLE_OFFER_CARD = 0
 const val STEP_OFFER_CARD = 1
 const val TAG_EXPANDED = '1'
@@ -54,7 +55,7 @@ class OffersAdapter(
 
 
     override fun onBindViewHolder(holder: OfferHolder, position: Int) {
-        println("Binding position ${position}")
+        println("Binding OFFER ${position}")
         dangerouslySetHTML(dataSource[position].name, holder.title)
         dangerouslySetHTML(dataSource[position].description, holder.description)
         holder.points.text = "+${dataSource[position].payout}"

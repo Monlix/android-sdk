@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.adapters.OffersAdapter
+import com.monlixv2.adapters.OffersAdapterV2
 import com.monlixv2.databinding.OffersFragmentBinding
+import com.monlixv2.databinding.OffersFragmentV2Binding
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.ui.activities.SearchOffersActivity
 import com.monlixv2.util.Constants
@@ -56,8 +58,7 @@ val SORT_FILTER_TO_ID = arrayMapOf(
 
 class OffersFragment : Fragment(), CoroutineScope {
     private var campaigns: ArrayList<Campaign>? = null
-    private var filteredCampaigns: ArrayList<Campaign> = ArrayList()
-    private lateinit var binding: OffersFragmentBinding
+    private lateinit var binding: OffersFragmentV2Binding
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
     private var sortFilter: SORT_FILTER = SORT_FILTER.NONE
@@ -76,77 +77,69 @@ class OffersFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.offers_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.offers_fragment_v2, container, false)
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        filteredCampaigns.addAll(campaigns!!)
-        initSpinner()
-        initListeners()
+//        initSpinner()
+//        initListeners()
         super.onViewCreated(view, savedInstanceState)
+//        filteredCampaigns.addAll(campaigns!!)
+        setupAdapter()
     }
 
-    fun initListeners() {
-        binding.sortFilters.setOnClickListener {
-            showOrderFilters()
-        }
-        binding.searchContainer.setOnClickListener {
-            val intent = Intent(requireActivity(), SearchOffersActivity::class.java)
-            intent.putExtra(CAMPAIGNS_PAYLOAD,campaigns)
-            startActivity(intent);
-            requireActivity().overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);
-        }
-    }
+//    fun initListeners() {
+//        binding.sortFilters.setOnClickListener {
+//            showOrderFilters()
+//        }
+//        binding.searchContainer.setOnClickListener {
+//            val intent = Intent(requireActivity(), SearchOffersActivity::class.java)
+//            intent.putExtra(CAMPAIGNS_PAYLOAD,campaigns)
+//            startActivity(intent);
+//            requireActivity().overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);
+//        }
+//    }
 
 
 
     fun setupAdapter() {
-        filterData()
-        binding.offersRecycler.apply {
-            adapter = OffersAdapter(filteredCampaigns, activity as AppCompatActivity)
+        binding.offersRecyclerV2.apply {
+            adapter = campaigns?.let { OffersAdapterV2(it, activity as AppCompatActivity) }
         }
+        //filterData()
+//        binding.offersRecycler.apply {
+//            adapter = OffersAdapterV2(filteredCampaigns, activity as AppCompatActivity)
+//        }
     }
 
     fun filterData() {
         // filter by offer type
-        filteredCampaigns = when (typeOfOffersFilter) {
-            Constants.ALL_OFFERS -> campaigns!!
-            else -> campaigns!!.filter { it ->
-                Constants.ANDROID_CAMPAIGN_PARAM in it.oss
-            } as ArrayList<Campaign>
-        }
+//        filteredCampaigns = when (typeOfOffersFilter) {
+//            Constants.ALL_OFFERS -> campaigns!!
+//            else -> campaigns!!.filter { it ->
+//                Constants.ANDROID_CAMPAIGN_PARAM in it.oss
+//            } as ArrayList<Campaign>
+//        }
 
         // filter by sort
-        if (sortFilter !== SORT_FILTER.NONE) {
-            when (sortFilter) {
-                SORT_FILTER.HIGH_TO_LOW -> filteredCampaigns.sortWith(
-                    campaignHighToLowPayoutComparator
-                )
-                SORT_FILTER.LOW_TO_HIGH -> filteredCampaigns.sortWith(
-                    campaignLowToHighPayoutComparator
-                )
-                SORT_FILTER.RECOMMENDED -> filteredCampaigns.sortWith(campaignCrComparator)
-                else -> filteredCampaigns.sortByDescending { campaign -> dateFormatter.parse(campaign.createdAt) }
-            }
-        }
+//        if (sortFilter !== SORT_FILTER.NONE) {
+//            when (sortFilter) {
+//                SORT_FILTER.HIGH_TO_LOW -> filteredCampaigns.sortWith(
+//                    campaignHighToLowPayoutComparator
+//                )
+//                SORT_FILTER.LOW_TO_HIGH -> filteredCampaigns.sortWith(
+//                    campaignLowToHighPayoutComparator
+//                )
+//                SORT_FILTER.RECOMMENDED -> filteredCampaigns.sortWith(campaignCrComparator)
+//                else -> filteredCampaigns.sortByDescending { campaign -> dateFormatter.parse(campaign.createdAt) }
+//            }
+//        }
     }
 
     fun initSpinner() {
-        binding.offerTypeSpinner.adapter = ArrayAdapter<String>(
-            requireContext(), R.layout.simple_spinner_dropdown_item,
-            Constants.OFFER_FILTER_LIST
-        )
-        binding.offerTypeSpinner.setOnItemSelectedListener(object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
-                typeOfOffersFilter = adapterView.getItemAtPosition(i).toString()
-                setupAdapter()
-            }
-
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-        })
+//+++++*******************************
     }
 
 

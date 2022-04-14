@@ -3,6 +3,8 @@ package com.monlixv2.adapters
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.service.models.surveys.Survey
 import com.monlixv2.ui.fragments.AdsFragment
 import com.monlixv2.ui.fragments.OffersFragment
 import com.monlixv2.ui.fragments.SurveysFragment
@@ -17,6 +19,7 @@ class PagerAdapter(fa: AppCompatActivity?) :
 
     private var data: GroupedResponse? = null
     private var renderedFragments = mutableSetOf<Number>()
+    private var filteredCampaigns: ArrayList<Campaign> = ArrayList()
 
     fun setupData(passedData: GroupedResponse) {
         this.data = passedData
@@ -29,11 +32,20 @@ class PagerAdapter(fa: AppCompatActivity?) :
         }
         if (!renderedFragments.contains(OFFER_FRAGMENT) && data?.campaigns?.size!! > 0) {
             renderedFragments.add(OFFER_FRAGMENT)
+            //todo remove
             data!!.campaigns!![0].featured = true
             data!!.campaigns!![1].featured = true
             data!!.campaigns!![2].featured = true
             data!!.campaigns!![3].featured = true
             data!!.campaigns!![5].featured = true
+
+            println("CAMPAIGNS BEFORE ${data!!.campaigns!!.size}")
+
+            for (i in 0 until 500) {
+                data!!.campaigns!!.add(data!!.campaigns!![data!!.campaigns!!.size-1])
+            }
+
+            println("CAMPAIGNS AFTER ${data!!.campaigns!!.size}")
 
             return OffersFragment.newInstance(data?.campaigns!!)
         }

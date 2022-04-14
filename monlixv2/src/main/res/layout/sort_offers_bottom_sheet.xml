@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content" />
 
         <ImageView
+                android:id="@+id/closeSort"
                 android:layout_marginLeft="-16dp"
                 android:layout_width="18dp"
                 android:layout_height="18dp"

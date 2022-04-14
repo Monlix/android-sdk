@@ -1,4 +1,5 @@
 package com.monlixv2.ui.fragments
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.monlixv2.R
 import com.monlixv2.adapters.AdsAdapter
-import com.monlixv2.adapters.SurveysAdapter
 import com.monlixv2.databinding.AdsFragmentBinding
 import com.monlixv2.service.models.ads.Ad
 

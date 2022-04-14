@@ -63,17 +63,7 @@ class MainActivity : AppCompatActivity() {
                 val currentFragment =
                     if (navHostFragment.childFragmentManager.fragments.size > 0) navHostFragment.childFragmentManager.fragments[0] else null
                 if (currentFragment is HomeFragment) {
-                    println(it.mergedSurveys?.size)
-                    println(it.offers?.offers?.size)
-                    println(it.campaigns?.size)
-//                    val groupedResponse = GroupedResponse(
-//                        surveys = ArrayList(),
-//                        offers = null,
-//                        campaigns = ArrayList(),
-//                        mergedSurveys = it.mergedSurveys
-//                    )
                      currentFragment.displayData(it);
-                    // currentFragment.displayData(it);
                 }
             }
         })
