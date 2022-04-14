@@ -44,9 +44,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 <include layout="@layout/status_item_android" />
+                <include layout="@layout/status_item_new_users" />
                 <include layout="@layout/status_item_multi_reward" />
                 <include layout="@layout/status_item_complete_task" />
-                <include layout="@layout/status_item_new_users" />
+                <include layout="@layout/status_item_no_vpn" />
 
             </LinearLayout>
 
@@ -67,6 +68,7 @@
                     android:maxLines="2"
                     android:textColor="@color/grayV5"
                     android:textSize="12sp"
+                    android:paddingRight="4dp"
                     android:fontFamily="@font/barlow"
                     android:layout_width="wrap_content"
                     android:id="@+id/offerDescription"

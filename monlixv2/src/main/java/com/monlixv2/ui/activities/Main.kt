@@ -1,4 +1,4 @@
-package com.monlixv2.ui
+package com.monlixv2.ui.activities
 
 import android.content.Intent
 import android.content.SharedPreferences

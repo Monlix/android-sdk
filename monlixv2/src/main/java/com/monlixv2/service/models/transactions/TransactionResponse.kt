@@ -8,7 +8,7 @@ data class TransactionResponse(
     @SerializedName("ptcEarnings")
     val ptcEarnings: Double,
     @SerializedName("completedOffers")
-    val completedOffers: Double,
+    val completedOffers: Int,
     @SerializedName("transactions")
     val transactions: ArrayList<Transaction>,
 )

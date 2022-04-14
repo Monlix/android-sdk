@@ -25,4 +25,6 @@
     <string name="search_offer_or_keyword">Search offer or keyword</string>
     <string name="sort">Sort</string>
     <string name="start_offer">start offer</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="search">Search</string>
 </resources>

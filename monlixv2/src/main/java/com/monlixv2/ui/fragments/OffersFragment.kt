@@ -1,14 +1,14 @@
 package com.monlixv2.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.arrayMapOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,17 +17,19 @@ import com.monlixv2.R
 import com.monlixv2.adapters.OffersAdapter
 import com.monlixv2.databinding.OffersFragmentBinding
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.ui.activities.Main
+import com.monlixv2.ui.activities.SearchOffers
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ALL_OFFERS
+import com.monlixv2.util.Constants.CAMPAIGNS_PAYLOAD
 import com.monlixv2.util.Constants.campaignCrComparator
 import com.monlixv2.util.Constants.campaignHighToLowPayoutComparator
 import com.monlixv2.util.Constants.campaignLowToHighPayoutComparator
 import com.monlixv2.util.Constants.dateFormatter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+
 
 private const val OFFERS_PARAM = "OFFERS_PARAM"
 
@@ -60,7 +62,6 @@ class OffersFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
     private var sortFilter: SORT_FILTER = SORT_FILTER.NONE
-    private var textFilter = ""
     private var typeOfOffersFilter = ALL_OFFERS
 
 
@@ -92,36 +93,20 @@ class OffersFragment : Fragment(), CoroutineScope {
         binding.sortFilters.setOnClickListener {
             showOrderFilters()
         }
-        binding.textSearch.addTextChangedListener(textWatcher)
-    }
-
-    private val textWatcher = object : TextWatcher {
-        private var searchFor = ""
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val searchText = s.toString().trim()
-            if (searchText == searchFor)
-                return
-
-            searchFor = searchText
-
-            launch {
-                delay(300)  //debounce timeOut
-                if (searchText != searchFor)
-                    return@launch
-                textFilter = searchFor.lowercase()
-                setupAdapter()
-            }
+        binding.searchContainer.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchOffers::class.java)
+            intent.putExtra(CAMPAIGNS_PAYLOAD,campaigns)
+            startActivity(intent);
+            requireActivity().overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);
         }
-
-        override fun afterTextChanged(s: Editable?) = Unit
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
     }
+
+
 
     fun setupAdapter() {
         filterData()
         binding.offersRecycler.apply {
-            adapter = OffersAdapter(filteredCampaigns)
+            adapter = OffersAdapter(filteredCampaigns, activity as AppCompatActivity)
         }
     }
 
@@ -147,15 +132,6 @@ class OffersFragment : Fragment(), CoroutineScope {
                 else -> filteredCampaigns.sortByDescending { campaign -> dateFormatter.parse(campaign.createdAt) }
             }
         }
-
-        // filter by text
-        if (textFilter.isNotEmpty()) {
-            filteredCampaigns = filteredCampaigns.filter { it ->
-                it.name.lowercase().contains(textFilter)
-            } as ArrayList<Campaign>
-        }
-
-
     }
 
     fun initSpinner() {

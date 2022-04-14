@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.monlixv2.R
 import com.monlixv2.adapters.PagerAdapter
 import com.monlixv2.databinding.HomeFragmentBinding
-import com.monlixv2.ui.Main
+import com.monlixv2.ui.activities.Main
 import com.monlixv2.viewmodels.GroupedResponse
 
 class HomeFragment : Fragment() {

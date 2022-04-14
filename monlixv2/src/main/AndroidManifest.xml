@@ -12,9 +12,17 @@
             android:networkSecurityConfig="@xml/network_security_config"
             android:supportsRtl="true"
             >
-        <activity android:name=".ui.Main" android:theme="@style/MonlinxTheme"
+        <activity android:name=".ui.activities.Main" android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"
                 />
+        <activity android:name=".ui.activities.SearchOffers" android:theme="@style/MonlinxTheme"
+                android:hardwareAccelerated="true"
+                />
+        <activity android:name=".ui.activities.OfferDetails"
+                android:theme="@style/MonlinxTheme"
+                android:hardwareAccelerated="true"
+                />
+
         <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts" />

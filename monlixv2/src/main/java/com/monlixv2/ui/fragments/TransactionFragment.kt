@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.R
 import com.monlixv2.adapters.TransactionAdapter
 import com.monlixv2.databinding.TransactionFragmentBinding
-import com.monlixv2.ui.Main
+import com.monlixv2.ui.activities.Main
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.TRANSACTION_FILTER_LIST
 import com.monlixv2.util.PreferenceHelper

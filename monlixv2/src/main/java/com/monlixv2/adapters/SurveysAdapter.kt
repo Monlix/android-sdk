@@ -12,6 +12,7 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.monlixv2.R
 import com.monlixv2.service.models.surveys.Survey
+import com.monlixv2.util.UIHelpers
 
 
 const val LARGE_CARD = 0
@@ -48,8 +49,7 @@ class SurveysAdapter(
 
 
     override fun onBindViewHolder(holder: SurveyHolder, position: Int) {
-        holder.title.text = dataSource[position].name
-
+        UIHelpers.dangerouslySetHTML(dataSource[position].name, holder.title)
         // trick to handle text auto-resizing
         TextViewCompat.setAutoSizeTextTypeWithDefaults(holder.points, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
         holder.points.text = ""

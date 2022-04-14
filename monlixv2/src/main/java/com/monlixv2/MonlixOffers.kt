@@ -3,7 +3,7 @@ package com.monlixv2
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import com.monlixv2.ui.Main
+import com.monlixv2.ui.activities.Main
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixAppId
 import com.monlixv2.util.PreferenceHelper.MonlixPrefs

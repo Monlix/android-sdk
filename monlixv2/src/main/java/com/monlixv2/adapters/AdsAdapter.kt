@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
 import com.monlixv2.service.models.ads.Ad
+import com.monlixv2.util.UIHelpers
 
 
 class AdsAdapter(
@@ -37,10 +38,10 @@ class AdsAdapter(
 
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
-        holder.title.text = dataSource[position].name
+        UIHelpers.dangerouslySetHTML(dataSource[position].name, holder.title)
+        UIHelpers.dangerouslySetHTML(dataSource[position].description, holder.description)
         holder.points.text = "+${dataSource[position].payout}"
         holder.currency.text = dataSource[position].currency
-        holder.description.text = dataSource[position].description
         holder.ad = dataSource[position]
 
         Glide.with(holder.itemView.context).load(dataSource[position].logo)

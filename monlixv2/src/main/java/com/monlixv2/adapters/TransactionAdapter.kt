@@ -15,6 +15,8 @@ import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
 import com.monlixv2.util.Constants.CLICKED_QUERY_PARAM
 import com.monlixv2.util.Constants.TRANSACTION_ITEM_STATUS_DRAWABLE
 import com.monlixv2.util.Constants.TRANSACTION_ITEM_STATUS_TEXT_COLOR
+import com.monlixv2.util.UIHelpers
+import com.monlixv2.util.UIHelpers.dangerouslySetHTML
 
 
 const val SIMPLE_TRANSCATION_CARD = 0
@@ -60,8 +62,7 @@ class TransactionAdapter(
 
 
     override fun onBindViewHolder(holder: TransactionHolder, position: Int) {
-
-        holder.title.text = dataSource[position].name
+        dangerouslySetHTML(dataSource[position].name, holder.title)
         holder.payout.text =
             "${dataSource[position].reward} ${dataSource[position].currency}"
         holder.status.text = "${dataSource[position].status}"

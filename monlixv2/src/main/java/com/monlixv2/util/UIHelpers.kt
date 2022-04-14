@@ -1,31 +1,21 @@
 package com.monlixv2.util
 
 import android.graphics.*
+import android.os.Build
+import android.text.Html
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
 object UIHelpers {
 
-    fun circleCrop(bitmap: Bitmap): Bitmap {
-        val output =
-            Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(output)
-        val paint = Paint()
-        val rect = Rect(0, 0, bitmap.getWidth(), bitmap.getHeight())
-
-        paint.isAntiAlias = true
-        canvas.drawARGB(0, 0, 0, 0)
-        canvas.drawCircle(
-            bitmap.getWidth() / 2f,
-            bitmap.getHeight() / 2f,
-            bitmap.getWidth() / 2f,
-            paint
-        )
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-        canvas.drawBitmap(bitmap, rect, rect, paint)
-
-        return output
+    fun dangerouslySetHTML(html: String, textView: TextView) {
+        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            Html.fromHtml(html)
+        }
     }
 
     class MarginItemDecoration(private val spaceSize: Int) : RecyclerView.ItemDecoration() {

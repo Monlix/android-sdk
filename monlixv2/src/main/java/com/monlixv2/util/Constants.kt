@@ -22,6 +22,9 @@ object Constants {
     const val REJECTED_QUERY_PARAM = "cancelled"
     const val CLICKED_QUERY_PARAM = "clicked"
     const val PENDING_QUERY_PARAM = "pending"
+    const val CAMPAIGNS_PAYLOAD = "campaigns"
+    const val SINGLE_CAMPAIGN_PAYLOAD = "singleCampaign"
+
     val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
 

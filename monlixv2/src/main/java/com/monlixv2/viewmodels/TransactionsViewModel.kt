@@ -26,13 +26,10 @@ class TransactionsViewModel(APP_ID: String, USER_ID: String, application: Applic
     val transactionList: LiveData<ArrayList<Transaction>>
         get() = _transactionList
 
-    private val _points = MutableLiveData<String>("0")
-    val points: LiveData<String>
-        get() = _points
+    private val _completedTasks = MutableLiveData<String>("0")
+    val completedTasks: LiveData<String>
+        get() = _completedTasks
 
-    private val _clicks = MutableLiveData<String>("0")
-    val clicks: LiveData<String>
-        get() = _clicks
 
     private val _pageId = MutableLiveData<String>("")
     val pageId: LiveData<String>
@@ -106,8 +103,7 @@ class TransactionsViewModel(APP_ID: String, USER_ID: String, application: Applic
                 }
                 _isLoadingProgress.postValue(false)
                 _isLoadingRequest.postValue(false)
-                _points.postValue(response.body()?.ptcEarnings.toString())
-                _clicks.postValue(response.body()?.ptcClicks.toString())
+                _completedTasks.postValue(response.body()?.completedOffers.toString())
 
                 val responseTransactions = response.body()!!.transactions
 

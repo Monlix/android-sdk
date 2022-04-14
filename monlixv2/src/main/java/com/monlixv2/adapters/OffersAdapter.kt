@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -16,8 +17,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.ui.activities.Main
+import com.monlixv2.ui.activities.OfferDetails
+import com.monlixv2.ui.activities.SearchOffers
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
+import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
+import com.monlixv2.util.UIHelpers.dangerouslySetHTML
 
 
 const val SIMPLE_OFFER_CARD = 0
@@ -26,7 +32,8 @@ const val TAG_EXPANDED = '1'
 const val TAG_NOT_EXPANDED = '0'
 
 class OffersAdapter(
-    private val dataSource: ArrayList<Campaign>
+    private val dataSource: ArrayList<Campaign>,
+    private val activity: AppCompatActivity,
 ) : RecyclerView.Adapter<OffersAdapter.OfferHolder>() {
 
 
@@ -55,10 +62,10 @@ class OffersAdapter(
 
 
     override fun onBindViewHolder(holder: OfferHolder, position: Int) {
-        holder.title.text = dataSource[position].name
+        dangerouslySetHTML(dataSource[position].name, holder.title)
+        dangerouslySetHTML(dataSource[position].description, holder.description)
         holder.points.text = "+${dataSource[position].payout}"
         holder.currency.text = dataSource[position].currency
-        holder.description.text = dataSource[position].description
         holder.campaign = dataSource[position]
 
         Glide.with(holder.itemView.context).load(dataSource[position].image)
@@ -82,96 +89,10 @@ class OffersAdapter(
     }
 
     private fun onOfferClick(holder: OfferHolder, campaign: Campaign) {
-        val bottomSheetDialog = BottomSheetDialog(holder.itemView.context)
-        bottomSheetDialog.setContentView(R.layout.ad_bottom_sheet)
-
-        bottomSheetDialog.findViewById<View>(R.id.spacer)!!.minimumHeight = (Resources.getSystem().displayMetrics.heightPixels) / 2
-        bottomSheetDialog.findViewById<TextView>(R.id.title)?.text = "Requirements"
-        bottomSheetDialog.findViewById<TextView>(R.id.adTitle)?.text = campaign.name
-        bottomSheetDialog.findViewById<TextView>(R.id.transactionId)?.text = campaign.description
-        bottomSheetDialog.findViewById<Button>(R.id.startOfferBtn)!!.setOnClickListener {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(campaign.url)
-            it?.let { ContextCompat.startActivity(it.context, i, null) }
-        }
-
-
-        val logo = bottomSheetDialog.findViewById<ImageView>(R.id.transactionImage)
-
-        Glide.with(holder.itemView.context).load(campaign.image)
-            .transition(DrawableTransitionOptions.withCrossFade(300))
-            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
-            .into(logo!!)
-
-        if (campaign.hasGoals && campaign.goals.size > 0) {
-            val stepsToggle = bottomSheetDialog.findViewById<TextView>(R.id.stepsToggle)!!
-            val stepsContainer = bottomSheetDialog.findViewById<LinearLayout>(R.id.stepsContainer)!!;
-            val stepsScroller = stepsContainer.parent as ScrollView
-            stepsScroller.apply {
-                setOnTouchListener(View.OnTouchListener { v, _ ->
-                    v.parent.parent.parent.requestDisallowInterceptTouchEvent(true);
-                    performClick()
-                    false
-                })
-            }
-            stepsToggle.visibility = View.VISIBLE
-            stepsToggle.tag = TAG_NOT_EXPANDED
-
-            for (i in 0 until campaign.goals.size) {
-                val requirementItem = LayoutInflater.from(holder.itemView.context)
-                    .inflate(R.layout.requrement_item, null, false);
-
-                val textview =
-                    requirementItem.findViewById<TextView>(R.id.requirementTitle)
-                val stepCheck = requirementItem.findViewById<ImageView>(R.id.stepCheck)
-                val goalPayout =
-                    requirementItem.findViewById<TextView>(R.id.goalPayout);
-                textview.text = campaign.goals[i].name
-                goalPayout.text = campaign.goals[i].payout
-
-                Glide.with(holder.itemView.context).load(
-                    ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.circle_radio
-                    )
-                ).into(stepCheck)
-                if (i == campaign.goals.size - 1) {
-                    requirementItem.findViewById<ImageView>(R.id.bottomDots).visibility =
-                        View.GONE
-                }
-                stepsContainer.addView(requirementItem)
-            }
-
-            stepsToggle.setOnClickListener {
-                val shouldReveal = stepsToggle.tag == TAG_NOT_EXPANDED
-                stepsContainer.visibility = if(shouldReveal) View.VISIBLE else View.GONE
-                stepsScroller.visibility = if(shouldReveal) View.VISIBLE else View.GONE
-
-                val drawable = ContextCompat.getDrawable(
-                    holder.itemView.context,
-                    if (shouldReveal) R.drawable.arrow_down_reversed else
-                        R.drawable.arrow_down
-                )
-                stepsToggle.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    null,
-                    drawable,
-                    null
-                )
-
-                stepsToggle.tag =
-                    if (stepsToggle.tag == TAG_EXPANDED) TAG_NOT_EXPANDED else TAG_EXPANDED
-            }
-            stepsToggle.performClick()
-        }
-
-        bottomSheetDialog.findViewById<ImageView>(R.id.adSheetClose)?.setOnClickListener {
-            bottomSheetDialog.cancel()
-        }
-
-        bottomSheetDialog.behavior.peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
-        bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        bottomSheetDialog.show()
+        val intent = Intent(holder.itemView.context, OfferDetails::class.java)
+        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD,campaign)
+        activity.startActivity(intent);
+        activity.overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);
     }
 
 

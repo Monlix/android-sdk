@@ -84,7 +84,10 @@
                         tools:text="Call of Antia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/barlow_bold" />
+                        android:fontFamily="@font/barlow_bold"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        />
 
                 <TextView
                         android:id="@+id/transactionId"
