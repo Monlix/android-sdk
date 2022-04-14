@@ -37,20 +37,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <LinearLayout
-                    android:gravity="center"
-                    android:id="@+id/statusContainer"
-                    android:orientation="horizontal"
+            <HorizontalScrollView
+                    android:scrollbars="none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                <include layout="@layout/status_item_android" />
-                <include layout="@layout/status_item_new_users" />
-                <include layout="@layout/status_item_multi_reward" />
-                <include layout="@layout/status_item_complete_task" />
-                <include layout="@layout/status_item_no_vpn" />
+                <LinearLayout
+                        android:gravity="center"
+                        android:id="@+id/statusContainer"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    <include layout="@layout/status_item_android" />
+                    <include layout="@layout/status_item_new_users" />
+                    <include layout="@layout/status_item_multi_reward" />
+                    <include layout="@layout/status_item_complete_task" />
 
-            </LinearLayout>
-
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <TextView
                     android:layout_marginTop="4dp"

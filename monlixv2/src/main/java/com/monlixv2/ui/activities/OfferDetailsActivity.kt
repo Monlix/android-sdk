@@ -22,7 +22,7 @@ import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.SINGLE_CAMPAIGN_PAYLOAD
 
 
-class OfferDetails : AppCompatActivity() {
+class OfferDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: OfferDetailsActivityBinding
     private lateinit var offerDetailsBinding: OfferItemInPopWindowBinding

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.monlixv2.service.ApiInterface
+import com.monlixv2.service.ApiTest
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey
@@ -87,7 +88,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
                 _groupedResponse.value?.surveys = response.body()
                 checkProgress()
             } catch (e: Exception) {
-                println("Monlix Exception ${e.message}")
+                println("Monlix Exception surveys -${e.message}")
             }
         }
     }
@@ -100,7 +101,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
                 _groupedResponse.value?.offers = response.body()
                 checkProgress()
             } catch (e: Exception) {
-                println("Monlix Exception ${e.message}")
+                println("Monlix Exception offers - ${e.message}")
             }
         }
     }
@@ -118,7 +119,8 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
                 _groupedResponse.value?.campaigns =  filtered
                 checkProgress()
             } catch (e: Exception) {
-                println("Monlix Exception ${e.message}")
+                println(e)
+                println("Monlix Exception campaigns -${e.message}")
             }
         }
     }

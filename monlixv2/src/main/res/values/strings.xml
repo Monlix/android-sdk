@@ -27,4 +27,7 @@
     <string name="start_offer">start offer</string>
     <string name="completed_tasks">Completed Tasks</string>
     <string name="search">Search</string>
+    <string name="discover_offers">Discover offers</string>
+    <string name="search_again">Search again, or check offers below...</string>
+    <string name="featured_offers">Featured offers</string>
 </resources>

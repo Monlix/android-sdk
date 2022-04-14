@@ -27,7 +27,7 @@ data class Campaign(
     @SerializedName("multipleTimes")
     val multipleTimes: Boolean,
     @SerializedName("featured")
-    val featured: Boolean,
+    var featured: Boolean,
     @SerializedName("url")
     val url: String,
     @SerializedName("hasGoals")

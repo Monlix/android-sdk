@@ -1,25 +1,17 @@
 package com.monlixv2.adapters
 
 import android.content.Intent
-import android.content.res.Resources
-import android.net.Uri
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
-import com.monlixv2.ui.activities.Main
-import com.monlixv2.ui.activities.OfferDetails
-import com.monlixv2.ui.activities.SearchOffers
+import com.monlixv2.ui.activities.OfferDetailsActivity
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
@@ -62,6 +54,7 @@ class OffersAdapter(
 
 
     override fun onBindViewHolder(holder: OfferHolder, position: Int) {
+        println("Binding position ${position}")
         dangerouslySetHTML(dataSource[position].name, holder.title)
         dangerouslySetHTML(dataSource[position].description, holder.description)
         holder.points.text = "+${dataSource[position].payout}"
@@ -89,7 +82,7 @@ class OffersAdapter(
     }
 
     private fun onOfferClick(holder: OfferHolder, campaign: Campaign) {
-        val intent = Intent(holder.itemView.context, OfferDetails::class.java)
+        val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
         intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD,campaign)
         activity.startActivity(intent);
         activity.overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);

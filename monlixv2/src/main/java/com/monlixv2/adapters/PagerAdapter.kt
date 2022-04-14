@@ -29,6 +29,12 @@ class PagerAdapter(fa: AppCompatActivity?) :
         }
         if (!renderedFragments.contains(OFFER_FRAGMENT) && data?.campaigns?.size!! > 0) {
             renderedFragments.add(OFFER_FRAGMENT)
+            data!!.campaigns!![0].featured = true
+            data!!.campaigns!![1].featured = true
+            data!!.campaigns!![2].featured = true
+            data!!.campaigns!![3].featured = true
+            data!!.campaigns!![5].featured = true
+
             return OffersFragment.newInstance(data?.campaigns!!)
         }
         if (!renderedFragments.contains(AD_FRAGMENT) && data?.offers?.ads?.size!! > 0) {

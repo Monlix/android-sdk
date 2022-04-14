@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        android:id="@+id/featuredCard"
+        app:cardUseCompatPadding="true"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:contentDescription="featured image"
+            tools:src="@drawable/offer_placeholder"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="8dp"
+            android:id="@+id/offerImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+    <TextView
+            android:textSize="12sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="14dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:fontFamily="@font/barlow_medium"
+            android:textColor="@color/darkBlue"
+            android:layout_width="114dp"
+            android:id="@+id/offerTitle"
+            android:textAlignment="center"
+            android:text="$500 Capital One Gold"
+            android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+            android:padding="4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@color/greenV4"
+            android:layout_marginTop="116dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+        <TextView
+                android:textColor="@color/white"
+                android:text="+1 530 000"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeStepGranularity="2sp"
+                android:textSize="12sp"
+                android:lines="1"
+                android:id="@+id/offerPoints"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:fontFamily="@font/barlow_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <TextView
+                android:textColor="@color/white"
+                android:text="USD"
+                android:textSize="12sp"
+                android:id="@+id/offerCurrency"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:fontFamily="@font/barlow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

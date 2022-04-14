@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.R
 import com.monlixv2.adapters.TransactionAdapter
 import com.monlixv2.databinding.TransactionFragmentBinding
-import com.monlixv2.ui.activities.Main
+import com.monlixv2.ui.activities.MainActivity
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.TRANSACTION_FILTER_LIST
 import com.monlixv2.util.PreferenceHelper
@@ -37,7 +37,7 @@ class TransactionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        prefs = PreferenceHelper.customPrefs(context as Main, PreferenceHelper.MonlixPrefs);
+        prefs = PreferenceHelper.customPrefs(context as MainActivity, PreferenceHelper.MonlixPrefs);
         binding = TransactionFragmentBinding.inflate(inflater, container, false)
         binding!!.lifecycleOwner = this
         viewModel =

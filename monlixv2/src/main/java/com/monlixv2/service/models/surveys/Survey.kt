@@ -26,9 +26,9 @@ data class Survey(
     @SerializedName("platforms")
     val platforms: ArrayList<String>?,
     @SerializedName("minPayout")
-    val minPayout: Int?,
+    val minPayout: Double?,
     @SerializedName("maxPayout")
-    val maxPayout: Int?,
+    val maxPayout: Double?,
     @SerializedName("minDuration")
     val minDuration: String?,
     @SerializedName("maxDuration")

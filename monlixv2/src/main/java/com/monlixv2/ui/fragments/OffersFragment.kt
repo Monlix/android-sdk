@@ -17,8 +17,7 @@ import com.monlixv2.R
 import com.monlixv2.adapters.OffersAdapter
 import com.monlixv2.databinding.OffersFragmentBinding
 import com.monlixv2.service.models.campaigns.Campaign
-import com.monlixv2.ui.activities.Main
-import com.monlixv2.ui.activities.SearchOffers
+import com.monlixv2.ui.activities.SearchOffersActivity
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ALL_OFFERS
 import com.monlixv2.util.Constants.CAMPAIGNS_PAYLOAD
@@ -94,7 +93,7 @@ class OffersFragment : Fragment(), CoroutineScope {
             showOrderFilters()
         }
         binding.searchContainer.setOnClickListener {
-            val intent = Intent(requireActivity(), SearchOffers::class.java)
+            val intent = Intent(requireActivity(), SearchOffersActivity::class.java)
             intent.putExtra(CAMPAIGNS_PAYLOAD,campaigns)
             startActivity(intent);
             requireActivity().overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);

@@ -20,10 +20,11 @@ import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixAppId
 import com.monlixv2.util.PreferenceHelper.MonlixUserId
 import com.monlixv2.util.PreferenceHelper.get
+import com.monlixv2.viewmodels.GroupedResponse
 import com.monlixv2.viewmodels.MainViewModel
 
 
-class Main : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var viewModel: MainViewModel
@@ -62,7 +63,17 @@ class Main : AppCompatActivity() {
                 val currentFragment =
                     if (navHostFragment.childFragmentManager.fragments.size > 0) navHostFragment.childFragmentManager.fragments[0] else null
                 if (currentFragment is HomeFragment) {
-                    currentFragment.displayData(it);
+                    println(it.mergedSurveys?.size)
+                    println(it.offers?.offers?.size)
+                    println(it.campaigns?.size)
+//                    val groupedResponse = GroupedResponse(
+//                        surveys = ArrayList(),
+//                        offers = null,
+//                        campaigns = ArrayList(),
+//                        mergedSurveys = it.mergedSurveys
+//                    )
+                     currentFragment.displayData(it);
+                    // currentFragment.displayData(it);
                 }
             }
         })
