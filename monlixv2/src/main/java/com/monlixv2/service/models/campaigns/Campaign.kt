@@ -17,7 +17,7 @@ data class Campaign(
     @SerializedName("oss")
     val oss: ArrayList<String>,
     @SerializedName("payout")
-    val payout: String,
+    val payout: Double,
     @SerializedName("image")
     val image: String,
     @SerializedName("goals")

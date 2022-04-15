@@ -82,7 +82,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
 
     fun surveysRequest() {
         coroutineScope.launch {
-            val response = ApiInterface.getInstance()
+            val response = ApiTest.getInstance()
                 .getSurveys(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.surveys = response.body()
@@ -108,7 +108,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
 
     fun campaignsRequest() {
         coroutineScope.launch {
-            val response = ApiInterface.getInstance()
+            val response = ApiTest.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 val campaigns = if(response.body() != null) response.body() else ArrayList();

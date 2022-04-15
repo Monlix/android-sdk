@@ -78,10 +78,10 @@ object Constants {
     }
 
     val campaignHighToLowPayoutComparator = Comparator<Campaign> { a, b ->
-        (b.payout.toDouble() - a.payout.toDouble()).roundToInt()
+        (b.payout - a.payout).roundToInt()
     }
     val campaignLowToHighPayoutComparator = Comparator<Campaign> { a, b ->
-        (a.payout.toDouble() - b.payout.toDouble()).roundToInt()
+        (a.payout - b.payout).roundToInt()
     }
 
     enum class SORT_FILTER {

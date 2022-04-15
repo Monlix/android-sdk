@@ -71,12 +71,15 @@
 
 
             <LinearLayout
+                    android:minHeight="80dp"
+                    android:gravity="top"
                     android:paddingStart="12dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 <LinearLayout
+                        android:layout_gravity="top"
                         android:id="@+id/payoutContainer"
                         android:paddingRight="10dp"
                         android:gravity="end"
@@ -113,7 +116,7 @@
                         android:textColor="@color/darkBlue"
                         android:text=""
                         android:id="@+id/title"
-                        tools:text="Call of Antia"
+                        tools:text="Call of AntiaCall of Antia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/barlow_bold"

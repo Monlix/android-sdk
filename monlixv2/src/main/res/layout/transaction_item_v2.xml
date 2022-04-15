@@ -41,12 +41,15 @@
 
 
             <LinearLayout
+                    android:minHeight="80dp"
+                    android:gravity="top"
                     android:paddingStart="12dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 <LinearLayout
+                        android:layout_gravity="top"
                         android:paddingRight="10dp"
                         android:gravity="end"
                         android:layout_width="match_parent"
