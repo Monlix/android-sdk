@@ -32,11 +32,12 @@ val SPINNER_POSITION_MAPPING = mapOf(Constants.ALL_OFFERS to 0, Constants.ANDROI
 const val FILTER_CARD = 2
 const val SIMPLE_OFFER_CARD = 0
 const val STEP_OFFER_CARD = 1
+const val STEP_EMPTY_VIEW = 4
 const val TAG_EXPANDED = '1'
 const val TAG_NOT_EXPANDED = '0'
 
 class OffersAdapterV2(
-    dataSource: ArrayList<Campaign>,
+    private val dataSource: ArrayList<Campaign>,
     private val activity: AppCompatActivity,
 ) : RecyclerView.Adapter<OffersAdapterV2.OfferHolderV2>() {
 
@@ -66,14 +67,14 @@ class OffersAdapterV2(
     }
 
     override fun getItemCount(): Int {
-        return filteredCampaigns.size+1
+        return filteredCampaigns.size + 1
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position == 0)
-            return  FILTER_CARD
+        if (position == 0)
+            return FILTER_CARD
 
-        return if (filteredCampaigns[position].hasGoals && filteredCampaigns[position].goals.size > 0) STEP_OFFER_CARD else SIMPLE_OFFER_CARD
+        return if (filteredCampaigns[position-1].hasGoals && filteredCampaigns[position-1].goals.size > 0) STEP_OFFER_CARD else SIMPLE_OFFER_CARD
     }
 
 
@@ -83,9 +84,9 @@ class OffersAdapterV2(
         }
         holder.searchContainer?.setOnClickListener {
             val intent = Intent(activity, SearchOffersActivity::class.java)
-            intent.putExtra(Constants.CAMPAIGNS_PAYLOAD,filteredCampaigns)
+            intent.putExtra(Constants.CAMPAIGNS_PAYLOAD, filteredCampaigns)
             activity.startActivity(intent);
-            activity.overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);
+            activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
         }
         holder.offerTypeSpinner?.adapter = ArrayAdapter<String>(
             activity, R.layout.simple_spinner_dropdown_item,
@@ -95,7 +96,7 @@ class OffersAdapterV2(
         holder.offerTypeSpinner?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
-                if(isFakeSelected) {
+                if (isFakeSelected) {
                     isFakeSelected = false
                     return
                 }
@@ -128,11 +129,10 @@ class OffersAdapterV2(
     }
 
     private fun filterData() {
-        println("*** FILTERING ***")
-         // filter by offer type
+        // filter by offer type
         filteredCampaigns = when (typeOfOffersFilter) {
-            Constants.ALL_OFFERS -> filteredCampaigns
-            else -> filteredCampaigns.filter { it ->
+            Constants.ALL_OFFERS -> dataSource
+            else -> dataSource.filter { it ->
                 Constants.ANDROID_CAMPAIGN_PARAM in it.oss
             } as ArrayList<Campaign>
         }
@@ -147,7 +147,11 @@ class OffersAdapterV2(
                     campaignLowToHighPayoutComparator
                 )
                 Constants.SORT_FILTER.RECOMMENDED -> filteredCampaigns.sortWith(campaignCrComparator)
-                else -> filteredCampaigns.sortByDescending { campaign -> dateFormatter.parse(campaign.createdAt) }
+                else -> filteredCampaigns.sortByDescending { campaign ->
+                    dateFormatter.parse(
+                        campaign.createdAt
+                    )
+                }
             }
         }
         notifyDataSetChanged()
@@ -155,32 +159,42 @@ class OffersAdapterV2(
 
 
     override fun onBindViewHolder(holder: OfferHolderV2, position: Int) {
-        println("Binding OFFER ${position}")
+
         if (holder.itemViewType == FILTER_CARD) {
             initListeners(holder)
             return
         }
-        holder.title?.let { dangerouslySetHTML(filteredCampaigns[position].name, it) }
-        holder.description?.let { dangerouslySetHTML(filteredCampaigns[position].description, it) }
-        holder.points?.text = "+${filteredCampaigns[position].payout}"
-        holder.currency?.text = filteredCampaigns[position].currency
-        holder.campaign = filteredCampaigns[position]
+
+        holder.title?.let { dangerouslySetHTML(filteredCampaigns[position-1].name, it) }
+        holder.description?.let { dangerouslySetHTML(filteredCampaigns[position-1].description, it) }
+        holder.points?.text = "+${filteredCampaigns[position-1].payout}"
+        holder.currency?.text = filteredCampaigns[position-1].currency
+        holder.campaign = filteredCampaigns[position-1]
 
         holder.offerImage?.let {
-            Glide.with(holder.itemView.context).load(filteredCampaigns[position].image)
+            Glide.with(holder.itemView.context).load(filteredCampaigns[position-1].image)
                 .transition(DrawableTransitionOptions.withCrossFade(300))
-                .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
+                .error(
+                    ContextCompat.getDrawable(
+                        holder.itemView.context,
+                        R.drawable.offer_placeholder
+                    )
+                )
                 .into(it)
         }
 
         if (holder.itemViewType == STEP_OFFER_CARD) {
-            holder.offerStepsCount?.text = "0/${filteredCampaigns[position].goals.size}"
+            holder.offerStepsCount?.text = "0/${filteredCampaigns[position-1].goals.size}"
             holder.progressView?.setProgress(5.0)
         }
-        holder.statusNewUsers?.visibility = if(filteredCampaigns[position].multipleTimes) View.GONE else View.VISIBLE
-        holder.statusAndroid?.visibility = if(filteredCampaigns[position].oss.contains(ANDROID_CAMPAIGN_PARAM)) View.VISIBLE else View.GONE
-        holder.statusMultiReward?.visibility = if(filteredCampaigns[position].hasGoals) View.VISIBLE else View.GONE
-        holder.statusCompleteTask?.visibility = if(filteredCampaigns[position].hasGoals) View.GONE else View.VISIBLE
+        holder.statusNewUsers?.visibility =
+            if (filteredCampaigns[position-1].multipleTimes) View.GONE else View.VISIBLE
+        holder.statusAndroid?.visibility =
+            if (filteredCampaigns[position-1].oss.contains(ANDROID_CAMPAIGN_PARAM)) View.VISIBLE else View.GONE
+        holder.statusMultiReward?.visibility =
+            if (filteredCampaigns[position-1].hasGoals) View.VISIBLE else View.GONE
+        holder.statusCompleteTask?.visibility =
+            if (filteredCampaigns[position-1].hasGoals) View.GONE else View.VISIBLE
 
         holder.startOfferBtn?.setOnClickListener {
             onOfferClick(holder, holder.campaign)
@@ -190,9 +204,9 @@ class OffersAdapterV2(
 
     private fun onOfferClick(holder: OfferHolderV2, campaign: Campaign) {
         val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
-        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD,campaign)
+        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
         activity.startActivity(intent);
-        activity.overridePendingTransition( R.anim.slide_in_up, android.R.anim.fade_out);
+        activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
     }
 
 

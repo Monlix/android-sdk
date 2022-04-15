@@ -108,6 +108,7 @@
                 </LinearLayout>
 
                 <TextView
+                        android:paddingRight="4dp"
                         android:textSize="16sp"
                         android:textColor="@color/darkBlue"
                         android:text=""
@@ -121,6 +122,7 @@
                         />
 
                 <TextView
+                        android:paddingRight="4dp"
                         android:id="@+id/transactionId"
                         tools:text="8EVwSMu9TM1uzJiuQ8bnFB"
                         android:textColor="@color/grayV5"

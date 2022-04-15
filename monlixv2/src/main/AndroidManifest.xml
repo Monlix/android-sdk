@@ -18,6 +18,9 @@
         <activity android:name=".ui.activities.SearchOffersActivity" android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"
                 />
+        <activity android:name=".ui.activities.SearchOffersActivity" android:theme="@style/MonlinxTheme"
+                android:hardwareAccelerated="true"
+                />
         <activity android:name=".ui.activities.OfferDetailsActivity"
                 android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"

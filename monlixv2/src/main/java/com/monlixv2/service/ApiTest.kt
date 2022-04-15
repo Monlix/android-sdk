@@ -3,7 +3,6 @@ package com.monlixv2.service
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey
-import com.monlixv2.service.models.transactions.TransactionResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
