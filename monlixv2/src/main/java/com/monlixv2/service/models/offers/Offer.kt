@@ -1,11 +1,13 @@
 package com.monlixv2.service.models.offers
 
-import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
+@Entity(tableName = "offer")
 data class Offer(
+    @PrimaryKey @ColumnInfo(name = "id")
     @SerializedName("id")
     val id: Int,
     @SerializedName("payout")
@@ -20,4 +22,4 @@ data class Offer(
     val description: String,
     @SerializedName("logo")
     val logo: String,
-) : Parcelable
+)

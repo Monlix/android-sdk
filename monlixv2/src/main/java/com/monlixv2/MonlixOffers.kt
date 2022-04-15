@@ -3,6 +3,7 @@ package com.monlixv2
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import com.monlixv2.ui.activities.LoadingScreenActivity
 import com.monlixv2.ui.activities.MainActivity
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixAppId
@@ -36,7 +37,7 @@ object MonlixOffers {
         if (instance == null) {
             throw Exception("createInstance() must be called before accessing the instance.")
         }
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, LoadingScreenActivity::class.java)
         context.startActivity(intent)
     }
 

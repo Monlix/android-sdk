@@ -20,8 +20,8 @@ class SearchOffersActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.offer_search_activity)
         binding.lifecycleOwner = this
 
-        allCampaigns =
-            intent.getParcelableArrayListExtra<Campaign>(CAMPAIGNS_PAYLOAD) as ArrayList<Campaign>
+//        allCampaigns =
+//            intent.getParcelableArrayListExtra<Campaign>(CAMPAIGNS_PAYLOAD) as ArrayList<Campaign>
 
         val featured = allCampaigns.filter { campaign -> campaign.featured }
         binding.offerSearchRecycler.apply {

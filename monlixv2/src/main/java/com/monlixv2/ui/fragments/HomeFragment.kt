@@ -6,17 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.monlixv2.R
+import com.monlixv2.adapters.AD_FRAGMENT
+import com.monlixv2.adapters.OFFER_FRAGMENT
 import com.monlixv2.adapters.PagerAdapter
+import com.monlixv2.adapters.SURVEY_FRAGMENT
 import com.monlixv2.databinding.HomeFragmentBinding
 import com.monlixv2.ui.activities.MainActivity
-import com.monlixv2.viewmodels.GroupedResponse
+import com.monlixv2.util.Constants
+import com.monlixv2.util.Constants.FRAGMENT_NAME_ADS
+import com.monlixv2.util.Constants.FRAGMENT_NAME_OFFERS
+import com.monlixv2.util.Constants.FRAGMENT_NAME_SURVEYS
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
     private var tabs = arrayListOf<String>()
+    private var availableFragments: IntArray? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        availableFragments = arguments?.getIntArray(Constants.AVAILABLE_FRAGMENTS)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,26 +41,32 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.monlixPager.offscreenPageLimit = 1
+        if (availableFragments != null) {
+            setupPager()
+        }
     }
 
-    private fun setupTabNames (apiResponse: GroupedResponse){
+    private fun setupTabNames(availableFragments: IntArray) {
         tabs = arrayListOf()
-        if(apiResponse.mergedSurveys!!.size > 0) {
-            tabs.add("Surveys")
+        if (availableFragments.contains(SURVEY_FRAGMENT)) {
+            tabs.add(FRAGMENT_NAME_SURVEYS)
         }
-        if(apiResponse.campaigns!!.size > 0) {
-            tabs.add("Offers")
+        if (availableFragments.contains(OFFER_FRAGMENT)) {
+            tabs.add(FRAGMENT_NAME_OFFERS)
         }
-        if(apiResponse.offers!!.ads.size > 0) {
-            tabs.add("Ads")
+        if (availableFragments.contains(AD_FRAGMENT)) {
+            tabs.add(FRAGMENT_NAME_ADS)
         }
     }
 
-    fun displayData(apiResponse: GroupedResponse) {
+    private fun setupPager() {
         val adapter = PagerAdapter(requireActivity() as MainActivity);
-        setupTabNames(apiResponse)
-        adapter.setupData(apiResponse)
+        setupTabNames(availableFragments!!)
+        adapter.setupData(availableFragments!!)
+        println("setuppp")
+
         binding.monlixPager.adapter = adapter
         TabLayoutMediator(binding.monlixTablayout, binding.monlixPager) { tab, position ->
             tab.text = tabs[position]

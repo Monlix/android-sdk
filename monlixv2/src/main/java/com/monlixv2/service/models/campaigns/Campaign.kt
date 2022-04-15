@@ -1,11 +1,20 @@
 package com.monlixv2.service.models.campaigns
 
-import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
+const val CAMPAIGN_tABLE_NAME = "campaign"
+const val PLATFORM_ANDROID = 0
+const val PLATFORM_ALL = 1
+
+
+@Entity(tableName = CAMPAIGN_tABLE_NAME)
 data class Campaign(
+    @PrimaryKey @ColumnInfo(name = "id")
     @SerializedName("id")
     val id: Int,
     @SerializedName("campaignId")
@@ -21,7 +30,7 @@ data class Campaign(
     @SerializedName("image")
     val image: String,
     @SerializedName("goals")
-    val goals: ArrayList<CampaignGoal>,
+    val goals: List<CampaignGoal>,
     @SerializedName("categories")
     val categories: ArrayList<String>,
     @SerializedName("multipleTimes")
@@ -38,4 +47,13 @@ data class Campaign(
     val currency: String,
     @SerializedName("cr")
     val cr: Double,
-) : Parcelable
+    var platform: Int,
+)
+
+class GoalsTypeConverter {
+    @TypeConverter
+    fun listToJson(value: List<CampaignGoal>?): String = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonToList(value: String) = Gson().fromJson(value, Array<CampaignGoal>::class.java).toList()
+}

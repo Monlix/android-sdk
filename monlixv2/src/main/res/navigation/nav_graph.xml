@@ -11,6 +11,11 @@
         <action
                 android:id="@+id/action_homeFragment_to_transactionFragment"
                 app:destination="@id/transactionFragment" />
+        <argument
+                android:name="a"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="test" />
     </fragment>
     <fragment
             android:id="@+id/transactionFragment"

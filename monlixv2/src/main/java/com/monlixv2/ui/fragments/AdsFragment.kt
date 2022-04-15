@@ -6,21 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.AdsAdapter
 import com.monlixv2.databinding.AdsFragmentBinding
-import com.monlixv2.service.models.ads.Ad
-
-private const val AD_PARAM = "AD_PARAM"
+import com.monlixv2.util.Constants
+import com.monlixv2.viewmodels.AdsViewModel
 
 class AdsFragment : Fragment() {
-    private var ads: ArrayList<Ad>? = null
     private lateinit var binding: AdsFragmentBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            ads = it.getSerializable(AD_PARAM) as ArrayList<Ad>?
+    private val adsViewModel: AdsViewModel by viewModels {
+        Constants.viewModelFactory {
+            AdsViewModel((context?.applicationContext as App).adsRepository)
         }
     }
 
@@ -34,18 +34,11 @@ class AdsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.adRecycler.apply {
-            adapter = ads?.let { AdsAdapter(it) }
-        }
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    companion object {
-        @JvmStatic fun newInstance(param1: ArrayList<Ad>) =
-            AdsFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(AD_PARAM, param1)
-                }
+        adsViewModel.allAds.observe(viewLifecycleOwner, Observer { ads ->
+            binding.adRecycler.apply {
+                adapter = AdsAdapter(ads)
             }
+        })
     }
 }

@@ -213,7 +213,7 @@ class OffersSearchAdapter(
 
     private fun onOfferClick(holder: OfferHolder, campaign: Campaign) {
         val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
-        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
+//        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
     }

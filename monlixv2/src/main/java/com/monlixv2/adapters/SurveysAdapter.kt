@@ -19,7 +19,7 @@ const val LARGE_CARD = 0
 const val SMALL_CARD = 1
 
 class SurveysAdapter(
-    private val dataSource: ArrayList<Survey>
+    private val dataSource: List<Survey>
 ) : RecyclerView.Adapter<SurveysAdapter.SurveyHolder>() {
 
     override fun onCreateViewHolder(

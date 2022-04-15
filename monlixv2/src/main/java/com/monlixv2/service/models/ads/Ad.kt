@@ -1,11 +1,15 @@
 package com.monlixv2.service.models.ads
 
-import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
+const val AD_TABLE_NAME = "ad"
+
+@Entity(tableName = AD_TABLE_NAME)
 data class Ad(
+    @PrimaryKey @ColumnInfo(name = "id")
     @SerializedName("id")
     val id: Int,
     @SerializedName("payout")
@@ -22,4 +26,4 @@ data class Ad(
     val logo: String,
     @SerializedName("visited")
     val visited: Boolean,
-) : Parcelable
+)

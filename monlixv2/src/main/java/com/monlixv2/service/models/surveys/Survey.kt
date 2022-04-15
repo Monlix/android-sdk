@@ -1,12 +1,18 @@
 package com.monlixv2.service.models.surveys
 
-import android.os.Parcel
-import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import com.google.gson.reflect.TypeToken
 
-@Parcelize
+const val SURVEY_TABLE_NAME = "survey"
+
+@Entity(tableName = SURVEY_TABLE_NAME)
 data class Survey(
+    @PrimaryKey @ColumnInfo(name = "id")
     @SerializedName("id")
     val id: String,
     @SerializedName("payout")
@@ -23,8 +29,6 @@ data class Survey(
     val logo: String,
     @SerializedName("provider")
     val provider: String?,
-    @SerializedName("platforms")
-    val platforms: ArrayList<String>?,
     @SerializedName("minPayout")
     val minPayout: Double?,
     @SerializedName("maxPayout")
@@ -35,4 +39,18 @@ data class Survey(
     val maxDuration: String?,
     @SerializedName("rank")
     val rank: Double?,
-) : Parcelable
+)
+
+class PlatformsTypeConverter {
+    @TypeConverter
+    fun fromString(value: String?): ArrayList<String> {
+        val listType = object : TypeToken<ArrayList<String>>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun frmArrayList(list: ArrayList<String?>): String {
+        return Gson().toJson(list)
+    }
+
+}

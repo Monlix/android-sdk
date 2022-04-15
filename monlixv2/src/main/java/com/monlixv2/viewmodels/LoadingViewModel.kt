@@ -4,11 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.monlixv2.service.ApiInterface
 import com.monlixv2.service.ApiTest
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.service.models.campaigns.PLATFORM_ALL
+import com.monlixv2.service.models.campaigns.PLATFORM_ANDROID
 import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey
+import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.IOS_CAMPAIGN_PARAM
 import com.monlixv2.util.Credentials
 import kotlinx.coroutines.*
@@ -20,11 +22,10 @@ data class GroupedResponse(
     var offers: OfferResponse?,
     var campaigns: ArrayList<Campaign>?,
     var mergedSurveys: ArrayList<Survey>?,
-    )
+)
+const val step = 0.3
 
- const val step = 0.3
-
-class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
+class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application) :
     AndroidViewModel(application) {
 
     private var viewModelJob = Job()
@@ -95,7 +96,7 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
 
     fun offersRequest() {
         coroutineScope.launch {
-            val response = ApiInterface.getInstance()
+            val response = ApiTest.getInstance()
                 .getOffers(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.offers = response.body()
@@ -113,13 +114,15 @@ class MainViewModel(APP_ID: String, USER_ID: String, application: Application) :
             try {
                 val campaigns = if(response.body() != null) response.body() else ArrayList();
                 //remove ios campaigns
-                val filtered = campaigns!!.filter {
+                var filtered = campaigns!!.filter {
                         el -> IOS_CAMPAIGN_PARAM !in el.oss
                 } as ArrayList<Campaign>
+                for (el in filtered) {
+                    el.platform = if(el.oss.contains(Constants.ANDROID_CAMPAIGN_PARAM)) PLATFORM_ANDROID else PLATFORM_ALL
+                }
                 _groupedResponse.value?.campaigns =  filtered
                 checkProgress()
             } catch (e: Exception) {
-                println(e)
                 println("Monlix Exception campaigns -${e.message}")
             }
         }

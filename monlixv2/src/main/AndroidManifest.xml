@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-            android:name="androidx.multidex.MultiDexApplication"
+            android:name=".App"
             android:allowBackup="true"
             android:hardwareAccelerated="true"
             android:largeHeap="true"
@@ -12,15 +12,16 @@
             android:networkSecurityConfig="@xml/network_security_config"
             android:supportsRtl="true"
             >
+        <activity android:name=".ui.activities.LoadingScreenActivity" android:theme="@style/MonlinxTheme"
+                android:hardwareAccelerated="true"
+                />
         <activity android:name=".ui.activities.MainActivity" android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"
                 />
         <activity android:name=".ui.activities.SearchOffersActivity" android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"
                 />
-        <activity android:name=".ui.activities.SearchOffersActivity" android:theme="@style/MonlinxTheme"
-                android:hardwareAccelerated="true"
-                />
+
         <activity android:name=".ui.activities.OfferDetailsActivity"
                 android:theme="@style/MonlinxTheme"
                 android:hardwareAccelerated="true"

@@ -4,24 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.SurveysAdapter
 import com.monlixv2.databinding.SurveysFragmentBinding
 import com.monlixv2.service.models.surveys.Survey
+import com.monlixv2.util.Constants
+import com.monlixv2.viewmodels.SurveysViewModel
 
-private const val SURVEYS_PARAM = "SURVEYS_PARAM"
 
 class SurveysFragment : Fragment() {
-    private var surveys: ArrayList<Survey>? = null
     private lateinit var binding: SurveysFragmentBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            surveys = it.getSerializable(SURVEYS_PARAM) as ArrayList<Survey>?
+    private val surveysViewModel: SurveysViewModel by viewModels {
+        Constants.viewModelFactory {
+            SurveysViewModel((context?.applicationContext as App).surveyRepository)
         }
     }
 
@@ -35,26 +38,20 @@ class SurveysFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         (binding.surveyList.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if(position == 0)  2 else 1
             }
 
         }
-        binding.surveyList.apply {
-            adapter = surveys?.let { SurveysAdapter(it) }
+        surveysViewModel.allSurveys.observe(viewLifecycleOwner) {
+            binding.surveyList.apply {
+                adapter = it?.let { SurveysAdapter(it) }
+            }
         }
 
-        super.onViewCreated(view, savedInstanceState)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: ArrayList<Survey>) =
-            SurveysFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(SURVEYS_PARAM, param1)
-                }
-            }
-    }
 }

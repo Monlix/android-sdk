@@ -10,6 +10,12 @@ import kotlin.math.roundToInt
 
 object Constants {
 
+    const val FRAGMENT_NAME_SURVEYS = "Surveys"
+    const val FRAGMENT_NAME_OFFERS = "Offers"
+    const val FRAGMENT_NAME_ADS = "Ads"
+
+    const val AVAILABLE_FRAGMENTS = "AVAILABLE_FRAGMENTS"
+
     const val ALL_ACTIVITY = "All activity"
     const val IN_PROGRESS = "In progress"
     const val CREDITED = "Credited"

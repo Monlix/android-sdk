@@ -35,11 +35,11 @@ class OfferDetailsActivity : AppCompatActivity() {
         offerDetailsBinding = binding.offerDetails
         binding.lifecycleOwner = this
 
-        val campaign =
-            intent.getParcelableExtra<Campaign>(SINGLE_CAMPAIGN_PAYLOAD) as Campaign
+//        val campaign =
+//            intent.getParcelableExtra<Campaign>(SINGLE_CAMPAIGN_PAYLOAD) as Campaign
 
 
-        displayData(campaign)
+//        displayData(campaign)
     }
 
     private fun displayData(campaign: Campaign) {

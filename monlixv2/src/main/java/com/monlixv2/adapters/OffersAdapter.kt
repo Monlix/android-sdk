@@ -14,36 +14,37 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.service.models.campaigns.PLATFORM_ALL
+import com.monlixv2.service.models.campaigns.PLATFORM_ANDROID
 import com.monlixv2.ui.activities.OfferDetailsActivity
 import com.monlixv2.ui.activities.SearchOffersActivity
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
+import com.monlixv2.ui.fragments.OffersFragment
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
 import com.monlixv2.util.Constants.SORT_FILTER_TO_ID
 import com.monlixv2.util.Constants.SORT_IDS_TO_SORT_FILTER
-import com.monlixv2.util.Constants.campaignCrComparator
-import com.monlixv2.util.Constants.campaignHighToLowPayoutComparator
-import com.monlixv2.util.Constants.campaignLowToHighPayoutComparator
-import com.monlixv2.util.Constants.dateFormatter
 import com.monlixv2.util.UIHelpers.dangerouslySetHTML
 
 
 val SPINNER_POSITION_MAPPING = mapOf(Constants.ALL_OFFERS to 0, Constants.ANDROID to 1)
+val FILTER_TYPE_TO_DB_TYPE = mapOf(Constants.ALL_OFFERS to PLATFORM_ALL, Constants.ANDROID to PLATFORM_ANDROID)
+
 const val FILTER_CARD = 2
 const val SIMPLE_OFFER_CARD = 0
 const val STEP_OFFER_CARD = 1
-const val STEP_EMPTY_VIEW = 4
 const val TAG_EXPANDED = '1'
 const val TAG_NOT_EXPANDED = '0'
 
 class OffersAdapterV2(
-    private val dataSource: ArrayList<Campaign>,
+    private val dataSource: List<Campaign>,
     private val activity: AppCompatActivity,
+    private val fragmentInstance: OffersFragment
 ) : RecyclerView.Adapter<OffersAdapterV2.OfferHolderV2>() {
 
     private var sortFilter: Constants.SORT_FILTER = Constants.SORT_FILTER.NONE
     private var typeOfOffersFilter = Constants.ALL_OFFERS
-    private var filteredCampaigns = ArrayList<Campaign>()
+    private var filteredCampaigns: List<Campaign>
     private var isFakeSelected = false
 
     init {
@@ -84,7 +85,6 @@ class OffersAdapterV2(
         }
         holder.searchContainer?.setOnClickListener {
             val intent = Intent(activity, SearchOffersActivity::class.java)
-            intent.putExtra(Constants.CAMPAIGNS_PAYLOAD, filteredCampaigns)
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
         }
@@ -128,33 +128,8 @@ class OffersAdapterV2(
         bottomSheetDialog.show()
     }
 
-    private fun filterData() {
-        // filter by offer type
-        filteredCampaigns = when (typeOfOffersFilter) {
-            Constants.ALL_OFFERS -> dataSource
-            else -> dataSource.filter { it ->
-                Constants.ANDROID_CAMPAIGN_PARAM in it.oss
-            } as ArrayList<Campaign>
-        }
-
-        // filter by sort
-        if (sortFilter !== Constants.SORT_FILTER.NONE) {
-            when (sortFilter) {
-                Constants.SORT_FILTER.HIGH_TO_LOW -> filteredCampaigns.sortWith(
-                    campaignHighToLowPayoutComparator
-                )
-                Constants.SORT_FILTER.LOW_TO_HIGH -> filteredCampaigns.sortWith(
-                    campaignLowToHighPayoutComparator
-                )
-                Constants.SORT_FILTER.RECOMMENDED -> filteredCampaigns.sortWith(campaignCrComparator)
-                else -> filteredCampaigns.sortByDescending { campaign ->
-                    dateFormatter.parse(
-                        campaign.createdAt
-                    )
-                }
-            }
-        }
-        notifyDataSetChanged()
+     fun filterData() {
+         fragmentInstance.filterData(FILTER_TYPE_TO_DB_TYPE[typeOfOffersFilter]!!, sortFilter)
     }
 
 
@@ -204,9 +179,16 @@ class OffersAdapterV2(
 
     private fun onOfferClick(holder: OfferHolderV2, campaign: Campaign) {
         val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
-        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
+//        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
+    }
+
+    fun updateData(it: List<Campaign>?) {
+        if (it != null) {
+            filteredCampaigns = it
+            notifyDataSetChanged()
+        }
     }
 
 

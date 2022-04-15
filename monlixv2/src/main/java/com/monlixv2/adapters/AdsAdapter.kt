@@ -16,7 +16,7 @@ import com.monlixv2.util.UIHelpers
 
 
 class AdsAdapter(
-    private val dataSource: ArrayList<Ad>
+    private val dataSource: List<Ad>
 ) : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
 
 
@@ -38,6 +38,7 @@ class AdsAdapter(
 
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
+        println("Binding ad ${position}")
         UIHelpers.dangerouslySetHTML(dataSource[position].name, holder.title)
         UIHelpers.dangerouslySetHTML(dataSource[position].description, holder.description)
         holder.points.text = "+${dataSource[position].payout}"
