@@ -12,12 +12,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
 import com.monlixv2.service.models.ads.Ad
+import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.ui.fragments.AdsFragment
 import com.monlixv2.util.UIHelpers
 
 
 class AdsAdapter(
-    private val dataSource: List<Ad>
+    private val fragmentInstance: AdsFragment
 ) : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
+
+    private var dataSource: ArrayList<Ad> = ArrayList<Ad>()
 
 
     override fun onCreateViewHolder(
@@ -51,6 +55,13 @@ class AdsAdapter(
             .into(holder.offerImage)
         holder.itemView.alpha = if(dataSource[position].visited) 0.3f else 1f
     }
+
+    fun appendData(it: List<Ad>) {
+        val currentPosition = dataSource.size
+        dataSource.addAll(it)
+        notifyItemRangeInserted(currentPosition+1, it.size)
+    }
+
 
 
     class AdHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {

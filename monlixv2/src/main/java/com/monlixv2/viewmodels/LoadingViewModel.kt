@@ -75,7 +75,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
 
     private fun surveysRequest() {
         coroutineScope.launch {
-            val response = ApiInterface.getInstance()
+            val response = ApiTest.getInstance()
                 .getSurveys(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.surveys = response.body()
@@ -88,7 +88,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
 
     private fun offersRequest() {
         coroutineScope.launch {
-            val response = ApiInterface.getInstance()
+            val response = ApiTest.getInstance()
                 .getOffers(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.offers = response.body()
@@ -101,7 +101,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
 
     private fun campaignsRequest() {
         coroutineScope.launch {
-            val response = ApiInterface.getInstance()
+            val response = ApiTest.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 val campaigns = if(response.body() != null) response.body() else ArrayList();
