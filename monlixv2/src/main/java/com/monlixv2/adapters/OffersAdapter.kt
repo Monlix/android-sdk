@@ -14,6 +14,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.service.models.campaigns.DEFAULT_LIMIT
 import com.monlixv2.service.models.campaigns.PLATFORM_ALL
 import com.monlixv2.service.models.campaigns.PLATFORM_ANDROID
 import com.monlixv2.ui.activities.OfferDetailsActivity
@@ -24,11 +25,13 @@ import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
 import com.monlixv2.util.Constants.SORT_FILTER_TO_ID
 import com.monlixv2.util.Constants.SORT_IDS_TO_SORT_FILTER
+import com.monlixv2.util.Constants.campaignToJSON
 import com.monlixv2.util.UIHelpers.dangerouslySetHTML
 
 
 val SPINNER_POSITION_MAPPING = mapOf(Constants.ALL_OFFERS to 0, Constants.ANDROID to 1)
-val FILTER_TYPE_TO_DB_TYPE = mapOf(Constants.ALL_OFFERS to PLATFORM_ALL, Constants.ANDROID to PLATFORM_ANDROID)
+val FILTER_TYPE_TO_DB_TYPE =
+    mapOf(Constants.ALL_OFFERS to PLATFORM_ALL, Constants.ANDROID to PLATFORM_ANDROID)
 
 const val FILTER_CARD = 2
 const val SIMPLE_OFFER_CARD = 0
@@ -37,18 +40,19 @@ const val TAG_EXPANDED = '1'
 const val TAG_NOT_EXPANDED = '0'
 
 class OffersAdapterV2(
-    private val dataSource: List<Campaign>,
     private val activity: AppCompatActivity,
     private val fragmentInstance: OffersFragment
 ) : RecyclerView.Adapter<OffersAdapterV2.OfferHolderV2>() {
 
     private var sortFilter: Constants.SORT_FILTER = Constants.SORT_FILTER.NONE
     private var typeOfOffersFilter = Constants.ALL_OFFERS
-    private var filteredCampaigns: List<Campaign>
-    private var isFakeSelected = false
+    private var filteredCampaigns: ArrayList<Campaign> = ArrayList<Campaign>()
+    private var spinnerAutoSelected = false
+    private var isInitialLoad = true
+    var currentOffset = 0
 
     init {
-        filteredCampaigns = dataSource
+//        filteredCampaigns = dataSource
     }
 
     override fun onCreateViewHolder(
@@ -75,7 +79,7 @@ class OffersAdapterV2(
         if (position == 0)
             return FILTER_CARD
 
-        return if (filteredCampaigns[position-1].hasGoals && filteredCampaigns[position-1].goals.size > 0) STEP_OFFER_CARD else SIMPLE_OFFER_CARD
+        return if (filteredCampaigns[position - 1].hasGoals && filteredCampaigns[position - 1].goals.size > 0) STEP_OFFER_CARD else SIMPLE_OFFER_CARD
     }
 
 
@@ -92,15 +96,17 @@ class OffersAdapterV2(
             activity, R.layout.simple_spinner_dropdown_item,
             Constants.OFFER_FILTER_LIST
         )
-        isFakeSelected = true
+        spinnerAutoSelected = if (isInitialLoad) false else true
         holder.offerTypeSpinner?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
-                if (isFakeSelected) {
-                    isFakeSelected = false
+                if (spinnerAutoSelected) {
+                    spinnerAutoSelected = false
                     return
                 }
+                isInitialLoad = false
                 typeOfOffersFilter = adapterView.getItemAtPosition(i).toString()
+                currentOffset = 0
                 filterData()
             }
 
@@ -119,6 +125,7 @@ class OffersAdapterV2(
         }
         radioGroup?.setOnCheckedChangeListener { _, clickedId ->
             sortFilter = SORT_IDS_TO_SORT_FILTER[clickedId]!!
+            currentOffset = 0
             filterData()
         }
 
@@ -128,8 +135,17 @@ class OffersAdapterV2(
         bottomSheetDialog.show()
     }
 
-     fun filterData() {
-         fragmentInstance.filterData(FILTER_TYPE_TO_DB_TYPE[typeOfOffersFilter]!!, sortFilter)
+    fun filterData() {
+        fragmentInstance.filterData(
+            FILTER_TYPE_TO_DB_TYPE[typeOfOffersFilter]!!,
+            sortFilter,
+            currentOffset
+        )
+    }
+
+    fun loadNextPage() {
+        currentOffset += DEFAULT_LIMIT
+        filterData()
     }
 
 
@@ -140,14 +156,19 @@ class OffersAdapterV2(
             return
         }
 
-        holder.title?.let { dangerouslySetHTML(filteredCampaigns[position-1].name, it) }
-        holder.description?.let { dangerouslySetHTML(filteredCampaigns[position-1].description, it) }
-        holder.points?.text = "+${filteredCampaigns[position-1].payout}"
-        holder.currency?.text = filteredCampaigns[position-1].currency
-        holder.campaign = filteredCampaigns[position-1]
+        holder.title?.let { dangerouslySetHTML(filteredCampaigns[position - 1].name, it) }
+        holder.description?.let {
+            dangerouslySetHTML(
+                filteredCampaigns[position - 1].description,
+                it
+            )
+        }
+        holder.points?.text = "+${filteredCampaigns[position - 1].payout}"
+        holder.currency?.text = filteredCampaigns[position - 1].currency
+        holder.campaign = filteredCampaigns[position - 1]
 
         holder.offerImage?.let {
-            Glide.with(holder.itemView.context).load(filteredCampaigns[position-1].image)
+            Glide.with(holder.itemView.context).load(filteredCampaigns[position - 1].image)
                 .transition(DrawableTransitionOptions.withCrossFade(300))
                 .error(
                     ContextCompat.getDrawable(
@@ -159,17 +180,17 @@ class OffersAdapterV2(
         }
 
         if (holder.itemViewType == STEP_OFFER_CARD) {
-            holder.offerStepsCount?.text = "0/${filteredCampaigns[position-1].goals.size}"
+            holder.offerStepsCount?.text = "0/${filteredCampaigns[position - 1].goals.size}"
             holder.progressView?.setProgress(5.0)
         }
         holder.statusNewUsers?.visibility =
-            if (filteredCampaigns[position-1].multipleTimes) View.GONE else View.VISIBLE
+            if (filteredCampaigns[position - 1].multipleTimes) View.GONE else View.VISIBLE
         holder.statusAndroid?.visibility =
-            if (filteredCampaigns[position-1].oss.contains(ANDROID_CAMPAIGN_PARAM)) View.VISIBLE else View.GONE
+            if (filteredCampaigns[position - 1].oss.contains(ANDROID_CAMPAIGN_PARAM)) View.VISIBLE else View.GONE
         holder.statusMultiReward?.visibility =
-            if (filteredCampaigns[position-1].hasGoals) View.VISIBLE else View.GONE
+            if (filteredCampaigns[position - 1].hasGoals) View.VISIBLE else View.GONE
         holder.statusCompleteTask?.visibility =
-            if (filteredCampaigns[position-1].hasGoals) View.GONE else View.VISIBLE
+            if (filteredCampaigns[position - 1].hasGoals) View.GONE else View.VISIBLE
 
         holder.startOfferBtn?.setOnClickListener {
             onOfferClick(holder, holder.campaign)
@@ -179,16 +200,24 @@ class OffersAdapterV2(
 
     private fun onOfferClick(holder: OfferHolderV2, campaign: Campaign) {
         val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
-//        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
+        val campaignJson = campaignToJSON(campaign)
+        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaignJson)
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
     }
 
-    fun updateData(it: List<Campaign>?) {
+
+    fun replaceData(it: List<Campaign>) {
         if (it != null) {
-            filteredCampaigns = it
+            filteredCampaigns = it as ArrayList<Campaign>
             notifyDataSetChanged()
         }
+    }
+
+    fun appendData(it: List<Campaign>?) {
+        val currentPosition = filteredCampaigns.size
+        it?.let { it1 -> filteredCampaigns.addAll(it1) }
+        notifyItemRangeInserted(currentPosition+1, it!!.size)
     }
 
 

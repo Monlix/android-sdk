@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.monlixv2.service.ApiInterface
 import com.monlixv2.service.ApiTest
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.campaigns.PLATFORM_ALL
@@ -53,22 +54,18 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
         get() = _credentials
 
     init {
-        resetResponse()
-        _credentials.value = Credentials(APP_ID, USER_ID);
-        makeRequest()
-    }
-
-    private fun resetResponse(){
         _groupedResponse.value = GroupedResponse(
             surveys = null,
             offers = null,
             campaigns = null,
             mergedSurveys = null
         )
+        _credentials.value = Credentials(APP_ID, USER_ID);
+        initProgressBar()
+        makeRequests()
     }
 
-    fun initProgressBar() {
-        resetProgressbar()
+    private fun initProgressBar() {
         setInterval(10) {
             val newCurrentProgress = _currentProgress.value!!.plus(step)
             _currentProgress.postValue(newCurrentProgress)
@@ -76,14 +73,9 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
         }
     }
 
-    fun resetProgressbar(){
-        _renderProgress.value = 0
-        _currentProgress.value = 0.0
-    }
-
-    fun surveysRequest() {
+    private fun surveysRequest() {
         coroutineScope.launch {
-            val response = ApiTest.getInstance()
+            val response = ApiInterface.getInstance()
                 .getSurveys(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.surveys = response.body()
@@ -94,9 +86,9 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
         }
     }
 
-    fun offersRequest() {
+    private fun offersRequest() {
         coroutineScope.launch {
-            val response = ApiTest.getInstance()
+            val response = ApiInterface.getInstance()
                 .getOffers(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.offers = response.body()
@@ -107,20 +99,19 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
         }
     }
 
-    fun campaignsRequest() {
+    private fun campaignsRequest() {
         coroutineScope.launch {
-            val response = ApiTest.getInstance()
+            val response = ApiInterface.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 val campaigns = if(response.body() != null) response.body() else ArrayList();
-                //remove ios campaigns
-                var filtered = campaigns!!.filter {
+                val filtered = campaigns!!.filter {
                         el -> IOS_CAMPAIGN_PARAM !in el.oss
                 } as ArrayList<Campaign>
                 for (el in filtered) {
                     el.platform = if(el.oss.contains(Constants.ANDROID_CAMPAIGN_PARAM)) PLATFORM_ANDROID else PLATFORM_ALL
                 }
-                _groupedResponse.value?.campaigns =  filtered
+                 _groupedResponse.value?.campaigns =  filtered
                 checkProgress()
             } catch (e: Exception) {
                 println("Monlix Exception campaigns -${e.message}")
@@ -128,20 +119,21 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
         }
     }
 
-    fun makeRequest() {
-        resetResponse()
-        _isLoading.value = true
-        initProgressBar()
+    private fun makeRequests() {
         surveysRequest();
         offersRequest();
         campaignsRequest()
     }
 
-    fun setInterval(timeMillis: Long, handler: () -> Unit) = coroutineScope.launch {
+    private fun setInterval(timeMillis: Long, handler: () -> Unit) = coroutineScope.launch {
         while (_isLoading.value!!) {
             delay(timeMillis)
             handler()
         }
+    }
+
+    fun finishAnimation(){
+        _isLoading.postValue(false)
     }
 
     fun checkProgress() {
@@ -159,8 +151,6 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
             )
 
             _groupedResponse.value = newGroupedResponse
-            _isLoading.postValue(false)
-            resetProgressbar()
         }
     }
 

@@ -16,7 +16,7 @@ const val PLATFORM_ALL = 1
 data class Campaign(
     @PrimaryKey @ColumnInfo(name = "id")
     @SerializedName("id")
-    val id: Int,
+    var id: Int,
     @SerializedName("campaignId")
     val campaignId: String,
     @SerializedName("name")

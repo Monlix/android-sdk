@@ -3,10 +3,12 @@ package com.monlixv2.util
 import androidx.collection.arrayMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
-import java.text.SimpleDateFormat
-import kotlin.math.roundToInt
+import java.lang.reflect.Type
+
 
 object Constants {
 
@@ -31,9 +33,6 @@ object Constants {
     const val PENDING_QUERY_PARAM = "pending"
     const val CAMPAIGNS_PAYLOAD = "campaigns"
     const val SINGLE_CAMPAIGN_PAYLOAD = "singleCampaign"
-
-    val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
-
 
     val TRANSACTION_FILTER_LIST =
         arrayOf(ALL_ACTIVITY, IN_PROGRESS, CREDITED, REJECTED, CLICKED, PENDING)
@@ -74,21 +73,22 @@ object Constants {
         arrayOf(ALL_OFFERS, ANDROID)
 
 
+    fun campaignToJSON(campaign: Campaign): String {
+        val gson = Gson()
+        val type: Type = object : TypeToken<Campaign>() {}.type
+        return gson.toJson(campaign, type)
+    }
+
+    fun JSONToCampaign(jsonString: String): Campaign {
+        val gson = Gson()
+        val type = object : TypeToken<Campaign>() {}.type
+        return gson.fromJson(jsonString, type)
+    }
+
     inline fun <VM : ViewModel> viewModelFactory(crossinline f: () -> VM) =
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(aClass: Class<T>): T = f() as T
         }
-
-    val campaignCrComparator = Comparator<Campaign> { a, b ->
-        (a.cr - b.cr).roundToInt()
-    }
-
-    val campaignHighToLowPayoutComparator = Comparator<Campaign> { a, b ->
-        (b.payout - a.payout).roundToInt()
-    }
-    val campaignLowToHighPayoutComparator = Comparator<Campaign> { a, b ->
-        (a.payout - b.payout).roundToInt()
-    }
 
     enum class SORT_FILTER {
         RECOMMENDED,

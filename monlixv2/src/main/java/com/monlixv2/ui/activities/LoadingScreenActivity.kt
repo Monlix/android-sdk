@@ -125,6 +125,7 @@ class LoadingScreenActivity : AppCompatActivity() {
     private fun makeFragmentVisible(fragment: Int) {
         fragmentsToShow.add(fragment)
         if(fragmentsToShow.size == numberOfFragments) {
+            viewModel.finishAnimation()
             goToMainScreen()
         }
     }

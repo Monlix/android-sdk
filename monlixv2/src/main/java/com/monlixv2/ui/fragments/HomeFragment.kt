@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.monlixv2.R
 import com.monlixv2.adapters.AD_FRAGMENT
@@ -50,11 +49,11 @@ class HomeFragment : Fragment() {
 
     private fun setupTabNames(availableFragments: IntArray) {
         tabs = arrayListOf()
-        if (availableFragments.contains(SURVEY_FRAGMENT)) {
-            tabs.add(FRAGMENT_NAME_SURVEYS)
-        }
         if (availableFragments.contains(OFFER_FRAGMENT)) {
             tabs.add(FRAGMENT_NAME_OFFERS)
+        }
+        if (availableFragments.contains(SURVEY_FRAGMENT)) {
+            tabs.add(FRAGMENT_NAME_SURVEYS)
         }
         if (availableFragments.contains(AD_FRAGMENT)) {
             tabs.add(FRAGMENT_NAME_ADS)
@@ -65,7 +64,6 @@ class HomeFragment : Fragment() {
         val adapter = PagerAdapter(requireActivity() as MainActivity);
         setupTabNames(availableFragments!!)
         adapter.setupData(availableFragments!!)
-        println("setuppp")
 
         binding.monlixPager.adapter = adapter
         TabLayoutMediator(binding.monlixTablayout, binding.monlixPager) { tab, position ->

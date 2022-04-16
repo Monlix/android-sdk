@@ -6,22 +6,27 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
+const val DEFAULT_LIMIT = 30
+
 @Dao
 interface CampaignDao {
-    @Query("SELECT * FROM $CAMPAIGN_tABLE_NAME")
-    fun getAllCampaigns(): Flow<List<Campaign>>
+    @Query("SELECT * FROM $CAMPAIGN_tABLE_NAME where platform <= :platform limit $DEFAULT_LIMIT offset :offset")
+    fun getAllCampaigns(platform: Int, offset: Int): Flow<List<Campaign>>
 
-    @Query("SELECT * FROM campaign where platform = :platform order by payout DESC ")
-    fun getSortedCampaignsByHighToLow(platform: Int): Flow<List<Campaign>>
+    @Query("SELECT * FROM $CAMPAIGN_tABLE_NAME where featured = 1")
+    fun getFeaturedCampaigns(): Flow<List<Campaign>>
 
-    @Query("SELECT * FROM campaign where platform = :platform order by payout ASC ")
-    fun getSortedCampaignsByLowToHigh(platform: Int): Flow<List<Campaign>>
+    @Query("SELECT * FROM campaign where platform <= :platform order by payout DESC limit $DEFAULT_LIMIT offset :offset")
+    fun getSortedCampaignsByHighToLow(platform: Int, offset: Int): Flow<List<Campaign>>
 
-    @Query("SELECT * FROM campaign where platform = :platform order by cr ASC ")
-    fun getSortedCampaignsByRecommended(platform: Int): Flow<List<Campaign>>
+    @Query("SELECT * FROM campaign where platform <= :platform order by payout ASC limit $DEFAULT_LIMIT offset :offset")
+    fun getSortedCampaignsByLowToHigh(platform: Int, offset: Int): Flow<List<Campaign>>
 
-    @Query("SELECT * FROM campaign where platform = :platform order by date(createdAt) DESC ")
-    fun getSortedCampaignsByDate(platform: Int): Flow<List<Campaign>>
+    @Query("SELECT * FROM campaign where platform <= :platform order by cr ASC limit $DEFAULT_LIMIT offset :offset")
+    fun getSortedCampaignsByRecommended(platform: Int, offset: Int): Flow<List<Campaign>>
+
+    @Query("SELECT * FROM campaign where platform <= :platform order by date(createdAt) DESC limit $DEFAULT_LIMIT offset :offset")
+    fun getSortedCampaignsByDate(platform: Int, offset: Int): Flow<List<Campaign>>
 
     @Query("SELECT count(id) FROM $CAMPAIGN_tABLE_NAME")
     fun getCampaignsCount(): Flow<Int>
@@ -31,4 +36,7 @@ interface CampaignDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCampaigns(campaigns: List<Campaign>)
+
+    @Query("SELECT * FROM $CAMPAIGN_tABLE_NAME where lower(name) LIKE '%' || :name || '%' ")
+    fun searchCampaignsByTitle(name: String): Flow<List<Campaign>>
 }

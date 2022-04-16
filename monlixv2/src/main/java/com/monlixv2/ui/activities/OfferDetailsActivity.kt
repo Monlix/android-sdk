@@ -19,7 +19,9 @@ import com.monlixv2.databinding.OfferDetailsActivityBinding
 import com.monlixv2.databinding.OfferItemInPopWindowBinding
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.util.Constants
+import com.monlixv2.util.Constants.JSONToCampaign
 import com.monlixv2.util.Constants.SINGLE_CAMPAIGN_PAYLOAD
+import com.monlixv2.util.UIHelpers
 
 
 class OfferDetailsActivity : AppCompatActivity() {
@@ -35,15 +37,13 @@ class OfferDetailsActivity : AppCompatActivity() {
         offerDetailsBinding = binding.offerDetails
         binding.lifecycleOwner = this
 
-//        val campaign =
-//            intent.getParcelableExtra<Campaign>(SINGLE_CAMPAIGN_PAYLOAD) as Campaign
+        val campaignJSON = intent.getStringExtra(SINGLE_CAMPAIGN_PAYLOAD)
+        val campaign: Campaign = JSONToCampaign(campaignJSON!!)
 
-
-//        displayData(campaign)
+        displayData(campaign)
     }
 
     private fun displayData(campaign: Campaign) {
-
 
 
         binding.newUsersLayout.visibility = if(campaign.multipleTimes) View.GONE else View.VISIBLE
@@ -51,8 +51,8 @@ class OfferDetailsActivity : AppCompatActivity() {
         binding.multiRewardLayout.visibility = if(campaign.hasGoals) View.VISIBLE else View.GONE
         binding.completeTasksLayout.visibility = if(campaign.hasGoals) View.GONE else View.VISIBLE
 
-        binding.adTitle.text = campaign.name
-        offerDetailsBinding.description.text = campaign.description
+        UIHelpers.dangerouslySetHTML(campaign.name,binding.adTitle)
+        UIHelpers.dangerouslySetHTML(campaign.description,offerDetailsBinding.description)
 
         binding.startOfferBtn.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
@@ -66,13 +66,13 @@ class OfferDetailsActivity : AppCompatActivity() {
             .error(ContextCompat.getDrawable(this, R.drawable.offer_placeholder))
             .into(offerDetailsBinding.transactionImage)
 
-        if (campaign.hasGoals && campaign.goals.size > 0) {
+        if (campaign.hasGoals && campaign.goals.isNotEmpty()) {
             offerDetailsBinding.stepsScroller.apply {
-                setOnTouchListener(View.OnTouchListener { v, _ ->
+                setOnTouchListener { v, _ ->
                     v.parent.parent.parent.requestDisallowInterceptTouchEvent(true);
                     performClick()
                     false
-                })
+                }
             }
             offerDetailsBinding.stepsToggle.visibility = View.VISIBLE
             offerDetailsBinding.stepsToggle.tag = TAG_NOT_EXPANDED

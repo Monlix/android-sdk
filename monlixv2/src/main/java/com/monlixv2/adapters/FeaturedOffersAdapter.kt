@@ -60,7 +60,8 @@ class FeaturedOffersAdapter(
 
     private fun onOfferClick(holder: FeaturedOffersAdapter, campaign: Campaign) {
         val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
-//        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
+        val campaignJson = Constants.campaignToJSON(campaign)
+        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaignJson)
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
     }

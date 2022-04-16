@@ -1,23 +1,24 @@
 package com.monlixv2.service.models.campaigns
 
 import androidx.annotation.WorkerThread
-import com.monlixv2.service.models.ads.Ad
-import com.monlixv2.service.models.ads.AdDao
-import com.monlixv2.service.models.offers.Offer
-import com.monlixv2.service.models.offers.OfferDao
 import com.monlixv2.util.Constants
 import kotlinx.coroutines.flow.Flow
 
 class CampaignRepository(private val campaignDao: CampaignDao) {
-    val allCampaigns: Flow<List<Campaign>> = campaignDao.getAllCampaigns()
+    val allCampaigns: Flow<List<Campaign>> = campaignDao.getAllCampaigns(PLATFORM_ALL, 0)
+    val featuredCampaigns: Flow<List<Campaign>> = campaignDao.getFeaturedCampaigns();
 
-    fun sortedCampaigns(platform: Int, sortType: Constants.SORT_FILTER): Flow<List<Campaign>> {
+    fun searchCampaignsByTitle(title: String): Flow<List<Campaign>> {
+        return campaignDao.searchCampaignsByTitle(title)
+    }
+
+    fun sortedCampaigns(platform: Int, sortType: Constants.SORT_FILTER, offset: Int): Flow<List<Campaign>> {
         return when (sortType) {
-            Constants.SORT_FILTER.HIGH_TO_LOW -> campaignDao.getSortedCampaignsByHighToLow(platform)
-            Constants.SORT_FILTER.LOW_TO_HIGH -> campaignDao.getSortedCampaignsByLowToHigh(platform)
-            Constants.SORT_FILTER.RECOMMENDED -> campaignDao.getSortedCampaignsByRecommended(platform)
-            Constants.SORT_FILTER.NEWEST -> campaignDao.getSortedCampaignsByDate(platform)
-            else -> campaignDao.getAllCampaigns()
+            Constants.SORT_FILTER.HIGH_TO_LOW -> campaignDao.getSortedCampaignsByHighToLow(platform, offset)
+            Constants.SORT_FILTER.LOW_TO_HIGH -> campaignDao.getSortedCampaignsByLowToHigh(platform, offset)
+            Constants.SORT_FILTER.RECOMMENDED -> campaignDao.getSortedCampaignsByRecommended(platform, offset)
+            Constants.SORT_FILTER.NEWEST -> campaignDao.getSortedCampaignsByDate(platform, offset)
+            else -> campaignDao.getAllCampaigns(platform, offset)
         }
     }
 

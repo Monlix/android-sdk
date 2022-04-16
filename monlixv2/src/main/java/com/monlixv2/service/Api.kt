@@ -4,11 +4,13 @@ import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.offers.OfferResponse
 import com.monlixv2.service.models.surveys.Survey
 import com.monlixv2.service.models.transactions.TransactionResponse
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.concurrent.TimeUnit
 
 
 interface ApiInterface {
@@ -48,12 +50,17 @@ interface ApiInterface {
         private var instance: ApiInterface? = null
 
         private var BASE_URL = "https://api.monlix.com/api/"
+        private val okHttpClient = OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .build()
 
         fun getInstance(): ApiInterface {
             if (instance == null)
                 instance = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(BASE_URL)
+                    .client(okHttpClient)
                     .build()
                     .create(ApiInterface::class.java)
             return instance as ApiInterface

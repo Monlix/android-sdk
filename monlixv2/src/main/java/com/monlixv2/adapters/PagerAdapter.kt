@@ -22,20 +22,19 @@ class PagerAdapter(fa: AppCompatActivity?) :
     }
 
     override fun createFragment(position: Int): Fragment {
-        println(this.availableFragments)
-        if (!renderedFragments.contains(SURVEY_FRAGMENT) && availableFragments!!.contains(
-                SURVEY_FRAGMENT
-            )
-        ) {
-            renderedFragments.add(SURVEY_FRAGMENT)
-            return SurveysFragment()
-        }
         if (!renderedFragments.contains(OFFER_FRAGMENT) && availableFragments!!.contains(
                 OFFER_FRAGMENT
             )
         ) {
             renderedFragments.add(OFFER_FRAGMENT)
             return OffersFragment()
+        }
+        if (!renderedFragments.contains(SURVEY_FRAGMENT) && availableFragments!!.contains(
+                SURVEY_FRAGMENT
+            )
+        ) {
+            renderedFragments.add(SURVEY_FRAGMENT)
+            return SurveysFragment()
         }
 
         if (!renderedFragments.contains(AD_FRAGMENT) && availableFragments!!.contains(

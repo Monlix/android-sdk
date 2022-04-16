@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.ui.activities.OfferDetailsActivity
+import com.monlixv2.ui.activities.SearchOffersActivity
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.ANDROID_CAMPAIGN_PARAM
@@ -30,11 +31,9 @@ import kotlin.coroutines.CoroutineContext
 const val FILTER_SECTION = 2
 const val DISCOVER_OFFERS_STR = "Discover offers"
 class OffersSearchAdapter(
-    private val dataSource: ArrayList<Campaign>,
-    private val featuredCampaigns: ArrayList<Campaign>,
-    private val activity: AppCompatActivity,
+    private val activity: SearchOffersActivity,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), CoroutineScope {
-
+    private var allCampaigns = ArrayList<Campaign>()
     private var filteredCampaigns = ArrayList<Campaign>()
     private var textFilter = ""
     override val coroutineContext: CoroutineContext = Dispatchers.Main
@@ -42,10 +41,6 @@ class OffersSearchAdapter(
     private var noResultsString = ""
     private var showFeatured = false
 
-    init {
-        filteredCampaigns = dataSource
-        showFeatured = featuredCampaigns.size > 0
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -85,7 +80,7 @@ class OffersSearchAdapter(
 
         if(showFeatured) {
             holder.featuredRecycler.apply {
-                adapter = FeaturedOffersAdapter(featuredCampaigns, activity)
+               // adapter = FeaturedOffersAdapter(featuredCampaigns, activity)
             }
         }
 //
@@ -121,45 +116,42 @@ class OffersSearchAdapter(
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
     }
 
-
-    fun filterData() {
-        println("*** FILTERING *** ${textFilter}. Size before ${filteredCampaigns.size}")
-        // filter by offer type
-        filteredCampaigns = if (textFilter.isNotEmpty()) {
-            dataSource.filter { it ->
-                it.name.lowercase().contains(textFilter)
-            } as ArrayList<Campaign>
-        } else {
-            dataSource
+    fun updateData(newData: List<Campaign>) {
+        filteredCampaigns = newData as ArrayList<Campaign>
+        if(allCampaigns.size == 0) {
+            allCampaigns = filteredCampaigns
         }
-
 
         if (filteredCampaigns.size > 0) {
             discoverString = "Results for ``${textFilter}``"
             noResultsString = ""
             showFeatured = false
         }
-        if (filteredCampaigns.size == 0 && dataSource.size > 0) {
+        if (filteredCampaigns.size == 0 ) {
             noResultsString = "No results for <b>`${textFilter}`</b>"
             discoverString = DISCOVER_OFFERS_STR
-            if(featuredCampaigns.size > 0 ) {
-                showFeatured = true
-            }
+//            if(featuredCampaigns.size > 0 ) {
+//                showFeatured = true
+//            }
         } else {
             noResultsString = ""
         }
         if (textFilter.contentEquals("")) {
             discoverString = DISCOVER_OFFERS_STR
-            if(featuredCampaigns.size > 0 ) {
-                showFeatured = true
-            }
+//            if(featuredCampaigns.size > 0 ) {
+//                showFeatured = true
+//            }
         }
-        if (filteredCampaigns.size == 0 && textFilter.isNotEmpty()) {
-            filteredCampaigns = dataSource
+        if(newData.isEmpty()) {
+            filteredCampaigns = allCampaigns
         }
         notifyDataSetChanged()
     }
 
+
+    fun filterData() {
+        activity.filterData(textFilter.lowercase())
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         println("Binding OFFER ${position}")
@@ -213,7 +205,8 @@ class OffersSearchAdapter(
 
     private fun onOfferClick(holder: OfferHolder, campaign: Campaign) {
         val intent = Intent(holder.itemView.context, OfferDetailsActivity::class.java)
-//        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaign)
+        val campaignJson = Constants.campaignToJSON(campaign)
+        intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaignJson)
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
     }
