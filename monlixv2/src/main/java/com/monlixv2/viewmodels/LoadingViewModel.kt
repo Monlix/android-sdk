@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.monlixv2.service.ApiTest
+import com.monlixv2.service.ApiInterface
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.campaigns.PLATFORM_ALL
 import com.monlixv2.service.models.campaigns.PLATFORM_ANDROID
@@ -75,7 +75,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
 
     private fun surveysRequest() {
         coroutineScope.launch {
-            val response = ApiTest.getInstance()
+            val response = ApiInterface.getInstance()
                 .getSurveys(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.surveys = response.body()
@@ -88,7 +88,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
 
     private fun offersRequest() {
         coroutineScope.launch {
-            val response = ApiTest.getInstance()
+            val response = ApiInterface.getInstance()
                 .getOffers(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 _groupedResponse.value?.offers = response.body()
@@ -101,7 +101,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
 
     private fun campaignsRequest() {
         coroutineScope.launch {
-            val response = ApiTest.getInstance()
+            val response = ApiInterface.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
                 val campaigns = if (response.body() != null) response.body() else ArrayList();

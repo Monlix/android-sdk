@@ -25,13 +25,14 @@ import com.monlixv2.viewmodels.CampaignsViewModel
 import com.monlixv2.viewmodels.LoadingViewModel
 import com.monlixv2.viewmodels.SurveysViewModel
 
+const val EMPTY_FRAGMENT_SIZE = -1
 
 class LoadingScreenActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var viewModel: LoadingViewModel
     private lateinit var binding: LoadingScreenBinding
     private var fragmentsToShow = mutableListOf<Int>()
-    private var numberOfFragments : Int = -1
+    private var numberOfFragments : Int = EMPTY_FRAGMENT_SIZE
     private var isFetchedNetworkData = false
 
     private val campaignsViewModel: CampaignsViewModel by viewModels {
@@ -83,7 +84,6 @@ class LoadingScreenActivity : AppCompatActivity() {
     private fun setupListeners() {
 
         campaignsViewModel.campaignsCount.observe(this) {
-            println("CAMPAIGNS SIZE ${it}")
             if(isFetchedNetworkData && it > 0) {
                 makeFragmentVisible(OFFER_FRAGMENT)
             }
