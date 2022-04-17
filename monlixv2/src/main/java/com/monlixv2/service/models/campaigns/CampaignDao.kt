@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
-const val DEFAULT_LIMIT = 30
+const val DEFAULT_LIMIT = 12
 
 @Dao
 interface CampaignDao {
@@ -37,6 +37,6 @@ interface CampaignDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCampaigns(campaigns: List<Campaign>)
 
-    @Query("SELECT * FROM $CAMPAIGN_tABLE_NAME where lower(name) LIKE '%' || :name || '%' ")
-    fun searchCampaignsByTitle(name: String): Flow<List<Campaign>>
+    @Query("SELECT * FROM $CAMPAIGN_tABLE_NAME where lower(name) LIKE '%' || :name || '%' limit $DEFAULT_LIMIT offset :offset")
+    fun searchCampaignsByTitle(name: String, offset: Int): Flow<List<Campaign>>
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,13 +13,26 @@ import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.SurveysAdapter
 import com.monlixv2.databinding.SurveysFragmentBinding
-import com.monlixv2.service.models.surveys.Survey
+import com.monlixv2.service.models.campaigns.DEFAULT_LIMIT
 import com.monlixv2.util.Constants
+import com.monlixv2.util.RecyclerScrollListener
 import com.monlixv2.viewmodels.SurveysViewModel
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlin.coroutines.CoroutineContext
 
 
-class SurveysFragment : Fragment() {
+class SurveysFragment : Fragment(), CoroutineScope {
     private lateinit var binding: SurveysFragmentBinding
+    override val coroutineContext: CoroutineContext = Dispatchers.Main
+
+    private var surveysAdapter: SurveysAdapter? = null
+
+    private var isLoadingFromDb = false
+    private var isDbLastPage = false
+    private var isScrollListenerAttached = false
+    var currentOffset = 0
 
     private val surveysViewModel: SurveysViewModel by viewModels {
         Constants.viewModelFactory {
@@ -39,19 +51,61 @@ class SurveysFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         (binding.surveyList.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if(position == 0)  2 else 1
             }
-
         }
-        surveysViewModel.allSurveys.observe(viewLifecycleOwner) {
-            binding.surveyList.apply {
-                adapter = it?.let { SurveysAdapter(it) }
+        setupAdapter()
+        loadData()
+
+    }
+
+    fun loadData() {
+        lifecycleScope.launch {
+            surveysViewModel.getSurveys(currentOffset).collect {
+
+                if (it.isEmpty()) {
+                    isDbLastPage = true
+                    return@collect
+                }
+
+                if (surveysAdapter == null)
+                    return@collect
+
+                isLoadingFromDb = false
+                isDbLastPage = false
+
+                surveysAdapter?.appendData(it)
+
+                if (!isScrollListenerAttached) {
+                    attachScrollListener()
+                }
             }
         }
+    }
 
+
+    private fun setupAdapter() {
+        surveysAdapter = SurveysAdapter()
+        binding.surveyList.adapter = surveysAdapter
+    }
+
+    private fun attachScrollListener() {
+        isScrollListenerAttached = true
+        binding.surveyList.addOnScrollListener(object :
+            RecyclerScrollListener(binding.surveyList.layoutManager!! as GridLayoutManager) {
+            override fun loadMoreItems() {
+                isLoadingFromDb = true
+                currentOffset += DEFAULT_LIMIT
+                loadData()
+            }
+
+            override val isLastPage: Boolean
+                get() = isDbLastPage
+            override val isLoading: Boolean
+                get() = isLoadingFromDb
+        })
     }
 
 }

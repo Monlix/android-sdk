@@ -9,13 +9,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
 import com.monlixv2.service.models.campaigns.Campaign
+import com.monlixv2.service.models.campaigns.DEFAULT_LIMIT
 import com.monlixv2.ui.activities.OfferDetailsActivity
 import com.monlixv2.ui.activities.SearchOffersActivity
 import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
@@ -33,14 +33,17 @@ const val DISCOVER_OFFERS_STR = "Discover offers"
 class OffersSearchAdapter(
     private val activity: SearchOffersActivity,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), CoroutineScope {
+
     private var allCampaigns = ArrayList<Campaign>()
     private var filteredCampaigns = ArrayList<Campaign>()
+    private var featuredCampaigns = ArrayList<Campaign>()
     private var textFilter = ""
-    override val coroutineContext: CoroutineContext = Dispatchers.Main
     private var discoverString = DISCOVER_OFFERS_STR
     private var noResultsString = ""
     private var showFeatured = false
+    var currentOffset = 0
 
+    override val coroutineContext: CoroutineContext = Dispatchers.Main
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -70,8 +73,14 @@ class OffersSearchAdapter(
         return if (filteredCampaigns[position-1].hasGoals && filteredCampaigns[position-1].goals.size > 0) STEP_OFFER_CARD else SIMPLE_OFFER_CARD
     }
 
+    fun setFeatured(list: List<Campaign>) {
+        if(list.isNotEmpty()) {
+            featuredCampaigns = list as ArrayList<Campaign>
+        }
+        replaceData(filteredCampaigns)
+    }
 
-    fun initListeners(holder: FilterHolder) {
+    private fun initListeners(holder: FilterHolder) {
         dangerouslySetHTML(discoverString, holder.discoverText)
         dangerouslySetHTML(noResultsString, holder.noResultsText)
         holder.noResultsContainer.visibility = if(noResultsString.isEmpty()) View.GONE else View.VISIBLE
@@ -80,11 +89,9 @@ class OffersSearchAdapter(
 
         if(showFeatured) {
             holder.featuredRecycler.apply {
-               // adapter = FeaturedOffersAdapter(featuredCampaigns, activity)
+                adapter = FeaturedOffersAdapter(featuredCampaigns, activity)
             }
         }
-//
-        //noResultsContainer
         holder.textSearch.addTextChangedListener(textWatcher)
         holder.closeImg.setOnClickListener {
             activity.finish()
@@ -108,6 +115,7 @@ class OffersSearchAdapter(
                 if (searchText != searchFor)
                     return@launch
                 textFilter = searchFor.lowercase()
+                currentOffset = 0
                 filterData()
             }
         }
@@ -116,7 +124,22 @@ class OffersSearchAdapter(
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
     }
 
-    fun updateData(newData: List<Campaign>) {
+    init {
+        filterData()
+    }
+
+    fun loadNextPage() {
+        currentOffset += DEFAULT_LIMIT
+        filterData()
+    }
+
+    fun appendData(it: List<Campaign>?) {
+        val currentPosition = filteredCampaigns.size
+        it?.let { it1 -> filteredCampaigns.addAll(it1) }
+        notifyItemRangeInserted(currentPosition+1, it!!.size)
+    }
+
+    fun replaceData(newData: List<Campaign>) {
         filteredCampaigns = newData as ArrayList<Campaign>
         if(allCampaigns.size == 0) {
             allCampaigns = filteredCampaigns
@@ -130,17 +153,17 @@ class OffersSearchAdapter(
         if (filteredCampaigns.size == 0 ) {
             noResultsString = "No results for <b>`${textFilter}`</b>"
             discoverString = DISCOVER_OFFERS_STR
-//            if(featuredCampaigns.size > 0 ) {
-//                showFeatured = true
-//            }
+            if(featuredCampaigns.size > 0 ) {
+                showFeatured = true
+            }
         } else {
             noResultsString = ""
         }
         if (textFilter.contentEquals("")) {
             discoverString = DISCOVER_OFFERS_STR
-//            if(featuredCampaigns.size > 0 ) {
-//                showFeatured = true
-//            }
+            if(featuredCampaigns.size > 0 ) {
+                showFeatured = true
+            }
         }
         if(newData.isEmpty()) {
             filteredCampaigns = allCampaigns
@@ -150,11 +173,10 @@ class OffersSearchAdapter(
 
 
     fun filterData() {
-        activity.filterData(textFilter.lowercase())
+        activity.filterData(textFilter.lowercase(), currentOffset)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        println("Binding OFFER ${position}")
 
         if (holder.itemViewType == FILTER_CARD) {
             initListeners(holder as FilterHolder)

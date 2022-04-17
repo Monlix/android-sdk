@@ -12,7 +12,7 @@ class CampaignsViewModel(private val repository: CampaignRepository) : ViewModel
 
     val allCampaigns: LiveData<List<Campaign>> = repository.allCampaigns.asLiveData()
 
-    val featuredCampaigns: LiveData<List<Campaign>> = repository.featuredCampaigns.asLiveData()
+    val featuredCampaigns: Flow<List<Campaign>> = repository.featuredCampaigns
 
     val campaignsCount: LiveData<Int> = repository.campaignCount.asLiveData()
 
@@ -20,8 +20,8 @@ class CampaignsViewModel(private val repository: CampaignRepository) : ViewModel
         return repository.sortedCampaigns(platform, sortType, offset)
     }
 
-    fun searchCampaigns(title: String): LiveData<List<Campaign>> {
-        return repository.searchCampaignsByTitle(title).asLiveData()
+    fun searchCampaignsByName(title: String, offset: Int): Flow<List<Campaign>> {
+        return repository.searchCampaignsByTitle(title, offset)
     }
 
 

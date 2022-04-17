@@ -17,9 +17,7 @@ import com.monlixv2.ui.fragments.AdsFragment
 import com.monlixv2.util.UIHelpers
 
 
-class AdsAdapter(
-    private val fragmentInstance: AdsFragment
-) : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
+class AdsAdapter : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
 
     private var dataSource: ArrayList<Ad> = ArrayList<Ad>()
 
@@ -42,7 +40,6 @@ class AdsAdapter(
 
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
-        println("Binding ad ${position}")
         UIHelpers.dangerouslySetHTML(dataSource[position].name, holder.title)
         UIHelpers.dangerouslySetHTML(dataSource[position].description, holder.description)
         holder.points.text = "+${dataSource[position].payout}"
@@ -59,7 +56,7 @@ class AdsAdapter(
     fun appendData(it: List<Ad>) {
         val currentPosition = dataSource.size
         dataSource.addAll(it)
-        notifyItemRangeInserted(currentPosition+1, it.size)
+        notifyItemRangeInserted(currentPosition, it.size)
     }
 
 

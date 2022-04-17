@@ -45,7 +45,9 @@ class OfferDetailsActivity : AppCompatActivity() {
 
     private fun displayData(campaign: Campaign) {
 
-
+        binding.adSheetClose.setOnClickListener {
+            finish()
+        }
         binding.newUsersLayout.visibility = if(campaign.multipleTimes) View.GONE else View.VISIBLE
         binding.androidLayout.visibility = if(campaign.oss.contains(Constants.ANDROID_CAMPAIGN_PARAM)) View.VISIBLE else View.GONE
         binding.multiRewardLayout.visibility = if(campaign.hasGoals) View.VISIBLE else View.GONE
@@ -126,10 +128,6 @@ class OfferDetailsActivity : AppCompatActivity() {
             }
             offerDetailsBinding.stepsToggle.performClick()
         }
-    }
-
-    fun close(view: View) {
-        finish();
     }
 
     override fun finish() {

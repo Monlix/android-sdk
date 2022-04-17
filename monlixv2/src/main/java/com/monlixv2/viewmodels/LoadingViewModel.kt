@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.monlixv2.service.ApiInterface
 import com.monlixv2.service.ApiTest
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.service.models.campaigns.PLATFORM_ALL
@@ -24,6 +23,7 @@ data class GroupedResponse(
     var campaigns: ArrayList<Campaign>?,
     var mergedSurveys: ArrayList<Survey>?,
 )
+
 const val step = 0.3
 
 class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application) :
@@ -104,14 +104,15 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
             val response = ApiTest.getInstance()
                 .getCampaigns(_credentials.value!!.appId, _credentials.value!!.userId, "")
             try {
-                val campaigns = if(response.body() != null) response.body() else ArrayList();
-                val filtered = campaigns!!.filter {
-                        el -> IOS_CAMPAIGN_PARAM !in el.oss
+                val campaigns = if (response.body() != null) response.body() else ArrayList();
+                val filtered = campaigns!!.filter { el ->
+                    IOS_CAMPAIGN_PARAM !in el.oss
                 } as ArrayList<Campaign>
                 for (el in filtered) {
-                    el.platform = if(el.oss.contains(Constants.ANDROID_CAMPAIGN_PARAM)) PLATFORM_ANDROID else PLATFORM_ALL
+                    el.platform =
+                        if (el.oss.contains(Constants.ANDROID_CAMPAIGN_PARAM)) PLATFORM_ANDROID else PLATFORM_ALL
                 }
-                 _groupedResponse.value?.campaigns =  filtered
+                _groupedResponse.value?.campaigns = filtered
                 checkProgress()
             } catch (e: Exception) {
                 println("Monlix Exception campaigns -${e.message}")
@@ -132,7 +133,7 @@ class LoadingViewModel(APP_ID: String, USER_ID: String, application: Application
         }
     }
 
-    fun finishAnimation(){
+    fun finishAnimation() {
         _isLoading.postValue(false)
     }
 

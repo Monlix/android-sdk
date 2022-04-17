@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.monlixv2.R
+import com.monlixv2.service.models.ads.Ad
 import com.monlixv2.service.models.surveys.Survey
 import com.monlixv2.util.UIHelpers
 
@@ -18,9 +19,10 @@ import com.monlixv2.util.UIHelpers
 const val LARGE_CARD = 0
 const val SMALL_CARD = 1
 
-class SurveysAdapter(
-    private val dataSource: List<Survey>
-) : RecyclerView.Adapter<SurveysAdapter.SurveyHolder>() {
+class SurveysAdapter : RecyclerView.Adapter<SurveysAdapter.SurveyHolder>() {
+
+    private var dataSource: ArrayList<Survey> = ArrayList<Survey>()
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -50,34 +52,59 @@ class SurveysAdapter(
 
     override fun onBindViewHolder(holder: SurveyHolder, position: Int) {
         UIHelpers.dangerouslySetHTML(dataSource[position].name, holder.title)
-        // trick to handle text auto-resizing
-        TextViewCompat.setAutoSizeTextTypeWithDefaults(holder.points, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
+        // handle text auto-resizing
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(
+            holder.points,
+            TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE
+        );
         holder.points.text = ""
-        if(holder.itemViewType == LARGE_CARD) {
-            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(holder.points, 12,
-                60, 2, TypedValue.COMPLEX_UNIT_SP);
-        }else {
-            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(holder.points, 12,
-                30, 2, TypedValue.COMPLEX_UNIT_SP);
+        if (holder.itemViewType == LARGE_CARD) {
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                holder.points, 12,
+                60, 2, TypedValue.COMPLEX_UNIT_SP
+            );
+        } else {
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                holder.points, 12,
+                30, 2, TypedValue.COMPLEX_UNIT_SP
+            );
         }
 
-        holder.points.text = if(dataSource[position].payout != null) dataSource[position].payout else "${dataSource[position].minPayout} - ${dataSource[position].maxPayout}"
+        holder.points.text =
+            if (dataSource[position].payout != null) dataSource[position].payout else "${dataSource[position].minPayout} - ${dataSource[position].maxPayout}"
         holder.currency.text = dataSource[position].currency
-        holder.time.text = "~${if(dataSource[position].maxDuration !== null) dataSource[position].maxDuration else "15"} min"
+        holder.time.text =
+            "~${if (dataSource[position].maxDuration !== null) dataSource[position].maxDuration else "15"} min"
         holder.survey = dataSource[position]
-        holder.ratingContainer.visibility = if(dataSource[position].rank !== null) View.VISIBLE else View.GONE
-        if(dataSource[position].rank !== null) {
-            holder.rating!!.text = "%.1f".format(dataSource[position].rank!!*5)
+        holder.ratingContainer.visibility =
+            if (dataSource[position].rank !== null) View.VISIBLE else View.GONE
+        if (dataSource[position].rank !== null) {
+            holder.rating!!.text = "%.1f".format(dataSource[position].rank!! * 5)
         }
 
-        if(holder.itemViewType == LARGE_CARD) {
-            holder.timerContainer.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.border_radius_item)
-            holder.ratingContainer.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.border_radius_item_transparent_20)
-        }else {
-            holder.timerContainer.background = ContextCompat.getDrawable(holder.itemView.context,
-            if(dataSource[position].rank !== null) R.drawable.border_radius_item_half_corners else R.drawable.border_radius_item)
-            holder.ratingContainer.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.border_radius_item_transparent_20_half_corners)
+        if (holder.itemViewType == LARGE_CARD) {
+            holder.timerContainer.background =
+                ContextCompat.getDrawable(holder.itemView.context, R.drawable.border_radius_item)
+            holder.ratingContainer.background = ContextCompat.getDrawable(
+                holder.itemView.context,
+                R.drawable.border_radius_item_transparent_20
+            )
+        } else {
+            holder.timerContainer.background = ContextCompat.getDrawable(
+                holder.itemView.context,
+                if (dataSource[position].rank !== null) R.drawable.border_radius_item_half_corners else R.drawable.border_radius_item
+            )
+            holder.ratingContainer.background = ContextCompat.getDrawable(
+                holder.itemView.context,
+                R.drawable.border_radius_item_transparent_20_half_corners
+            )
         }
+    }
+
+    fun appendData(it: List<Survey>) {
+        val currentPosition = dataSource.size
+        dataSource.addAll(it)
+        notifyItemRangeInserted(currentPosition, it.size)
     }
 
 

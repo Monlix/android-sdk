@@ -83,27 +83,24 @@ class LoadingScreenActivity : AppCompatActivity() {
     private fun setupListeners() {
 
         campaignsViewModel.campaignsCount.observe(this) {
+            println("CAMPAIGNS SIZE ${it}")
             if(isFetchedNetworkData && it > 0) {
-                println("campaign count ${it}")
                 makeFragmentVisible(OFFER_FRAGMENT)
             }
         }
         adsViewModel.adCount.observe(this) {
             if(isFetchedNetworkData && it > 0) {
-                println("ads count ${it}")
                 makeFragmentVisible(AD_FRAGMENT)
             }
         }
 
         surveysViewModel.surveyCount.observe(this) {
             if(isFetchedNetworkData && it > 0) {
-                println("survey count ${it}")
                 makeFragmentVisible(SURVEY_FRAGMENT)
             }
         }
         viewModel.groupedResponse.observe(this, Observer {
             if (it.mergedSurveys !== null) {
-                println("inserting offers")
                 isFetchedNetworkData = true
                 numberOfFragments = 0
                 if(it.mergedSurveys!!.size > 0) {

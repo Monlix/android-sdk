@@ -51,10 +51,6 @@ class OffersAdapterV2(
     private var isInitialLoad = true
     var currentOffset = 0
 
-    init {
-//        filteredCampaigns = dataSource
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

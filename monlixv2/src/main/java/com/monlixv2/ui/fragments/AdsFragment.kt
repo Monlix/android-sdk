@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.App
 import com.monlixv2.R
@@ -54,7 +55,7 @@ class AdsFragment : Fragment(), CoroutineScope {
     }
 
     fun loadData() {
-        launch {
+        lifecycleScope.launch {
             adsViewModel.getAds(currentOffset).collect {
 
                 if (it.isEmpty()) {
@@ -79,7 +80,7 @@ class AdsFragment : Fragment(), CoroutineScope {
 
 
     private fun setupAdapter() {
-        adsAdapter = AdsAdapter(this)
+        adsAdapter = AdsAdapter()
         binding.adRecycler.adapter = adsAdapter
     }
 

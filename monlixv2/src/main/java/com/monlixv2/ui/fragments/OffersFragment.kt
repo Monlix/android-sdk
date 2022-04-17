@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.App
 import com.monlixv2.R
@@ -54,7 +55,7 @@ class OffersFragment : Fragment(), CoroutineScope {
 
 
     fun filterData(platform: Int, sortType: Constants.SORT_FILTER, offset: Int = 0) {
-        launch {
+        lifecycleScope.launch {
             campaignsViewModel.getSortedCampaigns(platform, sortType, offset).collect {
                 if (it.isEmpty()) {
                     isDbLastPage = true
@@ -100,11 +101,6 @@ class OffersFragment : Fragment(), CoroutineScope {
     private fun setupAdapter() {
         offersAdapterV2 = OffersAdapterV2(context as AppCompatActivity, this@OffersFragment)
         binding.offersRecyclerV2.adapter = offersAdapterV2
-    }
-
-    override fun onPause() {
-        super.onPause()
-        println("GOING TO PAUSE")
     }
 
 }

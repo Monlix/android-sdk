@@ -4,8 +4,11 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
 class SurveyRepository(private val surveyDao: SurveyDao) {
-    val allSurveys: Flow<List<Survey>> = surveyDao.getSurveys()
     val surveyCount: Flow<Int> = surveyDao.getSurveyCount()
+
+    fun getSurveys(offset: Int): Flow<List<Survey>> {
+        return surveyDao.getSurveys(offset);
+    }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -18,4 +21,5 @@ class SurveyRepository(private val surveyDao: SurveyDao) {
     suspend fun deleteAll() {
         surveyDao.deleteAllSurveys()
     }
+
 }

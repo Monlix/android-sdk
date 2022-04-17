@@ -8,8 +8,8 @@ class CampaignRepository(private val campaignDao: CampaignDao) {
     val allCampaigns: Flow<List<Campaign>> = campaignDao.getAllCampaigns(PLATFORM_ALL, 0)
     val featuredCampaigns: Flow<List<Campaign>> = campaignDao.getFeaturedCampaigns();
 
-    fun searchCampaignsByTitle(title: String): Flow<List<Campaign>> {
-        return campaignDao.searchCampaignsByTitle(title)
+    fun searchCampaignsByTitle(title: String, offset: Int): Flow<List<Campaign>> {
+        return campaignDao.searchCampaignsByTitle(title, offset)
     }
 
     fun sortedCampaigns(platform: Int, sortType: Constants.SORT_FILTER, offset: Int): Flow<List<Campaign>> {

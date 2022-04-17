@@ -100,7 +100,7 @@
 
         <LinearLayout
                 android:visibility="gone"
-                android:paddingTop="64dp"
+                android:paddingTop="48dp"
                 app:transactionsNoDataHandler="@{viewModel.showNoData}"
                 android:orientation="vertical"
                 android:gravity="center"
