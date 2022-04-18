@@ -25,14 +25,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="220dp"
                 android:id="@+id/imageView" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
                 app:progressbarLoading="@{viewModel.renderProgress}"
                 app:trackColor="@color/grayV6"
                 app:indicatorColor="@color/darkBlue"
-                app:trackThickness="2dp"
+                app:trackThickness="4dp"
                 android:progress="0"
                 app:trackCornerRadius="5dp"
                 android:layout_width="300dp"
