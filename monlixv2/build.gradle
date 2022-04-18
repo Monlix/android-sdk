@@ -64,8 +64,8 @@ afterEvaluate {
                 from components.release
 
                 groupId = 'com.netboxify'
-                artifactId = 'monlixv2'
-                version = '2.0'
+                artifactId = 'monlix-android-sdk-2'
+                version = '0.1'
             }
         }
     }
