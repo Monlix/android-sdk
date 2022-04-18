@@ -1,6 +1,7 @@
 package com.monlixv2
 
 import android.content.Context
+import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.monlixv2.service.models.ads.AdRepository
 import com.monlixv2.service.localDb.OfferDatabase
@@ -21,5 +22,6 @@ class App : MultiDexApplication() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 }
