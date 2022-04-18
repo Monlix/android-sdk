@@ -60,7 +60,7 @@
         <TextView
                 android:textColor="@color/darkBlue"
                 android:alpha="0.5"
-                android:text="©2021 IBLIZ INC - Powered by Monlix"
+                android:text="Powered by Monlix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewAbout"
