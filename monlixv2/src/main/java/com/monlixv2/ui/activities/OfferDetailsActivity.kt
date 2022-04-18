@@ -15,8 +15,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
 import com.monlixv2.adapters.TAG_EXPANDED
 import com.monlixv2.adapters.TAG_NOT_EXPANDED
-import com.monlixv2.databinding.OfferDetailsActivityBinding
-import com.monlixv2.databinding.OfferItemInPopWindowBinding
+import com.monlixv2.databinding.MonlixOfferDetailsActivityBinding
+import com.monlixv2.databinding.MonlixOfferItemInPopWindowBinding
 import com.monlixv2.service.models.campaigns.Campaign
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.JSONToCampaign
@@ -26,14 +26,14 @@ import com.monlixv2.util.UIHelpers
 
 class OfferDetailsActivity : AppCompatActivity() {
 
-    private lateinit var binding: OfferDetailsActivityBinding
-    private lateinit var offerDetailsBinding: OfferItemInPopWindowBinding
+    private lateinit var binding: MonlixOfferDetailsActivityBinding
+    private lateinit var offerDetailsBinding: MonlixOfferItemInPopWindowBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.offer_details_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.monlix_offer_details_activity)
         offerDetailsBinding = binding.offerDetails
         binding.lifecycleOwner = this
 
@@ -65,7 +65,7 @@ class OfferDetailsActivity : AppCompatActivity() {
 
         Glide.with(this).load(campaign.image)
             .transition(DrawableTransitionOptions.withCrossFade(300))
-            .error(ContextCompat.getDrawable(this, R.drawable.offer_placeholder))
+            .error(ContextCompat.getDrawable(this, R.drawable.monlix_offer_placeholder))
             .into(offerDetailsBinding.transactionImage)
 
         if (campaign.hasGoals && campaign.goals.isNotEmpty()) {
@@ -81,7 +81,7 @@ class OfferDetailsActivity : AppCompatActivity() {
 
             for (i in 0 until campaign.goals.size) {
                 val requirementItem = LayoutInflater.from(this)
-                    .inflate(R.layout.requrement_item, null, false);
+                    .inflate(R.layout.monlix_requrement_item, null, false);
 
                 val textview =
                     requirementItem.findViewById<TextView>(R.id.requirementTitle)
@@ -94,7 +94,7 @@ class OfferDetailsActivity : AppCompatActivity() {
                 Glide.with(this).load(
                     ContextCompat.getDrawable(
                         this,
-                        R.drawable.circle_radio
+                        R.drawable.monlix_circle_radio
                     )
                 ).into(stepCheck)
                 if (i == campaign.goals.size - 1) {
@@ -113,8 +113,8 @@ class OfferDetailsActivity : AppCompatActivity() {
 
                 val drawable = ContextCompat.getDrawable(
                     this,
-                    if (shouldReveal) R.drawable.arrow_down_reversed else
-                        R.drawable.arrow_down
+                    if (shouldReveal) R.drawable.monlix_arrow_down_reversed else
+                        R.drawable.monlix_arrow_down
                 )
                 offerDetailsBinding.stepsToggle.setCompoundDrawablesWithIntrinsicBounds(
                     null,
@@ -132,7 +132,7 @@ class OfferDetailsActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_down)
+        overridePendingTransition(android.R.anim.fade_in, R.anim.monlix_slide_out_down)
     }
 
 }

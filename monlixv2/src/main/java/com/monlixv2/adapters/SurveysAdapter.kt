@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.monlixv2.R
-import com.monlixv2.service.models.ads.Ad
 import com.monlixv2.service.models.surveys.Survey
 import com.monlixv2.util.UIHelpers
 
@@ -30,9 +29,9 @@ class SurveysAdapter : RecyclerView.Adapter<SurveysAdapter.SurveyHolder>() {
     ): SurveyHolder {
         val inflatedView = parent.inflate(
             when (viewType) {
-                LARGE_CARD -> R.layout.survey_item_banner
+                LARGE_CARD -> R.layout.monlix_survey_item_banner
                 else -> {
-                    R.layout.survey_item
+                    R.layout.monlix_survey_item
                 }
             }, false
         )
@@ -84,19 +83,19 @@ class SurveysAdapter : RecyclerView.Adapter<SurveysAdapter.SurveyHolder>() {
 
         if (holder.itemViewType == LARGE_CARD) {
             holder.timerContainer.background =
-                ContextCompat.getDrawable(holder.itemView.context, R.drawable.border_radius_item)
+                ContextCompat.getDrawable(holder.itemView.context, R.drawable.monlix_border_radius_item)
             holder.ratingContainer.background = ContextCompat.getDrawable(
                 holder.itemView.context,
-                R.drawable.border_radius_item_transparent_20
+                R.drawable.monlix_border_radius_item_transparent_20
             )
         } else {
             holder.timerContainer.background = ContextCompat.getDrawable(
                 holder.itemView.context,
-                if (dataSource[position].rank !== null) R.drawable.border_radius_item_half_corners else R.drawable.border_radius_item
+                if (dataSource[position].rank !== null) R.drawable.monlix_border_radius_item_half_corners else R.drawable.monlix_border_radius_item
             )
             holder.ratingContainer.background = ContextCompat.getDrawable(
                 holder.itemView.context,
-                R.drawable.border_radius_item_transparent_20_half_corners
+                R.drawable.monlix_border_radius_item_transparent_20_half_corners
             )
         }
     }

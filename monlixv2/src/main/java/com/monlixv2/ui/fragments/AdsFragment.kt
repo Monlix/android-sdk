@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.AdsAdapter
-import com.monlixv2.databinding.AdsFragmentBinding
+import com.monlixv2.databinding.MonlixAdsFragmentBinding
 import com.monlixv2.service.models.campaigns.DEFAULT_LIMIT
 import com.monlixv2.util.Constants
 import com.monlixv2.util.RecyclerScrollListener
@@ -26,7 +26,7 @@ import kotlin.coroutines.CoroutineContext
 class AdsFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
-    private lateinit var binding: AdsFragmentBinding
+    private lateinit var binding: MonlixAdsFragmentBinding
     private var adsAdapter: AdsAdapter? = null
     private var isLoadingFromDb = false
     private var isDbLastPage = false
@@ -44,7 +44,7 @@ class AdsFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.ads_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.monlix_ads_fragment, container, false)
         return binding.root
     }
 

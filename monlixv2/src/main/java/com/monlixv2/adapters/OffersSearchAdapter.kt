@@ -53,12 +53,12 @@ class OffersSearchAdapter(
         if (viewType == FILTER_SECTION) {
             return FilterHolder(
                 parent.inflate(
-                    R.layout.offer_search_filters,
+                    R.layout.monlix_offer_search_filters,
                     false
                 )
             )
         }
-        return OfferHolder(parent.inflate(R.layout.offer_item, false))
+        return OfferHolder(parent.inflate(R.layout.monlix_offer_item, false))
 
     }
 
@@ -204,7 +204,7 @@ class OffersSearchAdapter(
                 .error(
                     ContextCompat.getDrawable(
                         holder.itemView.context,
-                        R.drawable.offer_placeholder
+                        R.drawable.monlix_offer_placeholder
                     )
                 )
                 .into(it)
@@ -230,7 +230,7 @@ class OffersSearchAdapter(
         val campaignJson = Constants.campaignToJSON(campaign)
         intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaignJson)
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
+        activity.overridePendingTransition(R.anim.monlix_slide_in_up, android.R.anim.fade_out);
     }
 
     class FilterHolder(v: View) : RecyclerView.ViewHolder(v) {

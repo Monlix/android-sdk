@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+            android:tag="test123"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+                android:elevation="20dp"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                android:outlineProvider="paddedBounds"
+                app:tabMode="fixed"
+                android:id="@+id/monlixTablayout"
+                android:background="@drawable/monlix_toolbar_bg"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="12dp"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="0dp"
+                app:tabIndicatorColor="@color/transparent"
+                app:tabBackground="@drawable/monlix_tab_color_selector"
+                app:tabTextColor="@color/grayV7"
+                app:tabSelectedTextColor="@color/darkBlue"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:tabTextAppearance="@style/MonlixTabButtonStyle"
+                android:layout_height="46dp" />
+
+        <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/monlixPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</layout>

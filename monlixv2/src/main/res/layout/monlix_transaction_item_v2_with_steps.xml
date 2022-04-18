@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="4dp"
+        android:minHeight="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:paddingTop="12dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:paddingBottom="12dp"
+                android:paddingLeft="12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="5dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp">
+
+                <ImageView
+                        android:id="@+id/transactionImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="transaction image" />
+
+                <View
+                        android:id="@+id/transactionOverlay"
+                        android:alpha=".2"
+                        android:background="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                <TextView
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/barlow_bold"
+                        tools:text="3/6"
+                        android:layout_marginTop="-10dp"
+                        android:id="@+id/stepsCount"
+                        android:textSize="24sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/doneText"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/barlow"
+                        android:layout_marginTop="10dp"
+                        android:text="done"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <com.monlixv2.ui.components.squareprogressbar.SquareProgressView
+                        android:id="@+id/transactionProgress"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                    android:minHeight="80dp"
+                    android:gravity="top"
+                    android:paddingStart="12dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <LinearLayout
+                        android:layout_gravity="top"
+                        android:id="@+id/payoutContainer"
+                        android:paddingRight="10dp"
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:background="@drawable/monlix_transaction_item_points"
+                            android:fontFamily="@font/barlow_bold"
+                            android:textSize="10sp"
+                            android:textColor="@color/grayV5"
+                            tools:text="+153000"
+                            android:id="@+id/payout"
+                            android:layout_marginRight="1dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    <TextView
+                            android:background="@drawable/monlix_transaction_status_completed"
+                            android:fontFamily="@font/barlow_bold"
+                            android:textAllCaps="true"
+                            android:textColor="@color/green"
+                            android:textSize="10sp"
+                            tools:text="Completed"
+                            android:id="@+id/status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <TextView
+                        android:paddingRight="4dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/darkBlue"
+                        android:text=""
+                        android:id="@+id/title"
+                        tools:text="Call of AntiaCall of Antia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/barlow_bold"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        />
+
+                <TextView
+                        android:paddingRight="4dp"
+                        android:id="@+id/transactionId"
+                        tools:text="8EVwSMu9TM1uzJiuQ8bnFB"
+                        android:textColor="@color/grayV5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/barlow" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:visibility="invisible"
+                        android:id="@+id/stepsToggle"
+                        android:textSize="12sp"
+                        android:paddingEnd="10dp"
+                        android:drawableEnd="@drawable/monlix_arrow_down"
+                        app:drawableEndCompat="@drawable/monlix_arrow_down"
+                        android:drawablePadding="6dp"
+                        android:layout_gravity="end"
+                        android:textAllCaps="true"
+                        android:textColor="@color/darkBlue"
+                        android:text="@string/see_all_steps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/barlow_bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+                android:id="@+id/stepsScroller"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="200dp">
+            <LinearLayout
+                    android:visibility="gone"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:background="#F9F9FB"
+                    android:id="@+id/stepsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

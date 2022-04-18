@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.R
 import com.monlixv2.adapters.TransactionAdapter
-import com.monlixv2.databinding.TransactionFragmentBinding
+import com.monlixv2.databinding.MonlixTransactionFragmentBinding
 import com.monlixv2.ui.activities.MainActivity
 import com.monlixv2.util.Constants
 import com.monlixv2.util.Constants.TRANSACTION_FILTER_LIST
@@ -28,7 +28,7 @@ class TransactionFragment : Fragment() {
     private lateinit var prefs: SharedPreferences
 
     private lateinit var viewModel: TransactionsViewModel
-    private var binding: TransactionFragmentBinding? = null
+    private var binding: MonlixTransactionFragmentBinding? = null
 
     private var isRequestLoading = false
     private var isRequestLastPage = false
@@ -38,7 +38,7 @@ class TransactionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         prefs = PreferenceHelper.customPrefs(context as MainActivity, PreferenceHelper.MonlixPrefs);
-        binding = TransactionFragmentBinding.inflate(inflater, container, false)
+        binding = MonlixTransactionFragmentBinding.inflate(inflater, container, false)
         binding!!.lifecycleOwner = this
         viewModel =
             ViewModelProvider(
@@ -81,7 +81,7 @@ class TransactionFragment : Fragment() {
     }
 
     fun initSpinner(){
-        binding?.spinner?.adapter = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_dropdown_item,TRANSACTION_FILTER_LIST)
+        binding?.spinner?.adapter = ArrayAdapter<String>(requireContext(), R.layout.monlix_simple_spinner_dropdown_item,TRANSACTION_FILTER_LIST)
         binding?.spinner?.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 val value = adapterView.getItemAtPosition(i).toString()

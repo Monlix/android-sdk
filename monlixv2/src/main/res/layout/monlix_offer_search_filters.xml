@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="48dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:fontFamily="@font/barlow_medium"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:id="@+id/textSearch"
+                        android:textSize="12sp"
+                        android:gravity="center|start"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/monlix_search2"
+                        android:hint="@string/search"
+                        android:drawablePadding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                    android:layout_marginLeft="-32dp"
+                    android:layout_gravity="end|center"
+                    android:id="@+id/closeSearch"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/monlix_close_ring" />
+        </LinearLayout>
+
+        <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="6dp"
+                android:background="#ECEFFA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+        <LinearLayout
+                android:id="@+id/noResultsContainer"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="14dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:textSize="16sp"
+                        android:id="@+id/noResultsText"
+                        android:fontFamily="@font/barlow_medium"
+                        android:textColor="@color/darkBlue"
+                        android:text="No results for asdasd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <TextView
+                    android:textSize="16sp"
+                    android:fontFamily="@font/barlow_medium"
+                    android:textColor="@color/darkBlue"
+                    android:text="@string/search_again"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/featuredText"
+                android:textColor="@color/darkBlue"
+                android:fontFamily="@font/barlow_semibold"
+                android:paddingLeft="14dp"
+                android:text="@string/featured_offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/featuredRecycler"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/monlix_featured_item" />
+        <TextView
+                android:id="@+id/discoverText"
+                android:textColor="@color/darkBlue"
+                android:fontFamily="@font/barlow_semibold"
+                android:paddingLeft="14dp"
+                android:text="@string/discover_offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</layout>
+
+

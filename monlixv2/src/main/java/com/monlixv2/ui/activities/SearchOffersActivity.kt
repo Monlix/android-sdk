@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.OffersSearchAdapter
-import com.monlixv2.databinding.OfferSearchActivityBinding
+import com.monlixv2.databinding.MonlixOfferSearchActivityBinding
 import com.monlixv2.util.Constants
 import com.monlixv2.util.RecyclerScrollListener
 import com.monlixv2.viewmodels.CampaignsViewModel
@@ -21,7 +21,7 @@ import kotlin.coroutines.CoroutineContext
 
 
 class SearchOffersActivity : AppCompatActivity(), CoroutineScope {
-    private lateinit var binding: OfferSearchActivityBinding
+    private lateinit var binding: MonlixOfferSearchActivityBinding
     override val coroutineContext: CoroutineContext = Dispatchers.Main
     private var offersAdapter: OffersSearchAdapter? = null
     private var isLoadingFromDb = false
@@ -37,7 +37,7 @@ class SearchOffersActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.offer_search_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.monlix_offer_search_activity)
         binding.lifecycleOwner = this
 
         setupAdapter()
@@ -104,7 +104,7 @@ class SearchOffersActivity : AppCompatActivity(), CoroutineScope {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_down)
+        overridePendingTransition(android.R.anim.fade_in, R.anim.monlix_slide_out_down)
     }
 
     override fun onBackPressed() {

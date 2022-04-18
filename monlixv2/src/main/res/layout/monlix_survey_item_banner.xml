@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:minHeight="200dp"
+        android:layout_height="wrap_content">
+
+    <FrameLayout
+            android:background="@drawable/monlix_dark_blue_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+        <LinearLayout
+                android:id="@+id/surveyTimerContainer"
+                android:background="@drawable/monlix_border_radius_item"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="top|start"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/monlix_timer2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+            <TextView
+                    android:id="@+id/surveyTime"
+                    android:textColor="@color/darkBlue"
+                    android:fontFamily="@font/barlow_medium"
+                    android:textSize="12sp"
+                    android:text="5 min"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <TextView
+                    android:textSize="12sp"
+                    android:fontFamily="@font/barlow_bold"
+                    android:text="HOT"
+                    android:background="@drawable/monlix_hot_radius_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/ratingContainer"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/monlix_border_radius_item_transparent_20"
+                android:layout_gravity="top|end"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:minHeight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:src="@drawable/monlix_orange_star"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+            <TextView
+                    android:id="@+id/surveyRating"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/barlow_medium"
+                    android:textColor="@color/white"
+                    android:text="4.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/surveyPoints"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeMaxTextSize="60sp"
+                    app:autoSizeStepGranularity="2sp"
+                    android:textSize="60sp"
+                    android:lines="1"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="900"
+                    android:fontFamily="@font/barlow_extrabold"
+                    android:layout_height="wrap_content" />
+
+            <TextView
+                    android:id="@+id/surveyCurrency"
+                    android:fontFamily="@font/barlow_semibold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    android:text="POINTS"
+                    android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/monlix_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="star'" />
+
+    </FrameLayout>
+
+    <LinearLayout
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_marginTop="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:id="@+id/surveyTitle"
+                android:textColor="@color/darkBlue"
+                android:textSize="16sp"
+                android:fontFamily="@font/barlow_semibold"
+                android:gravity="center"
+                android:textAlignment="center"
+                tools:text="Lorem ipsum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

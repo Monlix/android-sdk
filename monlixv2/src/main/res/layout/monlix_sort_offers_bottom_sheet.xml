@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/grayV3"
+        android:layout_height="wrap_content">
+
+
+    <LinearLayout
+            android:padding="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+
+                android:textSize="16sp"
+                android:textColor="@color/darkBlue"
+                android:fontFamily="@font/barlow_bold"
+                android:text="@string/sort_offers_by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <ImageView
+                android:id="@+id/closeSort"
+                android:layout_marginLeft="-16dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/monlix_close_ring" />
+    </LinearLayout>
+
+
+    <View
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:background="#ECEFFA"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+
+    <RadioGroup
+            android:id="@+id/sortGroup"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+                android:text="@string/recommended"
+                android:gravity="center"
+                android:paddingLeft="12dp"
+                android:id="@+id/sortRecommended"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@drawable/monlix_radiobuttonstate"
+                android:button="@drawable/monlix_filter_star_states"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+                android:text="@string/high_to_low"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:id="@+id/sortHighToLow"
+                android:fontFamily="@font/barlow_medium"
+                android:paddingLeft="12dp"
+                android:button="@drawable/monlix_filter_hl_states"
+                android:textColor="@drawable/monlix_radiobuttonstate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+                android:text="@string/low_to_high"
+                android:gravity="center"
+                android:paddingLeft="12dp"
+                android:id="@+id/sortLowToHigh"
+                android:fontFamily="@font/barlow_medium"
+                android:layout_marginTop="20dp"
+                android:textColor="@drawable/monlix_radiobuttonstate"
+                android:button="@drawable/monlix_filter_lh_states"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+                android:text="@string/newest"
+                android:gravity="center"
+                android:paddingLeft="12dp"
+                android:id="@+id/sortNewest"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@drawable/monlix_radiobuttonstate"
+                android:layout_marginTop="20dp"
+                android:button="@drawable/monlix_filter_newest_states"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </RadioGroup>
+
+
+</LinearLayout>

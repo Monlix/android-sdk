@@ -15,7 +15,6 @@ import com.monlixv2.ui.components.squareprogressbar.SquareProgressView
 import com.monlixv2.util.Constants.CLICKED_QUERY_PARAM
 import com.monlixv2.util.Constants.TRANSACTION_ITEM_STATUS_DRAWABLE
 import com.monlixv2.util.Constants.TRANSACTION_ITEM_STATUS_TEXT_COLOR
-import com.monlixv2.util.UIHelpers
 import com.monlixv2.util.UIHelpers.dangerouslySetHTML
 
 
@@ -41,9 +40,9 @@ class TransactionAdapter(
     ): TransactionHolder {
         val inflatedView = parent.inflate(
             when (viewType) {
-                SIMPLE_TRANSCATION_CARD -> R.layout.transaction_item_v2
+                SIMPLE_TRANSCATION_CARD -> R.layout.monlix_transaction_item_v2
                 else -> {
-                    R.layout.transaction_item_v2_with_steps
+                    R.layout.monlix_transaction_item_v2_with_steps
                 }
             }, false
         )
@@ -88,7 +87,7 @@ class TransactionAdapter(
 
         Glide.with(holder.itemView.context).load(dataSource[position].image)
             .transition(DrawableTransitionOptions.withCrossFade(300))
-            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
+            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.monlix_offer_placeholder))
             .into(holder.imageView)
 
         when (holder.itemViewType) {
@@ -121,8 +120,8 @@ class TransactionAdapter(
 
                     val drawable = ContextCompat.getDrawable(
                         holder.itemView.context,
-                        if (shouldReveal) R.drawable.arrow_down_reversed else
-                            R.drawable.arrow_down
+                        if (shouldReveal) R.drawable.monlix_arrow_down_reversed else
+                            R.drawable.monlix_arrow_down
                     )
                     holder.stepsToggle.setCompoundDrawablesWithIntrinsicBounds(
                         null,
@@ -160,8 +159,8 @@ class TransactionAdapter(
             if (isExpanded) View.VISIBLE else View.GONE
         val drawable = ContextCompat.getDrawable(
             holder.itemView.context,
-            if (isExpanded) R.drawable.arrow_down_reversed else
-                R.drawable.arrow_down
+            if (isExpanded) R.drawable.monlix_arrow_down_reversed else
+                R.drawable.monlix_arrow_down
         )
         holder.stepsToggle?.setCompoundDrawablesWithIntrinsicBounds(
             null,
@@ -181,7 +180,7 @@ class TransactionAdapter(
         if (isExpanded) {
             for (i in 0 until transaction.goals.size) {
                 val requirementItem = LayoutInflater.from(holder.itemView.context)
-                    .inflate(R.layout.requrement_item, null);
+                    .inflate(R.layout.monlix_requrement_item, null);
 
                 val textview =
                     requirementItem.findViewById<TextView>(R.id.requirementTitle)
@@ -198,7 +197,7 @@ class TransactionAdapter(
                                 CLICKED_QUERY_PARAM
                             )
                         )
-                            R.drawable.circle_radio else R.drawable.circle_radio_checked
+                            R.drawable.monlix_circle_radio else R.drawable.monlix_circle_radio_checked
                     )
                 ).into(stepCheck)
                 if (i == transaction.goals.size - 1) {

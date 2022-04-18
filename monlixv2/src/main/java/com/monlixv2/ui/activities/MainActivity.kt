@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.monlixv2.R
-import com.monlixv2.databinding.MainActivityBinding
+import com.monlixv2.databinding.MonlixMainActivityBinding
 import com.monlixv2.util.Constants
 import com.monlixv2.util.PreferenceHelper
 import com.monlixv2.util.PreferenceHelper.MonlixUserId
@@ -21,7 +21,7 @@ import com.monlixv2.util.PreferenceHelper.get
 class MainActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var navHostFragment: NavHostFragment
-    private lateinit var binding: MainActivityBinding
+    private lateinit var binding: MonlixMainActivityBinding
 
     private var isUserPage = false
 
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val availableFragments = intent.getIntArrayExtra(Constants.AVAILABLE_FRAGMENTS)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.monlix_main_activity)
         binding.lifecycleOwner = this
         prefs = PreferenceHelper.customPrefs(this, PreferenceHelper.MonlixPrefs);
         navHostFragment =
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         val bundle = Bundle()
         bundle.putIntArray(Constants.AVAILABLE_FRAGMENTS, availableFragments)
-        navHostFragment.navController.setGraph(R.navigation.nav_graph, bundle)
+        navHostFragment.navController.setGraph(R.navigation.monlix_nav_graph, bundle)
     }
 
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             (view as AppCompatImageView).setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.arrow_left
+                    R.drawable.monlix_arrow_left
                 )
             )
             return

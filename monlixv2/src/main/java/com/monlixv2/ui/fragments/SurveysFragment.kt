@@ -12,19 +12,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.SurveysAdapter
-import com.monlixv2.databinding.SurveysFragmentBinding
+import com.monlixv2.databinding.MonlixSurveysFragmentBinding
 import com.monlixv2.service.models.campaigns.DEFAULT_LIMIT
 import com.monlixv2.util.Constants
 import com.monlixv2.util.RecyclerScrollListener
 import com.monlixv2.viewmodels.SurveysViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlin.coroutines.CoroutineContext
 
 
 class SurveysFragment : Fragment(), CoroutineScope {
-    private lateinit var binding: SurveysFragmentBinding
+    private lateinit var binding: MonlixSurveysFragmentBinding
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
     private var surveysAdapter: SurveysAdapter? = null
@@ -45,7 +44,7 @@ class SurveysFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.surveys_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.monlix_surveys_fragment, container, false)
         return binding.root
     }
 

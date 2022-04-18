@@ -28,7 +28,7 @@ class FeaturedOffersAdapter(
     ): FeaturedOffersAdapter {
         return FeaturedOffersAdapter(
             parent.inflate(
-                R.layout.featured_item
+                R.layout.monlix_featured_item
             )
         )
 
@@ -48,7 +48,7 @@ class FeaturedOffersAdapter(
         Glide.with(holder.itemView.context).load(dataSource[position].image)
             .circleCrop()
             .transition(DrawableTransitionOptions.withCrossFade(300))
-            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
+            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.monlix_offer_placeholder))
             .into(holder.offerImage)
 
 
@@ -63,7 +63,7 @@ class FeaturedOffersAdapter(
         val campaignJson = Constants.campaignToJSON(campaign)
         intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaignJson)
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
+        activity.overridePendingTransition(R.anim.monlix_slide_in_up, android.R.anim.fade_out);
     }
 
 

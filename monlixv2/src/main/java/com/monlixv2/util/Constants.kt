@@ -47,11 +47,11 @@ object Constants {
     )
 
     val TRANSACTION_ITEM_STATUS_DRAWABLE = mapOf<String, Int>(
-        IN_PROGRESS_QUERY_PARAM to R.drawable.transaction_status_in_progress,
-        CREDITED_QUERY_PARAM to R.drawable.transaction_status_completed,
-        REJECTED_QUERY_PARAM to R.drawable.transaction_status_in_rejected,
-        CLICKED_QUERY_PARAM to R.drawable.transaction_status_in_clicked,
-        PENDING_QUERY_PARAM to R.drawable.transaction_status_in_pending,
+        IN_PROGRESS_QUERY_PARAM to R.drawable.monlix_transaction_status_in_progress,
+        CREDITED_QUERY_PARAM to R.drawable.monlix_transaction_status_completed,
+        REJECTED_QUERY_PARAM to R.drawable.monlix_transaction_status_in_rejected,
+        CLICKED_QUERY_PARAM to R.drawable.monlix_transaction_status_in_clicked,
+        PENDING_QUERY_PARAM to R.drawable.monlix_transaction_status_in_pending,
     )
 
     val TRANSACTION_ITEM_STATUS_TEXT_COLOR = mapOf<String, Int>(

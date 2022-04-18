@@ -58,9 +58,9 @@ class OffersAdapterV2(
         return OfferHolderV2(
             parent.inflate(
                 when (viewType) {
-                    FILTER_CARD -> R.layout.offer_filters
-                    SIMPLE_OFFER_CARD -> R.layout.offer_item
-                    else -> R.layout.offer_item_with_steps
+                    FILTER_CARD -> R.layout.monlix_offer_filters
+                    SIMPLE_OFFER_CARD -> R.layout.monlix_offer_item
+                    else -> R.layout.monlix_offer_item_with_steps
                 }, false
             )
         )
@@ -86,10 +86,10 @@ class OffersAdapterV2(
         holder.searchContainer?.setOnClickListener {
             val intent = Intent(activity, SearchOffersActivity::class.java)
             activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
+            activity.overridePendingTransition(R.anim.monlix_slide_in_up, android.R.anim.fade_out);
         }
         holder.offerTypeSpinner?.adapter = ArrayAdapter<String>(
-            activity, R.layout.simple_spinner_dropdown_item,
+            activity, R.layout.monlix_simple_spinner_dropdown_item,
             Constants.OFFER_FILTER_LIST
         )
         spinnerAutoSelected = if (isInitialLoad) false else true
@@ -113,7 +113,7 @@ class OffersAdapterV2(
 
     private fun showOrderFilters() {
         val bottomSheetDialog = BottomSheetDialog(activity)
-        bottomSheetDialog.setContentView(R.layout.sort_offers_bottom_sheet)
+        bottomSheetDialog.setContentView(R.layout.monlix_sort_offers_bottom_sheet)
 
         val radioGroup = bottomSheetDialog.findViewById<RadioGroup>(R.id.sortGroup)
         if (sortFilter !== Constants.SORT_FILTER.NONE) {
@@ -169,7 +169,7 @@ class OffersAdapterV2(
                 .error(
                     ContextCompat.getDrawable(
                         holder.itemView.context,
-                        R.drawable.offer_placeholder
+                        R.drawable.monlix_offer_placeholder
                     )
                 )
                 .into(it)
@@ -199,7 +199,7 @@ class OffersAdapterV2(
         val campaignJson = campaignToJSON(campaign)
         intent.putExtra(Constants.SINGLE_CAMPAIGN_PAYLOAD, campaignJson)
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out);
+        activity.overridePendingTransition(R.anim.monlix_slide_in_up, android.R.anim.fade_out);
     }
 
 

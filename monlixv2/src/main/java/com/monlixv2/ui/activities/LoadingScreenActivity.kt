@@ -13,7 +13,7 @@ import com.monlixv2.R
 import com.monlixv2.adapters.AD_FRAGMENT
 import com.monlixv2.adapters.OFFER_FRAGMENT
 import com.monlixv2.adapters.SURVEY_FRAGMENT
-import com.monlixv2.databinding.LoadingScreenBinding
+import com.monlixv2.databinding.MonlixLoadingScreenBinding
 import com.monlixv2.util.Constants.AVAILABLE_FRAGMENTS
 import com.monlixv2.util.Constants.viewModelFactory
 import com.monlixv2.util.PreferenceHelper
@@ -30,7 +30,7 @@ const val EMPTY_FRAGMENT_SIZE = -1
 class LoadingScreenActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var viewModel: LoadingViewModel
-    private lateinit var binding: LoadingScreenBinding
+    private lateinit var binding: MonlixLoadingScreenBinding
     private var fragmentsToShow = mutableListOf<Int>()
     private var numberOfFragments : Int = EMPTY_FRAGMENT_SIZE
     private var isFetchedNetworkData = false
@@ -56,7 +56,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
         clearDB()
 
-        binding = DataBindingUtil.setContentView(this, R.layout.loading_screen)
+        binding = DataBindingUtil.setContentView(this, R.layout.monlix_loading_screen)
         binding.lifecycleOwner = this
         prefs = PreferenceHelper.customPrefs(this, PreferenceHelper.MonlixPrefs);
         viewModel =

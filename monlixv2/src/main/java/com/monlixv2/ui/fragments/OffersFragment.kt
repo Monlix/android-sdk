@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monlixv2.App
 import com.monlixv2.R
 import com.monlixv2.adapters.OffersAdapterV2
-import com.monlixv2.databinding.OffersFragmentV2Binding
+import com.monlixv2.databinding.MonlixOffersFragmentV2Binding
 import com.monlixv2.util.Constants
 import com.monlixv2.util.RecyclerScrollListener
 import com.monlixv2.viewmodels.CampaignsViewModel
@@ -25,7 +25,7 @@ import kotlin.coroutines.CoroutineContext
 
 
 class OffersFragment : Fragment(), CoroutineScope {
-    private lateinit var binding: OffersFragmentV2Binding
+    private lateinit var binding: MonlixOffersFragmentV2Binding
     override val coroutineContext: CoroutineContext = Dispatchers.Main
     private var offersAdapterV2: OffersAdapterV2? = null
     private var isLoadingFromDb = false
@@ -43,7 +43,7 @@ class OffersFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.offers_fragment_v2, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.monlix_offers_fragment_v2, container, false)
         return binding.root
     }
 

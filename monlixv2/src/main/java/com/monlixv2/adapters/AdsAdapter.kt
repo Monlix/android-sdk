@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.monlixv2.R
 import com.monlixv2.service.models.ads.Ad
-import com.monlixv2.service.models.campaigns.Campaign
-import com.monlixv2.ui.fragments.AdsFragment
 import com.monlixv2.util.UIHelpers
 
 
@@ -26,7 +24,7 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): AdHolder {
-        return AdHolder(parent.inflate(R.layout.ad_item,false))
+        return AdHolder(parent.inflate(R.layout.monlix_ad_item,false))
 
     }
 
@@ -48,7 +46,7 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.AdHolder>() {
 
         Glide.with(holder.itemView.context).load(dataSource[position].logo)
             .transition(DrawableTransitionOptions.withCrossFade(300))
-            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.offer_placeholder))
+            .error(ContextCompat.getDrawable(holder.itemView.context, R.drawable.monlix_offer_placeholder))
             .into(holder.offerImage)
         holder.itemView.alpha = if(dataSource[position].visited) 0.3f else 1f
     }
