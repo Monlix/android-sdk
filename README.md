@@ -1,3 +1,4 @@
+
 # Monlix Android SDK
 
 Monlix offerwall for Adndroid
@@ -38,8 +39,11 @@ dependencyResolutionManagement {
 3. In the app level build.gradle file, enable the **dataBinding** feature
 
 ```groovy
- buildFeatures {  
-  dataBinding true  
+android {
+    ...
+    buildFeatures {
+        dataBinding true
+    }
 }
 ```
 
