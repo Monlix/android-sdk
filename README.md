@@ -4,10 +4,10 @@ Monlix offerwall for Adndroid
 
 # Integration
 
-## Import from JitPack repository
 
 1. In the top level build.gradle file, add the following
 
+For Gradle < 7
 ```groovy
 allprojects {
    repositories {
@@ -17,10 +17,30 @@ allprojects {
  }
 ```
 
+For Gradle > 7, in the settings.gradle , add maven { url 'https://jitpack.io' }
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
 2. In the app level build.gradle file, add the dependency
 
 ```groovy
- implementation 'com.github.netboxify:monlix-android-sdk:0.0.4'
+ implementation 'com.github.Monlix:android-sdk:v0.1.4'
+```
+
+3. In the app level build.gradle file, enable the **dataBinding** feature
+
+```groovy
+ buildFeatures {  
+  dataBinding true  
+}
 ```
 
 # Usage
