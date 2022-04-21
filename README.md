@@ -1,7 +1,7 @@
 
 # Monlix Android SDK
 
-Monlix offerwall for Adndroid
+Monlix offerwall for Android
 
 # Integration
 
@@ -50,7 +50,6 @@ android {
 # Usage
 
 
-
 ----------
 
 1. Load the library in **Activity/Fragment**
@@ -71,7 +70,7 @@ Kotlin
   MonlixOffers.showWall(this)
 ```
 
-JAVA
+Java
 ```groovy
   MonlixOffers.INSTANCE.showWall(this)
 ```
