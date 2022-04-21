@@ -33,7 +33,7 @@ dependencyResolutionManagement {
 2. In the app level build.gradle file, add the dependency
 
 ```groovy
- implementation 'com.github.Monlix:android-sdk:v0.1.4'
+ implementation 'com.github.Monlix:android-sdk:v0.1.5'
 ```
 
 3. In the app level build.gradle file, enable the **dataBinding** feature
