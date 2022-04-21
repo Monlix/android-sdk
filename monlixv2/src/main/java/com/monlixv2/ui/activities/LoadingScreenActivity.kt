@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.monlixv2.App
+import com.monlixv2.MonlixOffers
 import com.monlixv2.R
 import com.monlixv2.adapters.AD_FRAGMENT
 import com.monlixv2.adapters.OFFER_FRAGMENT
@@ -37,17 +37,17 @@ class LoadingScreenActivity : AppCompatActivity() {
 
     private val campaignsViewModel: CampaignsViewModel by viewModels {
         viewModelFactory {
-            CampaignsViewModel((application as App).campaignsRepository)
+            CampaignsViewModel(MonlixOffers.campaignsRepository)
         }
     }
     private val adsViewModel: AdsViewModel by viewModels {
         viewModelFactory {
-            AdsViewModel((application as App).adsRepository)
+            AdsViewModel(MonlixOffers.adsRepository)
         }
     }
     private val surveysViewModel: SurveysViewModel by viewModels {
         viewModelFactory {
-            SurveysViewModel((application as App).surveyRepository)
+            SurveysViewModel(MonlixOffers.surveyRepository)
         }
     }
 

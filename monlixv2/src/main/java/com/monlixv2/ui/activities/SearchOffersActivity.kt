@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.monlixv2.App
+import com.monlixv2.MonlixOffers
 import com.monlixv2.R
 import com.monlixv2.adapters.OffersSearchAdapter
 import com.monlixv2.databinding.MonlixOfferSearchActivityBinding
@@ -30,7 +30,7 @@ class SearchOffersActivity : AppCompatActivity(), CoroutineScope {
 
     private val campaignsViewModel: CampaignsViewModel by viewModels {
         Constants.viewModelFactory {
-            CampaignsViewModel((applicationContext as App).campaignsRepository)
+            CampaignsViewModel(MonlixOffers.campaignsRepository)
         }
     }
 

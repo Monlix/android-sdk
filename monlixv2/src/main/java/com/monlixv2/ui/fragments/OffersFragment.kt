@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.monlixv2.App
+import com.monlixv2.MonlixOffers
 import com.monlixv2.R
 import com.monlixv2.adapters.OffersAdapterV2
 import com.monlixv2.databinding.MonlixOffersFragmentV2Binding
@@ -34,7 +34,7 @@ class OffersFragment : Fragment(), CoroutineScope {
 
     private val campaignsViewModel: CampaignsViewModel by viewModels {
         Constants.viewModelFactory {
-            CampaignsViewModel((context?.applicationContext as App).campaignsRepository)
+            CampaignsViewModel(MonlixOffers.campaignsRepository)
         }
     }
 

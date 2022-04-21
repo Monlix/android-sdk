@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.monlixv2.App
+import com.monlixv2.MonlixOffers
 import com.monlixv2.R
 import com.monlixv2.adapters.AdsAdapter
 import com.monlixv2.databinding.MonlixAdsFragmentBinding
@@ -35,7 +35,7 @@ class AdsFragment : Fragment(), CoroutineScope {
 
     private val adsViewModel: AdsViewModel by viewModels {
         Constants.viewModelFactory {
-            AdsViewModel((context?.applicationContext as App).adsRepository)
+            AdsViewModel(MonlixOffers.adsRepository)
         }
     }
 

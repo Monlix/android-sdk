@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.monlixv2.App
+import com.monlixv2.MonlixOffers
 import com.monlixv2.R
 import com.monlixv2.adapters.SurveysAdapter
 import com.monlixv2.databinding.MonlixSurveysFragmentBinding
@@ -35,7 +35,7 @@ class SurveysFragment : Fragment(), CoroutineScope {
 
     private val surveysViewModel: SurveysViewModel by viewModels {
         Constants.viewModelFactory {
-            SurveysViewModel((context?.applicationContext as App).surveyRepository)
+            SurveysViewModel(MonlixOffers.surveyRepository)
         }
     }
 
